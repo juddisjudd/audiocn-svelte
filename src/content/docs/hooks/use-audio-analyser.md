@@ -1,0 +1,80 @@
+---
+title: useAudioAnalyser
+description: Meter and visual frame sources from a MediaStream, media element or AudioNode.
+---
+
+<script>
+	import { Callout, PropsTable } from "#lib/docs/components/index.js";
+</script>
+
+`useAudioAnalyser` connects any audio to audiocn-svelte's meters and visualizers. It measures peak and RMS per channel and reduces the spectrum to frequency bands, and only runs while a component is subscribed.
+
+```npm
+npx shadcn-svelte@latest add @audiocn-svelte/use-audio-analyser
+```
+
+## Usage
+
+```svelte
+<script lang="ts">
+	import { BarVisualizer } from "#lib/components/ui/bar-visualizer/index.js";
+	import { LevelMeter } from "#lib/components/ui/level-meter/index.js";
+	import { useAudioAnalyser } from "#lib/hooks/use-audio-analyser.svelte.js";
+	import { useMicrophone } from "#lib/hooks/use-microphone.svelte.js";
+
+	const microphone = useMicrophone({ enabled: true });
+	const analyser = useAudioAnalyser(() => microphone.stream, { channels: "stereo" });
+</script>
+
+<LevelMeter aria-label="Microphone" source={analyser.meter} />
+<BarVisualizer aria-hidden="true" source={analyser.visual} />
+```
+
+Call it during component setup. Pass the input as a getter, `() => microphone.stream`, so the analyser follows it. The options can be a getter too. `meter` and `visual` stay the same when the input changes, so components keep their subscription.
+
+<Callout title="Media elements">
+
+A media element can only be connected to Web Audio once. The hook remembers the connection, routes the element to the speakers through the context, and reuses it for every analyser.
+
+</Callout>
+
+## Options
+
+<PropsTable
+	rows={[
+		["input", "MediaStream | HTMLMediaElement | AudioNode | null", null, "What to analyse."],
+		["fftSize", "number", "2048", "Analyser FFT size."],
+		["smoothing", "number", "0.3", "Analyser smoothing constant, 0..1."],
+		["bands", "number", "32", "Frequency bands per visual frame."],
+		["minHz / maxHz", "number", "40 / 16000", "Band range, spaced on a log scale."],
+		["historySize", "number", "60", "Entries in the level history ring."],
+		["historyIntervalMs", "number", "50", "Time between history entries."],
+		[
+			"intervalMs",
+			"number",
+			"0",
+			"Minimum time between frames. 0 sends one every animation frame.",
+		],
+		["channels", '"mono" | "stereo"', '"mono"', "stereo measures left and right separately."],
+		["enabled", "boolean", "true", "Pause analysis without tearing it down."],
+	]}
+/>
+
+`input` is the first argument; the rest go in the options object.
+
+## Returns
+
+<PropsTable
+	rows={[
+		["meter", "FrameSource<MeterFrame>", null, "Peak and RMS per channel."],
+		["visual", "FrameSource<VisualFrame>", null, "Bands, history, time-domain samples and peak."],
+		[
+			"status",
+			'"idle" | "running" | "suspended"',
+			null,
+			"idle with no input; suspended until the context resumes.",
+		],
+	]}
+/>
+
+Frames are reused between updates to avoid allocating. Copy a frame if you need to keep it.
