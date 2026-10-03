@@ -1391,6 +1391,357 @@
 					"type": "registry:ui"
 				}
 			]
+		},
+		{
+			"name": "audio-player",
+			"type": "registry:ui",
+			"title": "Audio Player",
+			"description": "A composable audio player: transport, seek bar with buffering, time, volume, playback rate, loop and keyboard shortcuts.",
+			"dependencies": [
+				"bits-ui"
+			],
+			"registryDependencies": [
+				"local:core",
+				"local:use-audio-player",
+				"local:use-frame-source",
+				"local:volume-control"
+			],
+			"files": [
+				{
+					"path": "./src/lib/components/ui/audio-player/audio-player-artwork.svelte",
+					"type": "registry:ui"
+				},
+				{
+					"path": "./src/lib/components/ui/audio-player/audio-player-button.svelte",
+					"type": "registry:ui"
+				},
+				{
+					"path": "./src/lib/components/ui/audio-player/audio-player-context.svelte.ts",
+					"type": "registry:ui"
+				},
+				{
+					"path": "./src/lib/components/ui/audio-player/audio-player-controls.svelte",
+					"type": "registry:ui"
+				},
+				{
+					"path": "./src/lib/components/ui/audio-player/audio-player-description.svelte",
+					"type": "registry:ui"
+				},
+				{
+					"path": "./src/lib/components/ui/audio-player/audio-player-internal.svelte",
+					"type": "registry:ui"
+				},
+				{
+					"path": "./src/lib/components/ui/audio-player/audio-player-loop.svelte",
+					"type": "registry:ui"
+				},
+				{
+					"path": "./src/lib/components/ui/audio-player/audio-player-next.svelte",
+					"type": "registry:ui"
+				},
+				{
+					"path": "./src/lib/components/ui/audio-player/audio-player-play.svelte",
+					"type": "registry:ui"
+				},
+				{
+					"path": "./src/lib/components/ui/audio-player/audio-player-previous.svelte",
+					"type": "registry:ui"
+				},
+				{
+					"path": "./src/lib/components/ui/audio-player/audio-player-provider.svelte",
+					"type": "registry:ui"
+				},
+				{
+					"path": "./src/lib/components/ui/audio-player/audio-player-rate.svelte",
+					"type": "registry:ui"
+				},
+				{
+					"path": "./src/lib/components/ui/audio-player/audio-player-seek.svelte",
+					"type": "registry:ui"
+				},
+				{
+					"path": "./src/lib/components/ui/audio-player/audio-player-skip-back.svelte",
+					"type": "registry:ui"
+				},
+				{
+					"path": "./src/lib/components/ui/audio-player/audio-player-skip-forward.svelte",
+					"type": "registry:ui"
+				},
+				{
+					"path": "./src/lib/components/ui/audio-player/audio-player-time.svelte",
+					"type": "registry:ui"
+				},
+				{
+					"path": "./src/lib/components/ui/audio-player/audio-player-title.svelte",
+					"type": "registry:ui"
+				},
+				{
+					"path": "./src/lib/components/ui/audio-player/audio-player-utils.ts",
+					"type": "registry:ui"
+				},
+				{
+					"path": "./src/lib/components/ui/audio-player/audio-player-volume.svelte",
+					"type": "registry:ui"
+				},
+				{
+					"path": "./src/lib/components/ui/audio-player/audio-player.svelte",
+					"type": "registry:ui"
+				},
+				{
+					"path": "./src/lib/components/ui/audio-player/index.ts",
+					"type": "registry:ui"
+				}
+			]
+		},
+		{
+			"name": "system-audio-mixer",
+			"type": "registry:block",
+			"title": "System Audio Mixer",
+			"description": "The complete mixer: microphone, system audio, music and sound pads with meters, faders, mute, solo, monitor and ducking, a limited master and a mixed output stream, all running on Web Audio.",
+			"dependencies": [
+				"phosphor-svelte"
+			],
+			"registryDependencies": [
+				"button",
+				"switch",
+				"tabs",
+				"popover",
+				"local:core",
+				"local:mixer",
+				"local:channel-strip",
+				"local:level-meter",
+				"local:fader",
+				"local:channel-toggle",
+				"local:audio-device-select",
+				"local:sound-pad",
+				"local:use-mixer",
+				"local:use-web-audio-mixer",
+				"local:use-microphone",
+				"local:use-system-audio",
+				"local:use-audio-devices",
+				"local:use-audio-player",
+				"local:use-sound",
+				"local:use-audio-context",
+				"local:use-gain-node"
+			],
+			"files": [
+				{
+					"path": "./src/lib/components/blocks/system-audio-mixer/index.ts",
+					"type": "registry:component",
+					"target": "blocks/system-audio-mixer/index.ts"
+				},
+				{
+					"path": "./src/lib/components/blocks/system-audio-mixer/mixer-master-strip.svelte",
+					"type": "registry:component",
+					"target": "blocks/system-audio-mixer/mixer-master-strip.svelte"
+				},
+				{
+					"path": "./src/lib/components/blocks/system-audio-mixer/mixer-microphone-channel.svelte",
+					"type": "registry:component",
+					"target": "blocks/system-audio-mixer/mixer-microphone-channel.svelte"
+				},
+				{
+					"path": "./src/lib/components/blocks/system-audio-mixer/mixer-pad.svelte",
+					"type": "registry:component",
+					"target": "blocks/system-audio-mixer/mixer-pad.svelte"
+				},
+				{
+					"path": "./src/lib/components/blocks/system-audio-mixer/mixer-source-strip.svelte",
+					"type": "registry:component",
+					"target": "blocks/system-audio-mixer/mixer-source-strip.svelte"
+				},
+				{
+					"path": "./src/lib/components/blocks/system-audio-mixer/system-audio-mixer.svelte",
+					"type": "registry:component",
+					"target": "blocks/system-audio-mixer/system-audio-mixer.svelte"
+				}
+			]
+		},
+		{
+			"name": "mic-setup",
+			"type": "registry:block",
+			"title": "Microphone Setup",
+			"description": "Choose and check a microphone: device select with a live preview, a level meter, gain, mute and a level check that says whether you sound right.",
+			"dependencies": [
+				"phosphor-svelte"
+			],
+			"registryDependencies": [
+				"alert",
+				"button",
+				"card",
+				"field",
+				"switch",
+				"local:core",
+				"local:audio-device-select",
+				"local:db-readout",
+				"local:level-meter",
+				"local:live-waveform",
+				"local:parameter-slider",
+				"local:use-audio-analyser",
+				"local:use-audio-context",
+				"local:use-audio-devices",
+				"local:use-microphone",
+				"local:use-gain-node"
+			],
+			"files": [
+				{
+					"path": "./src/lib/components/blocks/mic-setup/index.ts",
+					"type": "registry:component",
+					"target": "blocks/mic-setup/index.ts"
+				},
+				{
+					"path": "./src/lib/components/blocks/mic-setup/mic-setup.svelte",
+					"type": "registry:component",
+					"target": "blocks/mic-setup/mic-setup.svelte"
+				}
+			]
+		},
+		{
+			"name": "system-audio-settings",
+			"type": "registry:block",
+			"title": "System Audio Settings",
+			"description": "Turn system audio capture on, set its level, watch its meter and explain what the browser will capture.",
+			"dependencies": [
+				"phosphor-svelte"
+			],
+			"registryDependencies": [
+				"alert",
+				"badge",
+				"card",
+				"field",
+				"switch",
+				"local:core",
+				"local:level-meter",
+				"local:parameter-slider",
+				"local:use-audio-analyser",
+				"local:use-audio-context",
+				"local:use-system-audio",
+				"local:use-gain-node"
+			],
+			"files": [
+				{
+					"path": "./src/lib/components/blocks/system-audio-settings/index.ts",
+					"type": "registry:component",
+					"target": "blocks/system-audio-settings/index.ts"
+				},
+				{
+					"path": "./src/lib/components/blocks/system-audio-settings/system-audio-settings.svelte",
+					"type": "registry:component",
+					"target": "blocks/system-audio-settings/system-audio-settings.svelte"
+				}
+			]
+		},
+		{
+			"name": "music-player",
+			"type": "registry:block",
+			"title": "Music Player",
+			"description": "A playlist player with a waveform seek bar, shuffle, repeat, volume and optional ducking under the microphone.",
+			"dependencies": [
+				"phosphor-svelte"
+			],
+			"registryDependencies": [
+				"card",
+				"empty",
+				"label",
+				"switch",
+				"toggle",
+				"local:core",
+				"local:audio-player",
+				"local:parameter-slider",
+				"local:track-list",
+				"local:volume-control",
+				"local:waveform",
+				"local:use-audio-analyser",
+				"local:use-audio-context",
+				"local:use-audio-player",
+				"local:use-frame-source",
+				"local:use-waveform-data"
+			],
+			"files": [
+				{
+					"path": "./src/lib/components/blocks/music-player/index.ts",
+					"type": "registry:component",
+					"target": "blocks/music-player/index.ts"
+				},
+				{
+					"path": "./src/lib/components/blocks/music-player/music-player.svelte",
+					"type": "registry:component",
+					"target": "blocks/music-player/music-player.svelte"
+				}
+			]
+		},
+		{
+			"name": "soundboard",
+			"type": "registry:block",
+			"title": "Soundboard",
+			"description": "A grid of sound pads with global hotkeys, per-pad mode and volume in a context menu, master volume, stop all, and drag-and-drop to add sounds.",
+			"dependencies": [
+				"phosphor-svelte"
+			],
+			"registryDependencies": [
+				"alert",
+				"button",
+				"context-menu",
+				"empty",
+				"label",
+				"switch",
+				"local:sound-pad",
+				"local:volume-control",
+				"local:use-audio-context",
+				"local:use-sound",
+				"local:use-gain-node"
+			],
+			"files": [
+				{
+					"path": "./src/lib/components/blocks/soundboard/index.ts",
+					"type": "registry:component",
+					"target": "blocks/soundboard/index.ts"
+				},
+				{
+					"path": "./src/lib/components/blocks/soundboard/soundboard-pad.svelte",
+					"type": "registry:component",
+					"target": "blocks/soundboard/soundboard-pad.svelte"
+				},
+				{
+					"path": "./src/lib/components/blocks/soundboard/soundboard.svelte",
+					"type": "registry:component",
+					"target": "blocks/soundboard/soundboard.svelte"
+				}
+			]
+		},
+		{
+			"name": "quick-audio-popover",
+			"type": "registry:block",
+			"title": "Quick Audio Popover",
+			"description": "Compact microphone and system audio controls behind one toolbar button that shows a live level.",
+			"dependencies": [
+				"phosphor-svelte"
+			],
+			"registryDependencies": [
+				"button",
+				"field",
+				"popover",
+				"separator",
+				"switch",
+				"local:audio-device-select",
+				"local:bar-visualizer",
+				"local:use-audio-analyser",
+				"local:use-audio-devices",
+				"local:use-microphone",
+				"local:use-system-audio"
+			],
+			"files": [
+				{
+					"path": "./src/lib/components/blocks/quick-audio-popover/index.ts",
+					"type": "registry:component",
+					"target": "blocks/quick-audio-popover/index.ts"
+				},
+				{
+					"path": "./src/lib/components/blocks/quick-audio-popover/quick-audio-popover.svelte",
+					"type": "registry:component",
+					"target": "blocks/quick-audio-popover/quick-audio-popover.svelte"
+				}
+			]
 		}
 	]
 }

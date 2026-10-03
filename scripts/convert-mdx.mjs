@@ -265,7 +265,9 @@ export const convertMdx = (source) => {
 const collectPages = async (input) => {
 	const info = await stat(input);
 	if (info.isFile()) {
-		return [{ file: input, relative: path.basename(input) }];
+		const section = path.basename(path.dirname(input));
+		const name = path.basename(input);
+		return [{ file: input, relative: SECTIONS.includes(section) ? path.join(section, name) : name }];
 	}
 	const pages = [];
 	for (const section of SECTIONS) {
