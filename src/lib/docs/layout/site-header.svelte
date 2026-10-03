@@ -16,6 +16,7 @@
 	];
 
 	const pathname = $derived(withoutBase(page.url.pathname));
+	const onDocs = $derived(pathname === "/docs" || pathname.startsWith("/docs/"));
 
 	const isActive = (href: string) => {
 		const nested = LINKS.some(
@@ -42,7 +43,10 @@
 			{/each}
 		</nav>
 		<div class="ms-auto flex items-center gap-1">
-			<ThemePicker class="hidden sm:flex" />
+			<!-- The home page has its own theme swatches. -->
+			{#if onDocs}
+				<ThemePicker class="hidden sm:flex" />
+			{/if}
 			{#if siteConfig.githubUrl}
 				<a
 					href={siteConfig.githubUrl}

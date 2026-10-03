@@ -136,6 +136,7 @@ This repository holds the docs site, the registry source and the component sourc
 pnpm install
 pnpm dev              # docs site on http://localhost:5173
 pnpm test             # unit and component tests (Vitest, jsdom)
+pnpm test:e2e         # browser tests of the built site (Playwright, Chrome)
 pnpm check            # svelte-check
 pnpm lint             # Prettier and ESLint
 pnpm build            # registry and static site
