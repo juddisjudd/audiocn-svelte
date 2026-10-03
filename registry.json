@@ -15,33 +15,12 @@
 			"type": "registry:lib",
 			"title": "Audio core",
 			"description": "Decibel maths, meter ballistics, zones, fader tapers, band resampling, bar level smoothing, wave line shapes, time formatting, the shared frame loop, frame emitters, shared types and the audio theme tokens. Every audiocn component depends on it.",
-			"dependencies": [],
 			"registryDependencies": [],
 			"files": [
-				{
-					"path": "./src/lib/audio/types.ts",
-					"type": "registry:lib",
-					"target": "audio/types.ts"
-				},
-				{
-					"path": "./src/lib/audio/decibels.ts",
-					"type": "registry:lib",
-					"target": "audio/decibels.ts"
-				},
 				{
 					"path": "./src/lib/audio/ballistics.ts",
 					"type": "registry:lib",
 					"target": "audio/ballistics.ts"
-				},
-				{
-					"path": "./src/lib/audio/zones.ts",
-					"type": "registry:lib",
-					"target": "audio/zones.ts"
-				},
-				{
-					"path": "./src/lib/audio/taper.ts",
-					"type": "registry:lib",
-					"target": "audio/taper.ts"
 				},
 				{
 					"path": "./src/lib/audio/bands.ts",
@@ -54,14 +33,9 @@
 					"target": "audio/bar-levels.ts"
 				},
 				{
-					"path": "./src/lib/audio/wave-line.ts",
+					"path": "./src/lib/audio/decibels.ts",
 					"type": "registry:lib",
-					"target": "audio/wave-line.ts"
-				},
-				{
-					"path": "./src/lib/audio/time.ts",
-					"type": "registry:lib",
-					"target": "audio/time.ts"
+					"target": "audio/decibels.ts"
 				},
 				{
 					"path": "./src/lib/audio/frame-loop.ts",
@@ -74,14 +48,39 @@
 					"target": "audio/frame-source.ts"
 				},
 				{
+					"path": "./src/lib/audio/history-playback.ts",
+					"type": "registry:lib",
+					"target": "audio/history-playback.ts"
+				},
+				{
 					"path": "./src/lib/audio/history.ts",
 					"type": "registry:lib",
 					"target": "audio/history.ts"
 				},
 				{
-					"path": "./src/lib/audio/history-playback.ts",
+					"path": "./src/lib/audio/taper.ts",
 					"type": "registry:lib",
-					"target": "audio/history-playback.ts"
+					"target": "audio/taper.ts"
+				},
+				{
+					"path": "./src/lib/audio/time.ts",
+					"type": "registry:lib",
+					"target": "audio/time.ts"
+				},
+				{
+					"path": "./src/lib/audio/types.ts",
+					"type": "registry:lib",
+					"target": "audio/types.ts"
+				},
+				{
+					"path": "./src/lib/audio/wave-line.ts",
+					"type": "registry:lib",
+					"target": "audio/wave-line.ts"
+				},
+				{
+					"path": "./src/lib/audio/zones.ts",
+					"type": "registry:lib",
+					"target": "audio/zones.ts"
 				}
 			],
 			"cssVars": {
@@ -130,10 +129,26 @@
 			}
 		},
 		{
+			"name": "electric",
+			"type": "registry:lib",
+			"title": "Electric drawing",
+			"description": "Shared drawing for the electric visualizers: repeatable crackle, a spark pool, canvas sizing and theme colours read from CSS.",
+			"registryDependencies": [
+				"local:core"
+			],
+			"files": [
+				{
+					"path": "./src/lib/electric.ts",
+					"type": "registry:lib",
+					"target": "electric.ts"
+				}
+			]
+		},
+		{
 			"name": "use-frame-source",
 			"type": "registry:hook",
 			"title": "useFrameSource",
-			"description": "Subscribe a callback to a frame source.",
+			"description": "Subscribe a callback to a frame source, with a stable callback and automatic cleanup.",
 			"dependencies": [
 				"runed"
 			],
@@ -148,10 +163,201 @@
 			]
 		},
 		{
+			"name": "use-level",
+			"type": "registry:hook",
+			"title": "useLevel",
+			"description": "Read a meter source into React state at a low rate, for labels and conditional UI.",
+			"dependencies": [
+				"runed"
+			],
+			"registryDependencies": [
+				"local:core",
+				"local:use-frame-source"
+			],
+			"files": [
+				{
+					"path": "./src/lib/hooks/use-level.svelte.ts",
+					"type": "registry:hook"
+				}
+			]
+		},
+		{
+			"name": "use-clip-hold",
+			"type": "registry:hook",
+			"title": "useClipHold",
+			"description": "Clip detection with a hold time, a clip count and a reset.",
+			"dependencies": [
+				"runed"
+			],
+			"registryDependencies": [
+				"local:core"
+			],
+			"files": [
+				{
+					"path": "./src/lib/hooks/use-clip-hold.svelte.ts",
+					"type": "registry:hook"
+				}
+			]
+		},
+		{
+			"name": "use-reduced-motion",
+			"type": "registry:hook",
+			"title": "useReducedMotion",
+			"description": "True when the user asked the system to reduce motion.",
+			"dependencies": [
+				"runed"
+			],
+			"registryDependencies": [],
+			"files": [
+				{
+					"path": "./src/lib/hooks/use-reduced-motion.svelte.ts",
+					"type": "registry:hook"
+				}
+			]
+		},
+		{
+			"name": "use-visibility",
+			"type": "registry:hook",
+			"title": "useVisibility",
+			"description": "Whether an element is on screen, in a ref, so animation loops can skip frames nobody sees.",
+			"dependencies": [
+				"runed"
+			],
+			"registryDependencies": [],
+			"files": [
+				{
+					"path": "./src/lib/hooks/use-visibility.svelte.ts",
+					"type": "registry:hook"
+				}
+			]
+		},
+		{
+			"name": "use-demo-signal",
+			"type": "registry:hook",
+			"title": "useDemoSignal",
+			"description": "A synthetic speech, music, tone or noise signal as frame sources, for previews, prototypes and tests.",
+			"dependencies": [
+				"runed"
+			],
+			"registryDependencies": [
+				"local:core"
+			],
+			"files": [
+				{
+					"path": "./src/lib/hooks/use-demo-signal.svelte.ts",
+					"type": "registry:hook"
+				}
+			]
+		},
+		{
+			"name": "use-audio-context",
+			"type": "registry:hook",
+			"title": "useAudioContext",
+			"description": "One shared AudioContext that resumes on the first user gesture, plus a provider to supply your own.",
+			"dependencies": [
+				"runed"
+			],
+			"registryDependencies": [],
+			"files": [
+				{
+					"path": "./src/lib/hooks/use-audio-context.svelte.ts",
+					"type": "registry:hook"
+				}
+			]
+		},
+		{
+			"name": "use-gain-node",
+			"type": "registry:hook",
+			"title": "useGainNode",
+			"description": "A gain node on the shared AudioContext, wired from an input to a destination, with click-free level changes.",
+			"dependencies": [
+				"runed"
+			],
+			"registryDependencies": [
+				"local:use-audio-context"
+			],
+			"files": [
+				{
+					"path": "./src/lib/hooks/use-gain-node.svelte.ts",
+					"type": "registry:hook"
+				}
+			]
+		},
+		{
+			"name": "use-audio-analyser",
+			"type": "registry:hook",
+			"title": "useAudioAnalyser",
+			"description": "Meter and visual frame sources from a MediaStream, media element or AudioNode, using the Web Audio AnalyserNode.",
+			"dependencies": [
+				"runed"
+			],
+			"registryDependencies": [
+				"local:core",
+				"local:use-audio-context"
+			],
+			"files": [
+				{
+					"path": "./src/lib/hooks/use-audio-analyser.svelte.ts",
+					"type": "registry:hook"
+				}
+			]
+		},
+		{
+			"name": "use-audio-devices",
+			"type": "registry:hook",
+			"title": "useAudioDevices",
+			"description": "The list of audio input or output devices, with permission state and live updates when devices change.",
+			"dependencies": [
+				"runed"
+			],
+			"registryDependencies": [],
+			"files": [
+				{
+					"path": "./src/lib/hooks/use-audio-devices.svelte.ts",
+					"type": "registry:hook"
+				}
+			]
+		},
+		{
+			"name": "use-microphone",
+			"type": "registry:hook",
+			"title": "useMicrophone",
+			"description": "Open a microphone as a MediaStream, with browser processing off by default so meters show the real signal.",
+			"dependencies": [
+				"runed"
+			],
+			"registryDependencies": [],
+			"files": [
+				{
+					"path": "./src/lib/hooks/use-microphone.svelte.ts",
+					"type": "registry:hook"
+				}
+			]
+		},
+		{
+			"name": "use-system-audio",
+			"type": "registry:hook",
+			"title": "useSystemAudio",
+			"description": "Capture system or tab audio through the browser's screen-share picker.",
+			"dependencies": [
+				"runed"
+			],
+			"registryDependencies": [],
+			"files": [
+				{
+					"path": "./src/lib/hooks/use-system-audio.svelte.ts",
+					"type": "registry:hook"
+				}
+			]
+		},
+		{
 			"name": "use-audio-config",
 			"type": "registry:hook",
 			"title": "useAudioConfig",
-			"description": "Settings a mixer or channel strip passes to the components inside it.",
+			"description": "The context a mixer or channel strip uses to pass orientation, size, range, zones and ballistics down to the components inside it.",
+			"dependencies": [
+				"runed"
+			],
 			"registryDependencies": [
 				"local:core"
 			],
@@ -163,10 +369,584 @@
 			]
 		},
 		{
+			"name": "use-mixer",
+			"type": "registry:hook",
+			"title": "useMixer",
+			"description": "Mixer state with no audio attached: gain, mute, solo, pan and monitor per channel, a master, persistence and a controlled mode.",
+			"dependencies": [
+				"runed"
+			],
+			"registryDependencies": [
+				"local:core"
+			],
+			"files": [
+				{
+					"path": "./src/lib/hooks/use-mixer.svelte.ts",
+					"type": "registry:hook"
+				}
+			]
+		},
+		{
+			"name": "use-web-audio-mixer",
+			"type": "registry:hook",
+			"title": "useWebAudioMixer",
+			"description": "Binds mixer state to a Web Audio graph: per-channel gain, ducking, pan and monitor sends, a limited master bus, post-fader meters and a mixed output stream.",
+			"dependencies": [
+				"runed"
+			],
+			"registryDependencies": [
+				"local:core",
+				"local:use-mixer",
+				"local:use-audio-context",
+				"local:use-audio-analyser"
+			],
+			"files": [
+				{
+					"path": "./src/lib/hooks/use-web-audio-mixer.svelte.ts",
+					"type": "registry:hook"
+				}
+			]
+		},
+		{
+			"name": "use-audio-player",
+			"type": "registry:hook",
+			"title": "useAudioPlayer",
+			"description": "Playback state for an audio element the hook owns: status, time, duration, buffering, volume, rate and loop, plus a smooth time source.",
+			"dependencies": [
+				"runed"
+			],
+			"registryDependencies": [
+				"local:core"
+			],
+			"files": [
+				{
+					"path": "./src/lib/hooks/use-audio-player.svelte.ts",
+					"type": "registry:hook"
+				}
+			]
+		},
+		{
+			"name": "use-sound",
+			"type": "registry:hook",
+			"title": "useSound",
+			"description": "Low-latency playback of short sounds decoded into memory, with voices, looping, progress and a routable output node.",
+			"dependencies": [
+				"runed"
+			],
+			"registryDependencies": [
+				"local:core",
+				"local:use-audio-context",
+				"local:use-gain-node"
+			],
+			"files": [
+				{
+					"path": "./src/lib/hooks/use-sound.svelte.ts",
+					"type": "registry:hook"
+				}
+			]
+		},
+		{
+			"name": "use-waveform-data",
+			"type": "registry:hook",
+			"title": "useWaveformData",
+			"description": "Decode an audio file, or take an AudioBuffer, and reduce it to cached waveform peaks.",
+			"dependencies": [
+				"runed"
+			],
+			"registryDependencies": [
+				"local:use-audio-context",
+				"local:use-sound"
+			],
+			"files": [
+				{
+					"path": "./src/lib/hooks/use-waveform-data.svelte.ts",
+					"type": "registry:hook"
+				}
+			]
+		},
+		{
+			"name": "db-scale",
+			"type": "registry:ui",
+			"title": "dB Scale",
+			"description": "Tick marks and labels for a decibel range, shared by meters and faders.",
+			"dependencies": [],
+			"registryDependencies": [
+				"local:core",
+				"local:use-audio-config"
+			],
+			"files": [
+				{
+					"path": "./src/lib/components/ui/db-scale/db-scale-tick.svelte",
+					"type": "registry:ui"
+				},
+				{
+					"path": "./src/lib/components/ui/db-scale/db-scale-utils.ts",
+					"type": "registry:ui"
+				},
+				{
+					"path": "./src/lib/components/ui/db-scale/db-scale.svelte",
+					"type": "registry:ui"
+				},
+				{
+					"path": "./src/lib/components/ui/db-scale/index.ts",
+					"type": "registry:ui"
+				}
+			]
+		},
+		{
+			"name": "db-readout",
+			"type": "registry:ui",
+			"title": "dB Readout",
+			"description": "A numeric level label that updates at a readable rate, with a reserved width so the layout never shifts.",
+			"dependencies": [],
+			"registryDependencies": [
+				"local:core",
+				"local:use-frame-source"
+			],
+			"files": [
+				{
+					"path": "./src/lib/components/ui/db-readout/db-readout.svelte",
+					"type": "registry:ui"
+				},
+				{
+					"path": "./src/lib/components/ui/db-readout/index.ts",
+					"type": "registry:ui"
+				}
+			]
+		},
+		{
+			"name": "clip-indicator",
+			"type": "registry:ui",
+			"title": "Clip Indicator",
+			"description": "A clip light that holds after the signal clips, with an optional count and click to reset.",
+			"dependencies": [
+				"bits-ui"
+			],
+			"registryDependencies": [
+				"local:core",
+				"local:use-clip-hold",
+				"local:use-frame-source"
+			],
+			"files": [
+				{
+					"path": "./src/lib/components/ui/clip-indicator/clip-indicator.svelte",
+					"type": "registry:ui"
+				},
+				{
+					"path": "./src/lib/components/ui/clip-indicator/index.ts",
+					"type": "registry:ui"
+				}
+			]
+		},
+		{
+			"name": "level-meter",
+			"type": "registry:ui",
+			"title": "Level Meter",
+			"description": "A peak and RMS level meter: mono or stereo, horizontal or vertical, solid, segmented or gradient, with zones, peak hold, a scale, a readout and a clip light.",
+			"dependencies": [
+				"tailwind-variants"
+			],
+			"registryDependencies": [
+				"local:core",
+				"local:use-frame-source",
+				"local:use-reduced-motion",
+				"local:use-visibility",
+				"local:use-audio-config",
+				"local:db-scale",
+				"local:db-readout",
+				"local:clip-indicator"
+			],
+			"files": [
+				{
+					"path": "./src/lib/components/ui/level-meter/index.ts",
+					"type": "registry:ui"
+				},
+				{
+					"path": "./src/lib/components/ui/level-meter/level-meter-bar.svelte",
+					"type": "registry:ui"
+				},
+				{
+					"path": "./src/lib/components/ui/level-meter/level-meter-channel.svelte",
+					"type": "registry:ui"
+				},
+				{
+					"path": "./src/lib/components/ui/level-meter/level-meter-channels.svelte",
+					"type": "registry:ui"
+				},
+				{
+					"path": "./src/lib/components/ui/level-meter/level-meter-clip.svelte",
+					"type": "registry:ui"
+				},
+				{
+					"path": "./src/lib/components/ui/level-meter/level-meter-hold.svelte",
+					"type": "registry:ui"
+				},
+				{
+					"path": "./src/lib/components/ui/level-meter/level-meter-scale.svelte",
+					"type": "registry:ui"
+				},
+				{
+					"path": "./src/lib/components/ui/level-meter/level-meter-track.svelte",
+					"type": "registry:ui"
+				},
+				{
+					"path": "./src/lib/components/ui/level-meter/level-meter-utils.ts",
+					"type": "registry:ui"
+				},
+				{
+					"path": "./src/lib/components/ui/level-meter/level-meter-value.svelte",
+					"type": "registry:ui"
+				},
+				{
+					"path": "./src/lib/components/ui/level-meter/level-meter.svelte",
+					"type": "registry:ui"
+				}
+			]
+		},
+		{
+			"name": "bar-visualizer",
+			"type": "registry:ui",
+			"title": "Bar Visualizer",
+			"description": "A row of bars driven by frequency bands, with idle, loading and mirrored modes. Bars paint without re-rendering React.",
+			"dependencies": [],
+			"registryDependencies": [
+				"local:core",
+				"local:use-frame-source",
+				"local:use-reduced-motion",
+				"local:use-visibility",
+				"local:use-audio-config"
+			],
+			"files": [
+				{
+					"path": "./src/lib/components/ui/bar-visualizer/bar-visualizer.svelte",
+					"type": "registry:ui"
+				},
+				{
+					"path": "./src/lib/components/ui/bar-visualizer/index.ts",
+					"type": "registry:ui"
+				}
+			]
+		},
+		{
+			"name": "electric-bar-visualizer",
+			"type": "registry:ui",
+			"title": "Electric Bar Visualizer",
+			"description": "Frequency-band bars drawn as crackling filaments, with arcs between loud neighbours and sparks on sudden rises. Takes its colour from the theme.",
+			"dependencies": [],
+			"registryDependencies": [
+				"local:core",
+				"local:use-frame-source",
+				"local:use-reduced-motion",
+				"local:use-visibility",
+				"local:electric",
+				"local:use-audio-config"
+			],
+			"files": [
+				{
+					"path": "./src/lib/components/ui/electric-bar-visualizer/electric-bar-visualizer-utils.ts",
+					"type": "registry:ui"
+				},
+				{
+					"path": "./src/lib/components/ui/electric-bar-visualizer/electric-bar-visualizer.svelte",
+					"type": "registry:ui"
+				},
+				{
+					"path": "./src/lib/components/ui/electric-bar-visualizer/index.ts",
+					"type": "registry:ui"
+				}
+			]
+		},
+		{
+			"name": "electric-waveform",
+			"type": "registry:ui",
+			"title": "Electric Waveform",
+			"description": "One electric line across the width: a crackling, white-hot trace with a tall glow, forks off the peaks and sparks. Follows the frequency bands as a smooth wave, or the signal itself like an oscilloscope.",
+			"dependencies": [],
+			"registryDependencies": [
+				"local:core",
+				"local:use-frame-source",
+				"local:use-reduced-motion",
+				"local:use-visibility",
+				"local:electric"
+			],
+			"files": [
+				{
+					"path": "./src/lib/components/ui/electric-waveform/electric-waveform-utils.ts",
+					"type": "registry:ui"
+				},
+				{
+					"path": "./src/lib/components/ui/electric-waveform/electric-waveform.svelte",
+					"type": "registry:ui"
+				},
+				{
+					"path": "./src/lib/components/ui/electric-waveform/index.ts",
+					"type": "registry:ui"
+				}
+			]
+		},
+		{
+			"name": "smooth-waveform",
+			"type": "registry:ui",
+			"title": "Smooth Waveform",
+			"description": "One clean line across the width that follows the sound, as a smooth wave shaped by the frequency bands or a triggered oscilloscope trace.",
+			"dependencies": [],
+			"registryDependencies": [
+				"local:core",
+				"local:use-frame-source",
+				"local:use-reduced-motion",
+				"local:use-visibility"
+			],
+			"files": [
+				{
+					"path": "./src/lib/components/ui/smooth-waveform/index.ts",
+					"type": "registry:ui"
+				},
+				{
+					"path": "./src/lib/components/ui/smooth-waveform/smooth-waveform.svelte",
+					"type": "registry:ui"
+				}
+			]
+		},
+		{
+			"name": "live-waveform",
+			"type": "registry:ui",
+			"title": "Live Waveform",
+			"description": "A canvas waveform of a live signal: scrolling level history or the current frame, as bars, a mirrored shape or a line.",
+			"dependencies": [],
+			"registryDependencies": [
+				"local:core",
+				"local:use-frame-source",
+				"local:use-reduced-motion",
+				"local:use-visibility"
+			],
+			"files": [
+				{
+					"path": "./src/lib/components/ui/live-waveform/index.ts",
+					"type": "registry:ui"
+				},
+				{
+					"path": "./src/lib/components/ui/live-waveform/live-waveform.svelte",
+					"type": "registry:ui"
+				}
+			]
+		},
+		{
+			"name": "fader",
+			"type": "registry:ui",
+			"title": "Fader",
+			"description": "A volume fader in decibels: linear or console taper, detents, a scale, reset, an editable value, silence at the bottom, horizontal or vertical.",
+			"dependencies": [
+				"bits-ui",
+				"tailwind-variants"
+			],
+			"registryDependencies": [
+				"local:core",
+				"local:db-scale",
+				"local:use-audio-config"
+			],
+			"files": [
+				{
+					"path": "./src/lib/components/ui/fader/fader-label.svelte",
+					"type": "registry:ui"
+				},
+				{
+					"path": "./src/lib/components/ui/fader/fader-range.svelte",
+					"type": "registry:ui"
+				},
+				{
+					"path": "./src/lib/components/ui/fader/fader-reset.svelte",
+					"type": "registry:ui"
+				},
+				{
+					"path": "./src/lib/components/ui/fader/fader-scale.svelte",
+					"type": "registry:ui"
+				},
+				{
+					"path": "./src/lib/components/ui/fader/fader-thumb.svelte",
+					"type": "registry:ui"
+				},
+				{
+					"path": "./src/lib/components/ui/fader/fader-track.svelte",
+					"type": "registry:ui"
+				},
+				{
+					"path": "./src/lib/components/ui/fader/fader-utils.ts",
+					"type": "registry:ui"
+				},
+				{
+					"path": "./src/lib/components/ui/fader/fader-value.svelte",
+					"type": "registry:ui"
+				},
+				{
+					"path": "./src/lib/components/ui/fader/fader.svelte",
+					"type": "registry:ui"
+				},
+				{
+					"path": "./src/lib/components/ui/fader/index.ts",
+					"type": "registry:ui"
+				}
+			]
+		},
+		{
+			"name": "parameter-slider",
+			"type": "registry:ui",
+			"title": "Parameter Slider",
+			"description": "A labelled slider with a numeric input, unit, marks, reset and a linear or log scale, for gain trims, delays, thresholds and frequencies.",
+			"dependencies": [
+				"bits-ui"
+			],
+			"registryDependencies": [
+				"local:core",
+				"local:use-audio-config"
+			],
+			"files": [
+				{
+					"path": "./src/lib/components/ui/parameter-slider/index.ts",
+					"type": "registry:ui"
+				},
+				{
+					"path": "./src/lib/components/ui/parameter-slider/parameter-slider-control.svelte",
+					"type": "registry:ui"
+				},
+				{
+					"path": "./src/lib/components/ui/parameter-slider/parameter-slider-description.svelte",
+					"type": "registry:ui"
+				},
+				{
+					"path": "./src/lib/components/ui/parameter-slider/parameter-slider-header.svelte",
+					"type": "registry:ui"
+				},
+				{
+					"path": "./src/lib/components/ui/parameter-slider/parameter-slider-input.svelte",
+					"type": "registry:ui"
+				},
+				{
+					"path": "./src/lib/components/ui/parameter-slider/parameter-slider-label.svelte",
+					"type": "registry:ui"
+				},
+				{
+					"path": "./src/lib/components/ui/parameter-slider/parameter-slider-marks.svelte",
+					"type": "registry:ui"
+				},
+				{
+					"path": "./src/lib/components/ui/parameter-slider/parameter-slider-reset.svelte",
+					"type": "registry:ui"
+				},
+				{
+					"path": "./src/lib/components/ui/parameter-slider/parameter-slider-utils.ts",
+					"type": "registry:ui"
+				},
+				{
+					"path": "./src/lib/components/ui/parameter-slider/parameter-slider-value.svelte",
+					"type": "registry:ui"
+				},
+				{
+					"path": "./src/lib/components/ui/parameter-slider/parameter-slider.svelte",
+					"type": "registry:ui"
+				}
+			]
+		},
+		{
+			"name": "knob",
+			"type": "registry:ui",
+			"title": "Knob",
+			"description": "A rotary control drawn in SVG, with vertical, horizontal or circular dragging, fine adjustment, reset, a bipolar origin, an optional click sound and a volume dial skin with a numbered scale and an aluminium cap.",
+			"dependencies": [
+				"tailwind-variants"
+			],
+			"registryDependencies": [
+				"local:core",
+				"local:use-audio-config",
+				"local:use-audio-context"
+			],
+			"files": [
+				{
+					"path": "./src/lib/components/ui/knob/index.ts",
+					"type": "registry:ui"
+				},
+				{
+					"path": "./src/lib/components/ui/knob/knob-cap.svelte",
+					"type": "registry:ui"
+				},
+				{
+					"path": "./src/lib/components/ui/knob/knob-context.svelte.ts",
+					"type": "registry:ui"
+				},
+				{
+					"path": "./src/lib/components/ui/knob/knob-dial.svelte",
+					"type": "registry:ui"
+				},
+				{
+					"path": "./src/lib/components/ui/knob/knob-label.svelte",
+					"type": "registry:ui"
+				},
+				{
+					"path": "./src/lib/components/ui/knob/knob-pointer.svelte",
+					"type": "registry:ui"
+				},
+				{
+					"path": "./src/lib/components/ui/knob/knob-range.svelte",
+					"type": "registry:ui"
+				},
+				{
+					"path": "./src/lib/components/ui/knob/knob-scale.svelte",
+					"type": "registry:ui"
+				},
+				{
+					"path": "./src/lib/components/ui/knob/knob-track.svelte",
+					"type": "registry:ui"
+				},
+				{
+					"path": "./src/lib/components/ui/knob/knob-utils.ts",
+					"type": "registry:ui"
+				},
+				{
+					"path": "./src/lib/components/ui/knob/knob-value-input.svelte",
+					"type": "registry:ui"
+				},
+				{
+					"path": "./src/lib/components/ui/knob/knob-value.svelte",
+					"type": "registry:ui"
+				},
+				{
+					"path": "./src/lib/components/ui/knob/knob.svelte",
+					"type": "registry:ui"
+				}
+			]
+		},
+		{
+			"name": "pan-control",
+			"type": "registry:ui",
+			"title": "Pan Control",
+			"description": "Left and right balance with a fill from the centre, a centre detent and reset.",
+			"dependencies": [
+				"bits-ui",
+				"tailwind-variants"
+			],
+			"registryDependencies": [
+				"local:core",
+				"local:use-audio-config"
+			],
+			"files": [
+				{
+					"path": "./src/lib/components/ui/pan-control/index.ts",
+					"type": "registry:ui"
+				},
+				{
+					"path": "./src/lib/components/ui/pan-control/pan-control-utils.ts",
+					"type": "registry:ui"
+				},
+				{
+					"path": "./src/lib/components/ui/pan-control/pan-control.svelte",
+					"type": "registry:ui"
+				}
+			]
+		},
+		{
 			"name": "channel-toggle",
 			"type": "registry:ui",
 			"title": "Channel Toggle",
-			"description": "Mute, solo and monitor buttons.",
+			"description": "Mute, solo and monitor toggle buttons with their own pressed colours.",
 			"dependencies": [
 				"bits-ui",
 				"tailwind-variants"
@@ -180,11 +960,7 @@
 					"type": "registry:ui"
 				},
 				{
-					"path": "./src/lib/components/ui/channel-toggle/mute-toggle.svelte",
-					"type": "registry:ui"
-				},
-				{
-					"path": "./src/lib/components/ui/channel-toggle/solo-toggle.svelte",
+					"path": "./src/lib/components/ui/channel-toggle/index.ts",
 					"type": "registry:ui"
 				},
 				{
@@ -192,7 +968,426 @@
 					"type": "registry:ui"
 				},
 				{
-					"path": "./src/lib/components/ui/channel-toggle/index.ts",
+					"path": "./src/lib/components/ui/channel-toggle/mute-toggle.svelte",
+					"type": "registry:ui"
+				},
+				{
+					"path": "./src/lib/components/ui/channel-toggle/solo-toggle.svelte",
+					"type": "registry:ui"
+				}
+			]
+		},
+		{
+			"name": "volume-control",
+			"type": "registry:ui",
+			"title": "Volume Control",
+			"description": "A 0..1 volume slider with a mute button and a perceptual curve, for players.",
+			"dependencies": [
+				"bits-ui"
+			],
+			"registryDependencies": [
+				"local:core",
+				"local:use-audio-config"
+			],
+			"files": [
+				{
+					"path": "./src/lib/components/ui/volume-control/index.ts",
+					"type": "registry:ui"
+				},
+				{
+					"path": "./src/lib/components/ui/volume-control/volume-control-mute.svelte",
+					"type": "registry:ui"
+				},
+				{
+					"path": "./src/lib/components/ui/volume-control/volume-control-slider.svelte",
+					"type": "registry:ui"
+				},
+				{
+					"path": "./src/lib/components/ui/volume-control/volume-control-utils.ts",
+					"type": "registry:ui"
+				},
+				{
+					"path": "./src/lib/components/ui/volume-control/volume-control-value.svelte",
+					"type": "registry:ui"
+				},
+				{
+					"path": "./src/lib/components/ui/volume-control/volume-control.svelte",
+					"type": "registry:ui"
+				}
+			]
+		},
+		{
+			"name": "audio-device-select",
+			"type": "registry:ui",
+			"title": "Audio Device Select",
+			"description": "A microphone, speaker or source picker with loading, permission, None and disconnected-device states, and a slot for a live preview.",
+			"dependencies": [],
+			"registryDependencies": [
+				"select",
+				"button"
+			],
+			"files": [
+				{
+					"path": "./src/lib/components/ui/audio-device-select/audio-device-select-content.svelte",
+					"type": "registry:ui"
+				},
+				{
+					"path": "./src/lib/components/ui/audio-device-select/audio-device-select-context.svelte.ts",
+					"type": "registry:ui"
+				},
+				{
+					"path": "./src/lib/components/ui/audio-device-select/audio-device-select-item.svelte",
+					"type": "registry:ui"
+				},
+				{
+					"path": "./src/lib/components/ui/audio-device-select/audio-device-select-permission.svelte",
+					"type": "registry:ui"
+				},
+				{
+					"path": "./src/lib/components/ui/audio-device-select/audio-device-select-preview.svelte",
+					"type": "registry:ui"
+				},
+				{
+					"path": "./src/lib/components/ui/audio-device-select/audio-device-select-trigger.svelte",
+					"type": "registry:ui"
+				},
+				{
+					"path": "./src/lib/components/ui/audio-device-select/audio-device-select-value.svelte",
+					"type": "registry:ui"
+				},
+				{
+					"path": "./src/lib/components/ui/audio-device-select/audio-device-select.svelte",
+					"type": "registry:ui"
+				},
+				{
+					"path": "./src/lib/components/ui/audio-device-select/index.ts",
+					"type": "registry:ui"
+				}
+			]
+		},
+		{
+			"name": "channel-strip",
+			"type": "registry:ui",
+			"title": "Channel Strip",
+			"description": "One channel of a mixer: header, status, meter, fader, value, controls and a notice, as a row or a console strip. The master strip is a variant.",
+			"dependencies": [
+				"tailwind-variants"
+			],
+			"registryDependencies": [
+				"badge",
+				"local:core",
+				"local:use-audio-config"
+			],
+			"files": [
+				{
+					"path": "./src/lib/components/ui/channel-strip/channel-strip-actions.svelte",
+					"type": "registry:ui"
+				},
+				{
+					"path": "./src/lib/components/ui/channel-strip/channel-strip-context.svelte.ts",
+					"type": "registry:ui"
+				},
+				{
+					"path": "./src/lib/components/ui/channel-strip/channel-strip-controls.svelte",
+					"type": "registry:ui"
+				},
+				{
+					"path": "./src/lib/components/ui/channel-strip/channel-strip-description.svelte",
+					"type": "registry:ui"
+				},
+				{
+					"path": "./src/lib/components/ui/channel-strip/channel-strip-fader.svelte",
+					"type": "registry:ui"
+				},
+				{
+					"path": "./src/lib/components/ui/channel-strip/channel-strip-header.svelte",
+					"type": "registry:ui"
+				},
+				{
+					"path": "./src/lib/components/ui/channel-strip/channel-strip-icon.svelte",
+					"type": "registry:ui"
+				},
+				{
+					"path": "./src/lib/components/ui/channel-strip/channel-strip-meter.svelte",
+					"type": "registry:ui"
+				},
+				{
+					"path": "./src/lib/components/ui/channel-strip/channel-strip-notice.svelte",
+					"type": "registry:ui"
+				},
+				{
+					"path": "./src/lib/components/ui/channel-strip/channel-strip-provider.svelte",
+					"type": "registry:ui"
+				},
+				{
+					"path": "./src/lib/components/ui/channel-strip/channel-strip-status.svelte",
+					"type": "registry:ui"
+				},
+				{
+					"path": "./src/lib/components/ui/channel-strip/channel-strip-text.svelte",
+					"type": "registry:ui"
+				},
+				{
+					"path": "./src/lib/components/ui/channel-strip/channel-strip-title.svelte",
+					"type": "registry:ui"
+				},
+				{
+					"path": "./src/lib/components/ui/channel-strip/channel-strip-value.svelte",
+					"type": "registry:ui"
+				},
+				{
+					"path": "./src/lib/components/ui/channel-strip/channel-strip.svelte",
+					"type": "registry:ui"
+				},
+				{
+					"path": "./src/lib/components/ui/channel-strip/index.ts",
+					"type": "registry:ui"
+				}
+			]
+		},
+		{
+			"name": "mixer",
+			"type": "registry:ui",
+			"title": "Mixer",
+			"description": "The container for channel strips: shared meter settings, keyboard navigation between strips, a master area and an empty state.",
+			"dependencies": [],
+			"registryDependencies": [
+				"local:core",
+				"local:use-audio-config",
+				"local:channel-strip"
+			],
+			"files": [
+				{
+					"path": "./src/lib/components/ui/mixer/index.ts",
+					"type": "registry:ui"
+				},
+				{
+					"path": "./src/lib/components/ui/mixer/mixer-actions.svelte",
+					"type": "registry:ui"
+				},
+				{
+					"path": "./src/lib/components/ui/mixer/mixer-channels.svelte",
+					"type": "registry:ui"
+				},
+				{
+					"path": "./src/lib/components/ui/mixer/mixer-context.svelte.ts",
+					"type": "registry:ui"
+				},
+				{
+					"path": "./src/lib/components/ui/mixer/mixer-empty.svelte",
+					"type": "registry:ui"
+				},
+				{
+					"path": "./src/lib/components/ui/mixer/mixer-header.svelte",
+					"type": "registry:ui"
+				},
+				{
+					"path": "./src/lib/components/ui/mixer/mixer-master.svelte",
+					"type": "registry:ui"
+				},
+				{
+					"path": "./src/lib/components/ui/mixer/mixer-separator.svelte",
+					"type": "registry:ui"
+				},
+				{
+					"path": "./src/lib/components/ui/mixer/mixer-title.svelte",
+					"type": "registry:ui"
+				},
+				{
+					"path": "./src/lib/components/ui/mixer/mixer.svelte",
+					"type": "registry:ui"
+				}
+			]
+		},
+		{
+			"name": "waveform",
+			"type": "registry:ui",
+			"title": "Waveform",
+			"description": "A static waveform of a clip with a smooth playhead, seeking by pointer and keyboard, hover time, draggable regions and markers.",
+			"dependencies": [
+				"bits-ui"
+			],
+			"registryDependencies": [
+				"local:core",
+				"local:use-frame-source",
+				"local:use-visibility"
+			],
+			"files": [
+				{
+					"path": "./src/lib/components/ui/waveform/index.ts",
+					"type": "registry:ui"
+				},
+				{
+					"path": "./src/lib/components/ui/waveform/waveform-canvas.svelte",
+					"type": "registry:ui"
+				},
+				{
+					"path": "./src/lib/components/ui/waveform/waveform-context.svelte.ts",
+					"type": "registry:ui"
+				},
+				{
+					"path": "./src/lib/components/ui/waveform/waveform-cursor.svelte",
+					"type": "registry:ui"
+				},
+				{
+					"path": "./src/lib/components/ui/waveform/waveform-hover.svelte",
+					"type": "registry:ui"
+				},
+				{
+					"path": "./src/lib/components/ui/waveform/waveform-marker.svelte",
+					"type": "registry:ui"
+				},
+				{
+					"path": "./src/lib/components/ui/waveform/waveform-region.svelte",
+					"type": "registry:ui"
+				},
+				{
+					"path": "./src/lib/components/ui/waveform/waveform.svelte",
+					"type": "registry:ui"
+				}
+			]
+		},
+		{
+			"name": "track-list",
+			"type": "registry:ui",
+			"title": "Track List",
+			"description": "A list of tracks with active and playing states, arrow-key navigation and slots for artwork, duration and actions.",
+			"dependencies": [
+				"tailwind-variants"
+			],
+			"registryDependencies": [
+				"local:core"
+			],
+			"files": [
+				{
+					"path": "./src/lib/components/ui/track-list/index.ts",
+					"type": "registry:ui"
+				},
+				{
+					"path": "./src/lib/components/ui/track-list/track-list-context.svelte.ts",
+					"type": "registry:ui"
+				},
+				{
+					"path": "./src/lib/components/ui/track-list/track-list-item-actions.svelte",
+					"type": "registry:ui"
+				},
+				{
+					"path": "./src/lib/components/ui/track-list/track-list-item-artwork.svelte",
+					"type": "registry:ui"
+				},
+				{
+					"path": "./src/lib/components/ui/track-list/track-list-item-content.svelte",
+					"type": "registry:ui"
+				},
+				{
+					"path": "./src/lib/components/ui/track-list/track-list-item-description.svelte",
+					"type": "registry:ui"
+				},
+				{
+					"path": "./src/lib/components/ui/track-list/track-list-item-duration.svelte",
+					"type": "registry:ui"
+				},
+				{
+					"path": "./src/lib/components/ui/track-list/track-list-item-index.svelte",
+					"type": "registry:ui"
+				},
+				{
+					"path": "./src/lib/components/ui/track-list/track-list-item-title.svelte",
+					"type": "registry:ui"
+				},
+				{
+					"path": "./src/lib/components/ui/track-list/track-list-item.svelte",
+					"type": "registry:ui"
+				},
+				{
+					"path": "./src/lib/components/ui/track-list/track-list.svelte",
+					"type": "registry:ui"
+				}
+			]
+		},
+		{
+			"name": "sound-pad",
+			"type": "registry:ui",
+			"title": "Sound Pad",
+			"description": "A trigger pad with one-shot, toggle, hold and loop modes, a hotkey, playback progress and an accent colour, plus a grid with hotkeys and arrow navigation.",
+			"dependencies": [
+				"tailwind-variants"
+			],
+			"registryDependencies": [
+				"kbd",
+				"local:core",
+				"local:use-frame-source"
+			],
+			"files": [
+				{
+					"path": "./src/lib/components/ui/sound-pad/index.ts",
+					"type": "registry:ui"
+				},
+				{
+					"path": "./src/lib/components/ui/sound-pad/sound-pad-context.svelte.ts",
+					"type": "registry:ui"
+				},
+				{
+					"path": "./src/lib/components/ui/sound-pad/sound-pad-grid.svelte",
+					"type": "registry:ui"
+				},
+				{
+					"path": "./src/lib/components/ui/sound-pad/sound-pad-icon.svelte",
+					"type": "registry:ui"
+				},
+				{
+					"path": "./src/lib/components/ui/sound-pad/sound-pad-label.svelte",
+					"type": "registry:ui"
+				},
+				{
+					"path": "./src/lib/components/ui/sound-pad/sound-pad-progress.svelte",
+					"type": "registry:ui"
+				},
+				{
+					"path": "./src/lib/components/ui/sound-pad/sound-pad-shortcut.svelte",
+					"type": "registry:ui"
+				},
+				{
+					"path": "./src/lib/components/ui/sound-pad/sound-pad.svelte",
+					"type": "registry:ui"
+				}
+			]
+		},
+		{
+			"name": "spectrum",
+			"type": "registry:ui",
+			"title": "Spectrum",
+			"description": "A frequency spectrum analyser drawn on canvas as bars, a line or an area, with peak hold, a grid and frequency and level axes.",
+			"dependencies": [],
+			"registryDependencies": [
+				"local:core",
+				"local:use-frame-source",
+				"local:use-reduced-motion",
+				"local:use-visibility"
+			],
+			"files": [
+				{
+					"path": "./src/lib/components/ui/spectrum/index.ts",
+					"type": "registry:ui"
+				},
+				{
+					"path": "./src/lib/components/ui/spectrum/spectrum-canvas.svelte",
+					"type": "registry:ui"
+				},
+				{
+					"path": "./src/lib/components/ui/spectrum/spectrum-context.svelte.ts",
+					"type": "registry:ui"
+				},
+				{
+					"path": "./src/lib/components/ui/spectrum/spectrum-frequency-axis.svelte",
+					"type": "registry:ui"
+				},
+				{
+					"path": "./src/lib/components/ui/spectrum/spectrum-level-axis.svelte",
+					"type": "registry:ui"
+				},
+				{
+					"path": "./src/lib/components/ui/spectrum/spectrum.svelte",
 					"type": "registry:ui"
 				}
 			]
