@@ -100,10 +100,27 @@
 	const config = useAudioConfig();
 	const orientation = $derived(orientationProp ?? config.orientation ?? "horizontal");
 	const reducedMotion = useReducedMotion();
-	const visible = useVisibility(() => ref);
+	// Its own reference, since a prop update from the parent can reset `ref`.
+	let root = $state<HTMLDivElement | null>(null);
+	const visible = useVisibility(() => root);
 	let glow = $state<HTMLCanvasElement | null>(null);
 	let main = $state<HTMLCanvasElement | null>(null);
 	let input: ArrayLike<number> | null = null;
+
+	// One signal per value, so an effect re-runs only when its own value
+	// changes, not whenever any prop does.
+	const levelsInput = $derived(levels);
+	const painterAlign = $derived(align);
+	const painterArcs = $derived(arcs);
+	const painterBarCount = $derived(barCount);
+	const painterBarGap = $derived(barGap);
+	const painterBarWidth = $derived(barWidth);
+	const painterIdle = $derived(idle);
+	const painterIntensity = $derived(intensity);
+	const painterLoading = $derived(loading);
+	const painterMinLevel = $derived(minLevel);
+	const painterMirrored = $derived(mirrored);
+	const painterSparks = $derived(sparks);
 
 	export function paint(next: ArrayLike<number>) {
 		input = next;
@@ -120,8 +137,8 @@
 	// freezing, without wiping levels painted through the handle on re-runs.
 	let hadLevels = false;
 	$effect(() => {
-		if (levels) {
-			input = levels;
+		if (levelsInput) {
+			input = levelsInput;
 			hadLevels = true;
 		} else if (hadLevels) {
 			input = null;
@@ -130,32 +147,38 @@
 	});
 
 	$effect(() => {
-		const root = ref;
+		const element = root;
 		const mainCanvas = main;
 		const glowCanvas = glow;
 		const mainContext = mainCanvas?.getContext("2d");
 		const glowContext = glowCanvas?.getContext("2d");
-		if (!(root && mainCanvas && glowCanvas && mainContext && glowContext)) {
+		if (!(element && mainCanvas && glowCanvas && mainContext && glowContext)) {
 			return;
 		}
 		const still = reducedMotion.current;
-		const strength = clamp(intensity, 0, 1);
-		const geometry = { align, barCount, barGap, barWidth, orientation };
+		const strength = clamp(painterIntensity, 0, 1);
+		const geometry = {
+			align: painterAlign,
+			barCount: painterBarCount,
+			barGap: painterBarGap,
+			barWidth: painterBarWidth,
+			orientation,
+		};
 		const barLevels = createBarLevels({
-			barCount,
-			idle,
-			loading,
-			minLevel,
-			mirrored,
+			barCount: painterBarCount,
+			idle: painterIdle,
+			loading: painterLoading,
+			minLevel: painterMinLevel,
+			mirrored: painterMirrored,
 			reducedMotion: still,
 		});
 		const scene = createElectricScene({
-			arcs,
-			barCount,
+			arcs: painterArcs,
+			barCount: painterBarCount,
 			intensity: strength,
-			loading,
+			loading: painterLoading,
 			reducedMotion: still,
-			sparks,
+			sparks: painterSparks,
 		});
 		let size: ElectricCanvasSize = {
 			glowRatio: 1,
@@ -193,7 +216,7 @@
 			const nextActive = barLevels.step(nowMs, input);
 			if (nextActive !== active) {
 				active = nextActive;
-				root.toggleAttribute("data-active", active);
+				element.toggleAttribute("data-active", active);
 			}
 			scene.step(nowMs, barLevels.levels, layout);
 			const paintInput: PaintInput = {
@@ -214,13 +237,16 @@
 		return () => {
 			unsubscribe();
 			observer.disconnect();
-			delete root.dataset.active;
+			delete element.dataset.active;
 		};
 	});
 </script>
 
 <div
 	bind:this={ref}
+	{@attach (node) => {
+		root = node;
+	}}
 	aria-label="Audio visualizer"
 	role="img"
 	data-slot="electric-bar-visualizer"

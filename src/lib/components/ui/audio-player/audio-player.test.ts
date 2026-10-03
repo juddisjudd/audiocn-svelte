@@ -75,7 +75,10 @@ describe("controls", () => {
 			},
 		});
 		const calls = reported.length;
-		await rerender({ "aria-label": "Player, again" });
+		await rerender({
+			"aria-label": "Player, again",
+			onTimeUpdate: (time: number) => reported.push(time),
+		});
 		expect(reported).toHaveLength(calls);
 	});
 });

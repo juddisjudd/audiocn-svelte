@@ -48,12 +48,14 @@
 	const horizontal = $derived(volume.orientation === "horizontal");
 	const shown = $derived(volume.muted ? 0 : volume.position);
 
-	/** Moves the slider to a position on the step grid. */
+	/** Moves the slider to a position on the step grid, and reports whether it moved. */
 	const slideTo = (position: number) => {
 		const next = clamp(roundToStep(position, volume.step, 0), 0, 1);
-		if (next !== shown) {
-			volume.setPosition(next);
+		if (next === shown) {
+			return false;
 		}
+		volume.setPosition(next);
+		return true;
 	};
 
 	let track = $state<HTMLElement | null>(null);
@@ -138,8 +140,9 @@
 			return;
 		}
 		event.preventDefault();
-		slideTo(target());
-		volume.commit();
+		if (slideTo(target())) {
+			volume.commit();
+		}
 	};
 
 	const rangeStyle = $derived(

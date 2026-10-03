@@ -222,6 +222,44 @@ describe("frame sources over time", () => {
 	// Svelte has no <Activity>: effects never pause while state is kept.
 	it.skip("useClipHold releases after an Activity hide and show mid-hold", () => {});
 
+	it("useClipHold cancels a pending release on unmount", () => {
+		const onClippingChange = vi.fn();
+		const { result, unmount } = renderHook(() => useClipHold({ holdMs: 1000, onClippingChange }));
+		result.report(0);
+		flushSync();
+		unmount();
+		advance(1500);
+		expect(onClippingChange.mock.calls).toEqual([[true]]);
+	});
+
+	it("useClipHold.report inside an effect doesn't subscribe it to the options", () => {
+		let holdMs = $state(200);
+		let runs = 0;
+		renderHook(() => {
+			const hold = useClipHold(() => ({ holdMs }));
+			$effect(() => {
+				runs += 1;
+				hold.report(0);
+			});
+		});
+		holdMs = 400;
+		flushSync();
+		expect(runs).toBe(1);
+	});
+
+	it("useClipHold releases a latched light when holdMs becomes finite", () => {
+		let holdMs = $state(Infinity);
+		const { result } = renderHook(() => useClipHold(() => ({ holdMs })));
+		result.report(0);
+		flushSync();
+		advance(2000);
+		expect(result.clipping).toBe(true);
+		holdMs = 200;
+		flushSync();
+		advance(250);
+		expect(result.clipping).toBe(false);
+	});
+
 	it("useFrameSource hands frames to the latest callback without resubscribing", () => {
 		const emitter = createFrameEmitter<number>();
 		const subscribe = vi.fn((listener: (frame: number) => void) => emitter.subscribe(listener));

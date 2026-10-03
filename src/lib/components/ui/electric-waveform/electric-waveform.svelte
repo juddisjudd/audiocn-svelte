@@ -83,10 +83,21 @@
 	}: ElectricWaveformProps = $props();
 
 	const reducedMotion = useReducedMotion();
-	const visible = useVisibility(() => ref);
+	// Its own reference, since a prop update from the parent can reset `ref`.
+	let root = $state<HTMLDivElement | null>(null);
+	const visible = useVisibility(() => root);
 	let glow = $state<HTMLCanvasElement | null>(null);
 	let main = $state<HTMLCanvasElement | null>(null);
 	let latest: VisualFrame | null = null;
+
+	// One signal per value, so the trace rebuilds only when one of them changes,
+	// not whenever any prop does.
+	const traceArcs = $derived(arcs);
+	const traceIntensity = $derived(intensity);
+	const traceLoading = $derived(loading);
+	const traceMode = $derived(mode);
+	const traceSensitivity = $derived(sensitivity);
+	const traceSparks = $derived(sparks);
 
 	export function paint(frame: VisualFrame) {
 		latest = frame;
@@ -99,24 +110,24 @@
 	useFrameSource(() => source, paint);
 
 	$effect(() => {
-		const root = ref;
+		const element = root;
 		const mainCanvas = main;
 		const glowCanvas = glow;
 		const mainContext = mainCanvas?.getContext("2d");
 		const glowContext = glowCanvas?.getContext("2d");
-		if (!(root && mainCanvas && glowCanvas && mainContext && glowContext)) {
+		if (!(element && mainCanvas && glowCanvas && mainContext && glowContext)) {
 			return;
 		}
 		const still = reducedMotion.current;
-		const strength = clamp(intensity, 0, 1);
+		const strength = clamp(traceIntensity, 0, 1);
 		const trace = createElectricTrace({
-			arcs,
+			arcs: traceArcs,
 			intensity: strength,
-			loading,
-			mode,
+			loading: traceLoading,
+			mode: traceMode,
 			reducedMotion: still,
-			sensitivity,
-			sparks,
+			sensitivity: traceSensitivity,
+			sparks: traceSparks,
 		});
 		let size: ElectricCanvasSize = {
 			glowRatio: 1,
@@ -159,7 +170,7 @@
 			const nextActive = trace.step(nowMs, latest, geometry);
 			if (nextActive !== active) {
 				active = nextActive;
-				root.toggleAttribute("data-active", active);
+				element.toggleAttribute("data-active", active);
 			}
 			const input: PaintInput = {
 				colors,
@@ -182,13 +193,16 @@
 		return () => {
 			unsubscribe();
 			observer.disconnect();
-			delete root.dataset.active;
+			delete element.dataset.active;
 		};
 	});
 </script>
 
 <div
 	bind:this={ref}
+	{@attach (node) => {
+		root = node;
+	}}
 	aria-label="Audio waveform"
 	role="img"
 	data-slot="electric-waveform"

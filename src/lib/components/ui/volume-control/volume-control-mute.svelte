@@ -18,6 +18,7 @@
 		class: className,
 		children,
 		child,
+		onclick,
 		...restProps
 	}: VolumeControlMuteProps = $props();
 
@@ -38,7 +39,12 @@
 				"data-muted": volume.muted ? "" : undefined,
 				"data-slot": "volume-control-mute",
 				disabled: volume.disabled,
-				onclick: () => volume.toggleMuted(),
+				onclick: (event: MouseEvent & { currentTarget: EventTarget & HTMLButtonElement }) => {
+					onclick?.(event);
+					if (!event.defaultPrevented) {
+						volume.toggleMuted();
+					}
+				},
 				type: "button" as const,
 			},
 			restProps

@@ -27,4 +27,15 @@ describe("VolumeControl", () => {
 		await fireEvent.keyDown(slider, { key: "End" });
 		expect(slider).toHaveAttribute("aria-valuetext", "100%");
 	});
+
+	it("commits only keys that move the slider", async () => {
+		const onValueCommit = vi.fn();
+		render(VolumeControl, { onValueCommit });
+		const slider = screen.getByRole("slider", { name: "Volume" });
+		await fireEvent.keyDown(slider, { key: "ArrowUp" });
+		await fireEvent.keyDown(slider, { key: "End" });
+		expect(onValueCommit).not.toHaveBeenCalled();
+		await fireEvent.keyDown(slider, { key: "Home" });
+		expect(onValueCommit).toHaveBeenCalledWith(0);
+	});
 });

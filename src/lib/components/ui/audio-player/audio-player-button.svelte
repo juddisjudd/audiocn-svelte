@@ -10,6 +10,7 @@
 	};
 
 	type ButtonState = Record<string, boolean>;
+	type ButtonMouseEvent = MouseEvent & { currentTarget: EventTarget & HTMLButtonElement };
 </script>
 
 <script lang="ts">
@@ -27,6 +28,7 @@
 		class: className,
 		children,
 		child,
+		onclick,
 		...restProps
 	}: AudioPlayerButtonProps & {
 		/** The part's `data-slot`. */
@@ -53,7 +55,12 @@
 				class: cn(buttonClass, !children && "w-auto px-2.5", className),
 				"data-slot": slotName,
 				disabled,
-				onclick: () => action(),
+				onclick: (event: ButtonMouseEvent) => {
+					onclick?.(event);
+					if (!event.defaultPrevented) {
+						action();
+					}
+				},
 				type: "button" as const,
 			},
 			restProps

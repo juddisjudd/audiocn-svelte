@@ -90,11 +90,14 @@
 
 	const handleKeyDown: ParameterSliderInputProps["onkeydown"] = (event) => {
 		onkeydown?.(event);
-		if (event.defaultPrevented || slider.disabled) {
-			return;
-		}
-		if (event.key === "Enter") {
-			commitDraft(event);
+		const stepKey = event.key === "ArrowUp" || event.key === "ArrowDown";
+		if (
+			event.defaultPrevented ||
+			slider.disabled ||
+			event.ctrlKey ||
+			event.metaKey ||
+			(event.altKey && !stepKey)
+		) {
 			return;
 		}
 		const amount = stepFor(event);
@@ -103,8 +106,6 @@
 			ArrowUp: () => slider.value + amount,
 			End: () => slider.max,
 			Home: () => slider.min,
-			PageDown: () => slider.value - slider.largeStep,
-			PageUp: () => slider.value + slider.largeStep,
 		};
 		const target = targets[event.key];
 		if (!target) {
@@ -113,8 +114,10 @@
 		event.preventDefault();
 		draft = null;
 		const next = validate(target());
-		setValue(next, event);
-		slider.commit(next);
+		if (next !== slider.value) {
+			setValue(next, event);
+			slider.commit(next);
+		}
 	};
 
 	/** The scrub in progress: the last pointer x and the pixels not yet turned into steps. */

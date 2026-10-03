@@ -1,16 +1,10 @@
 import { render } from "@testing-library/svelte";
-import { flushSync } from "svelte";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import type { VisualFrame } from "#lib/audio/types.js";
 import { advance, useFakeFrames } from "#test/fake-frames.js";
 
-import {
-	ElectricWaveform,
-	createElectricTrace,
-	type ElectricTraceOptions,
-	type ElectricWaveformProps,
-} from "./index.js";
+import { ElectricWaveform, createElectricTrace, type ElectricTraceOptions } from "./index.js";
 
 vi.hoisted(() => {
 	// The global has a `matchMedia` key with no function, so test/setup.ts skips its stub.
@@ -192,17 +186,16 @@ describe("ElectricWaveform", () => {
 
 	it("keeps its trace when only the stroke changes", () => {
 		stubCanvas();
-		// `rerender` swaps the whole props object, which reads as a change to every
-		// prop. A `$state` object changes only the props that are set, as a parent does.
-		const props = $state<ElectricWaveformProps>({ lineWidth: 2 });
-		const { component: actions, getByRole } = render(ElectricWaveform, { props });
+		const {
+			component: actions,
+			getByRole,
+			rerender,
+		} = render(ElectricWaveform, { props: { lineWidth: 2 } });
 		actions.paint(frameOf([1, 1, 1, 1]));
 		advance(100);
 		const root = getByRole("img");
 		expect(root).toHaveAttribute("data-active");
-		props.fadeEdges = false;
-		props.lineWidth = 4;
-		flushSync();
+		rerender({ fadeEdges: false, lineWidth: 4 });
 		expect(root).toHaveAttribute("data-active");
 	});
 

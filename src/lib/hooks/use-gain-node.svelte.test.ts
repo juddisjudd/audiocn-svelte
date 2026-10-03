@@ -84,4 +84,15 @@ describe("useGainNode", () => {
 
 	// Svelte has no <Activity>: effects never pause while state is kept.
 	it.skip("disconnects on an Activity hide and reconnects on show", () => {});
+
+	it("disconnects from the old destination when it changes", () => {
+		const { audio, render } = setup();
+		const { rerender, result } = render({ gain: 0.25 });
+		const node = result;
+		const bus = { connect: vi.fn(), disconnect: vi.fn() } as unknown as AudioNode;
+		rerender({ destination: bus, gain: 0.25 });
+		expect(node?.disconnect).toHaveBeenCalledWith(audio.fake.destination);
+		expect(node?.connect).toHaveBeenCalledTimes(2);
+		expect(node?.connect).toHaveBeenLastCalledWith(bus);
+	});
 });

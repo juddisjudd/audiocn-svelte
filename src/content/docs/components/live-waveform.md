@@ -97,6 +97,6 @@ Bind the component with `bind:this` to call them. Their type is `LiveWaveformAct
 <PropsTable
 	rows={[
 		["paint", "(frame: VisualFrame) => void", null, "Paint a frame directly."],
-		["clear", "() => void", null, "Forget the last frame and the scroll history."],
+		["clear", "() => void", null, "Clear the canvas and forget the last frame."],
 	]}
 />

@@ -18,6 +18,7 @@
 		class: className,
 		children,
 		child,
+		onclick,
 		...restProps
 	}: FaderResetProps = $props();
 
@@ -35,7 +36,11 @@
 				"data-modified": modified ? "" : undefined,
 				"data-slot": "fader-reset",
 				disabled: fader.disabled || !modified,
-				onclick: () => {
+				onclick: (event: MouseEvent & { currentTarget: EventTarget & HTMLButtonElement }) => {
+					onclick?.(event);
+					if (event.defaultPrevented) {
+						return;
+					}
 					fader.change(fader.resetValue, { reason: "reset" });
 					fader.commit(fader.resetValue);
 				},

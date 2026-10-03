@@ -84,12 +84,13 @@ describe("useMicrophone", () => {
 
 describe("useAudioPlayer", () => {
 	let load: ReturnType<typeof vi.spyOn>;
+	let pause: ReturnType<typeof vi.spyOn>;
 
 	beforeEach(() => {
 		load = vi.spyOn(HTMLMediaElement.prototype, "load").mockImplementation(() => {
 			// jsdom has no media pipeline.
 		});
-		vi.spyOn(HTMLMediaElement.prototype, "pause").mockImplementation(() => {
+		pause = vi.spyOn(HTMLMediaElement.prototype, "pause").mockImplementation(() => {
 			// jsdom has no media pipeline.
 		});
 		vi.spyOn(HTMLMediaElement.prototype, "play").mockResolvedValue();
@@ -128,6 +129,16 @@ describe("useAudioPlayer", () => {
 
 	// Svelte has no <Activity>: effects never pause while state is kept.
 	it.skip("pauses on an Activity hide and comes back paused, not reloaded", () => {});
+
+	it("pauses the element on unmount", () => {
+		const { result, unmount } = renderPlayer({ src: "a.mp3" });
+		result.element?.dispatchEvent(new Event("playing"));
+		flushSync();
+		expect(result.status).toBe("playing");
+		const pauses = pause.mock.calls.length;
+		unmount();
+		expect(pause.mock.calls.length).toBe(pauses + 1);
+	});
 });
 
 describe("useSystemAudio", () => {
@@ -173,6 +184,20 @@ describe("useSystemAudio", () => {
 
 	// Svelte has no <Activity>: effects never pause while state is kept.
 	it.skip("comes back idle after an Activity hide, not active with a dead stream", () => {});
+
+	it("stops the capture on unmount", async () => {
+		const { stream, track } = fakeStream();
+		setMediaDevices({ getDisplayMedia: vi.fn(() => Promise.resolve(stream)) });
+		const { result, unmount } = renderHook(() => useSystemAudio());
+		await result.start();
+		flushSync();
+		expect(result.status).toBe("active");
+
+		unmount();
+		expect(track.stop).toHaveBeenCalled();
+		expect(result.status).toBe("idle");
+		expect(result.stream).toBeNull();
+	});
 });
 
 describe("useSound", () => {

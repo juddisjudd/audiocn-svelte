@@ -42,6 +42,8 @@ export interface FaderContext {
 	setDragging: (dragging: boolean) => void;
 	/** FaderLabel reports its id, so the thumb is labelled by it. */
 	registerLabel: (id: string) => () => void;
+	/** Moves focus to the thumb, as a click on FaderLabel does. */
+	focusThumb: () => void;
 	format: (db: number) => string;
 	/** The value in dB for a thumb position, with detents and quantizing. */
 	fromPosition: (position: number, fine: boolean) => number;

@@ -1,4 +1,9 @@
-import MusicPlayer from "./music-player.svelte";
+import Root from "./music-player.svelte";
 
 export { type MusicPlayerProps, type MusicTrack } from "./music-player.svelte";
-export { MusicPlayer };
+
+export {
+	Root,
+	//
+	Root as MusicPlayer,
+};

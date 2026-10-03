@@ -40,6 +40,25 @@ describe("ClipIndicator", () => {
 		expect(screen.getByRole("button")).not.toHaveAttribute("data-clipping");
 	});
 
+	it("runs your onclick before the reset, and preventDefault keeps the light on", async () => {
+		const seen: boolean[] = [];
+		const { component } = render(ClipIndicator, {
+			props: {
+				holdMs: Infinity,
+				onclick: (event: MouseEvent) => {
+					const button = event.currentTarget as HTMLElement;
+					seen.push(button.hasAttribute("data-clipping"));
+					event.preventDefault();
+				},
+			},
+		});
+		component.report(0);
+		flushSync();
+		await fireEvent.click(screen.getByRole("button"));
+		expect(seen).toEqual([true]);
+		expect(screen.getByRole("button")).toHaveAttribute("data-clipping");
+	});
+
 	it("follows the controlled prop", () => {
 		render(ClipIndicator, { props: { clipping: true } });
 		expect(screen.getByRole("button")).toHaveAttribute("data-clipping");

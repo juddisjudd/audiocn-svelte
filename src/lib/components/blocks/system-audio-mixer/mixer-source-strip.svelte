@@ -8,7 +8,7 @@
 	export interface MixerSourceStripProps {
 		id: string;
 		title: string;
-		description?: string;
+		description?: string | Snippet;
 		icon: Snippet;
 		accent?: string;
 		mixer: Mixer;
@@ -81,7 +81,13 @@
 			<ChannelStripText>
 				<ChannelStripTitle>{title}</ChannelStripTitle>
 				{#if description}
-					<ChannelStripDescription>{description}</ChannelStripDescription>
+					<ChannelStripDescription>
+						{#if typeof description === "string"}
+							{description}
+						{:else}
+							{@render description()}
+						{/if}
+					</ChannelStripDescription>
 				{/if}
 			</ChannelStripText>
 			{#if status}
