@@ -17,7 +17,7 @@ if (!("ResizeObserver" in globalThis)) {
     ResizeObserverStub as unknown as typeof ResizeObserver;
 }
 
-if (!("matchMedia" in globalThis)) {
+if (typeof globalThis.matchMedia !== "function") {
   Object.defineProperty(globalThis, "matchMedia", {
     value: (query: string) => ({
       addEventListener: vi.fn(),
