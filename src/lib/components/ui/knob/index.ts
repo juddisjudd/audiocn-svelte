@@ -9,7 +9,7 @@ import Track from "./knob-track.svelte";
 import Value from "./knob-value.svelte";
 
 export { knobVariants, type KnobProps, type KnobSize } from "./knob.svelte";
-export type { KnobCapProps } from "./knob-cap.svelte";
+export { knobCapVariants, type KnobCapProps, type KnobCapVariant } from "./knob-cap.svelte";
 export type { KnobDialProps } from "./knob-dial.svelte";
 export type { KnobLabelProps } from "./knob-label.svelte";
 export type { KnobPointerProps } from "./knob-pointer.svelte";
