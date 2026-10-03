@@ -24,3 +24,7 @@ vite.config.ts.timestamp-*
 
 # Built by `shadcn-svelte registry build`
 /static/r
+
+# Playwright
+/test-results
+/playwright-report

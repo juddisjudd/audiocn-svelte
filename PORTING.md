@@ -91,4 +91,5 @@ export {
 
 - Type-check: `pnpm check`. Other work may be in progress in the same tree; only errors in your own files count.
 - Run the Svelte MCP autofixer (`svelte-autofixer`) on each `.svelte` file you write.
+- Browser tests: `pnpm test:e2e` builds the site, serves it on port 3100 and runs `e2e/` in Chrome. SvelteKit hydrates after the load event, so open a page with `gotoHydrated` from `e2e/hydration.ts` before clicking or typing.
 - Registry: `registry.json` lists every item. Items name shadcn-svelte dependencies bare (`"select"`) and their own with `local:` (`"local:core"`). `pnpm registry:build` writes `static/r/`.
