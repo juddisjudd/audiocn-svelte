@@ -1,0 +1,201 @@
+{
+	"$schema": "https://shadcn-svelte.com/schema/registry.json",
+	"name": "audiocn-svelte",
+	"homepage": "https://audiocn-svelte.dev",
+	"aliases": {
+		"components": "#lib/components",
+		"ui": "#lib/components/ui",
+		"hooks": "#lib/hooks",
+		"utils": "#lib/utils",
+		"lib": "#lib"
+	},
+	"items": [
+		{
+			"name": "core",
+			"type": "registry:lib",
+			"title": "Audio core",
+			"description": "Decibel maths, meter ballistics, zones, fader tapers, band resampling, bar level smoothing, wave line shapes, time formatting, the shared frame loop, frame emitters, shared types and the audio theme tokens. Every audiocn component depends on it.",
+			"dependencies": [],
+			"registryDependencies": [],
+			"files": [
+				{
+					"path": "./src/lib/audio/types.ts",
+					"type": "registry:lib",
+					"target": "audio/types.ts"
+				},
+				{
+					"path": "./src/lib/audio/decibels.ts",
+					"type": "registry:lib",
+					"target": "audio/decibels.ts"
+				},
+				{
+					"path": "./src/lib/audio/ballistics.ts",
+					"type": "registry:lib",
+					"target": "audio/ballistics.ts"
+				},
+				{
+					"path": "./src/lib/audio/zones.ts",
+					"type": "registry:lib",
+					"target": "audio/zones.ts"
+				},
+				{
+					"path": "./src/lib/audio/taper.ts",
+					"type": "registry:lib",
+					"target": "audio/taper.ts"
+				},
+				{
+					"path": "./src/lib/audio/bands.ts",
+					"type": "registry:lib",
+					"target": "audio/bands.ts"
+				},
+				{
+					"path": "./src/lib/audio/bar-levels.ts",
+					"type": "registry:lib",
+					"target": "audio/bar-levels.ts"
+				},
+				{
+					"path": "./src/lib/audio/wave-line.ts",
+					"type": "registry:lib",
+					"target": "audio/wave-line.ts"
+				},
+				{
+					"path": "./src/lib/audio/time.ts",
+					"type": "registry:lib",
+					"target": "audio/time.ts"
+				},
+				{
+					"path": "./src/lib/audio/frame-loop.ts",
+					"type": "registry:lib",
+					"target": "audio/frame-loop.ts"
+				},
+				{
+					"path": "./src/lib/audio/frame-source.ts",
+					"type": "registry:lib",
+					"target": "audio/frame-source.ts"
+				},
+				{
+					"path": "./src/lib/audio/history.ts",
+					"type": "registry:lib",
+					"target": "audio/history.ts"
+				},
+				{
+					"path": "./src/lib/audio/history-playback.ts",
+					"type": "registry:lib",
+					"target": "audio/history-playback.ts"
+				}
+			],
+			"cssVars": {
+				"theme": {
+					"color-meter-ok": "var(--meter-ok)",
+					"color-meter-warn": "var(--meter-warn)",
+					"color-meter-clip": "var(--meter-clip)",
+					"color-channel-mute": "var(--channel-mute)",
+					"color-channel-solo": "var(--channel-solo)",
+					"color-channel-monitor": "var(--channel-monitor)",
+					"color-meter-ok-foreground": "var(--meter-ok-foreground)",
+					"color-meter-warn-foreground": "var(--meter-warn-foreground)",
+					"color-meter-clip-foreground": "var(--meter-clip-foreground)",
+					"color-channel-mute-foreground": "var(--channel-mute-foreground)",
+					"color-channel-solo-foreground": "var(--channel-solo-foreground)",
+					"color-channel-monitor-foreground": "var(--channel-monitor-foreground)"
+				},
+				"light": {
+					"meter-ok": "oklch(0.696 0.17 162.48)",
+					"meter-warn": "oklch(0.795 0.184 86.047)",
+					"meter-clip": "var(--destructive)",
+					"channel-mute": "var(--destructive)",
+					"channel-solo": "oklch(0.795 0.184 86.047)",
+					"channel-monitor": "oklch(0.623 0.214 259.815)",
+					"meter-ok-foreground": "color-mix(in oklch, var(--meter-ok), black 40%)",
+					"meter-warn-foreground": "color-mix(in oklch, var(--meter-warn), black 40%)",
+					"meter-clip-foreground": "color-mix(in oklch, var(--meter-clip), black 40%)",
+					"channel-mute-foreground": "color-mix(in oklch, var(--channel-mute), black 40%)",
+					"channel-solo-foreground": "color-mix(in oklch, var(--channel-solo), black 40%)",
+					"channel-monitor-foreground": "color-mix(in oklch, var(--channel-monitor), black 40%)"
+				},
+				"dark": {
+					"meter-ok": "oklch(0.765 0.177 163.223)",
+					"meter-warn": "oklch(0.852 0.199 91.936)",
+					"meter-clip": "var(--destructive)",
+					"channel-mute": "var(--destructive)",
+					"channel-solo": "oklch(0.852 0.199 91.936)",
+					"channel-monitor": "oklch(0.707 0.165 254.624)",
+					"meter-ok-foreground": "var(--meter-ok)",
+					"meter-warn-foreground": "var(--meter-warn)",
+					"meter-clip-foreground": "var(--meter-clip)",
+					"channel-mute-foreground": "var(--channel-mute)",
+					"channel-solo-foreground": "var(--channel-solo)",
+					"channel-monitor-foreground": "var(--channel-monitor)"
+				}
+			}
+		},
+		{
+			"name": "use-frame-source",
+			"type": "registry:hook",
+			"title": "useFrameSource",
+			"description": "Subscribe a callback to a frame source.",
+			"dependencies": [
+				"runed"
+			],
+			"registryDependencies": [
+				"local:core"
+			],
+			"files": [
+				{
+					"path": "./src/lib/hooks/use-frame-source.svelte.ts",
+					"type": "registry:hook"
+				}
+			]
+		},
+		{
+			"name": "use-audio-config",
+			"type": "registry:hook",
+			"title": "useAudioConfig",
+			"description": "Settings a mixer or channel strip passes to the components inside it.",
+			"registryDependencies": [
+				"local:core"
+			],
+			"files": [
+				{
+					"path": "./src/lib/hooks/use-audio-config.svelte.ts",
+					"type": "registry:hook"
+				}
+			]
+		},
+		{
+			"name": "channel-toggle",
+			"type": "registry:ui",
+			"title": "Channel Toggle",
+			"description": "Mute, solo and monitor buttons.",
+			"dependencies": [
+				"bits-ui",
+				"tailwind-variants"
+			],
+			"registryDependencies": [
+				"local:use-audio-config"
+			],
+			"files": [
+				{
+					"path": "./src/lib/components/ui/channel-toggle/channel-toggle.svelte",
+					"type": "registry:ui"
+				},
+				{
+					"path": "./src/lib/components/ui/channel-toggle/mute-toggle.svelte",
+					"type": "registry:ui"
+				},
+				{
+					"path": "./src/lib/components/ui/channel-toggle/solo-toggle.svelte",
+					"type": "registry:ui"
+				},
+				{
+					"path": "./src/lib/components/ui/channel-toggle/monitor-toggle.svelte",
+					"type": "registry:ui"
+				},
+				{
+					"path": "./src/lib/components/ui/channel-toggle/index.ts",
+					"type": "registry:ui"
+				}
+			]
+		}
+	]
+}

@@ -57,5 +57,8 @@
 		"#lib": "./src/lib/index.js",
 		"#lib/*": "./src/lib/*",
 		"#test/*": "./test/*"
+	},
+	"dependencies": {
+		"runed": "^0.37.1"
 	}
 }

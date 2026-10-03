@@ -1,0 +1,48 @@
+[
+	{
+		"name": "core",
+		"title": "Audio core",
+		"type": "registry:lib",
+		"description": "Decibel maths, meter ballistics, zones, fader tapers, band resampling, bar level smoothing, wave line shapes, time formatting, the shared frame loop, frame emitters, shared types and the audio theme tokens. Every audiocn component depends on it.",
+		"dependencies": [],
+		"registryDependencies": [],
+		"relativeUrl": "core.json"
+	},
+	{
+		"name": "use-frame-source",
+		"title": "useFrameSource",
+		"type": "registry:hook",
+		"description": "Subscribe a callback to a frame source.",
+		"dependencies": [
+			"runed"
+		],
+		"registryDependencies": [
+			"local:core"
+		],
+		"relativeUrl": "use-frame-source.json"
+	},
+	{
+		"name": "use-audio-config",
+		"title": "useAudioConfig",
+		"type": "registry:hook",
+		"description": "Settings a mixer or channel strip passes to the components inside it.",
+		"registryDependencies": [
+			"local:core"
+		],
+		"relativeUrl": "use-audio-config.json"
+	},
+	{
+		"name": "channel-toggle",
+		"title": "Channel Toggle",
+		"type": "registry:ui",
+		"description": "Mute, solo and monitor buttons.",
+		"dependencies": [
+			"bits-ui",
+			"tailwind-variants"
+		],
+		"registryDependencies": [
+			"local:use-audio-config"
+		],
+		"relativeUrl": "channel-toggle.json"
+	}
+]

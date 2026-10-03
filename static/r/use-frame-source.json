@@ -1,0 +1,20 @@
+{
+	"$schema": "https://shadcn-svelte.com/schema/registry-item.json",
+	"name": "use-frame-source",
+	"title": "useFrameSource",
+	"type": "registry:hook",
+	"description": "Subscribe a callback to a frame source.",
+	"dependencies": [
+		"runed"
+	],
+	"registryDependencies": [
+		"./core.json"
+	],
+	"files": [
+		{
+			"content": "import { untrack } from \"svelte\";\nimport { extract, type MaybeGetter } from \"runed\";\n\nimport type { FrameSource } from \"$LIB$/audio/types.js\";\n\nexport interface UseFrameSourceOptions {\n\t/** Pause the subscription without unmounting. Default true. */\n\tenabled?: MaybeGetter<boolean>;\n}\n\n/**\n * Subscribes `onFrame` to a frame source for the life of the calling component.\n * Call it during component setup. `onFrame` always sees current props, so it\n * never causes a resubscribe.\n */\nexport const useFrameSource = <T>(\n\tsource: MaybeGetter<FrameSource<T> | null | undefined>,\n\tonFrame: (frame: T) => void,\n\t{ enabled = true }: UseFrameSourceOptions = {}\n): void => {\n\t$effect(() => {\n\t\tconst current = extract(source);\n\t\tif (!(current && extract(enabled))) {\n\t\t\treturn;\n\t\t}\n\t\treturn current.subscribe((frame) => {\n\t\t\tuntrack(() => onFrame(frame));\n\t\t});\n\t});\n};\n",
+			"type": "registry:hook",
+			"target": "use-frame-source.svelte.ts"
+		}
+	]
+}
