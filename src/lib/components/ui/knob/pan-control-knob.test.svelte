@@ -1,40 +1,5 @@
-<script lang="ts" module>
-	const PERCENT = 100;
-	const CENTER_TEXT = /^c(?:enter|entre)?$/iu;
-	const SIDE_PREFIX = /^[LR]/iu;
-
-	const formatPan = (value: number): string => {
-		const amount = Math.round(Math.abs(value) * PERCENT);
-		if (amount === 0) {
-			return "C";
-		}
-		return `${value < 0 ? "L" : "R"}${amount}`;
-	};
-
-	const parsePan = (text: string): number | null => {
-		const trimmed = text.trim().replaceAll("−", "-");
-		if (CENTER_TEXT.test(trimmed)) {
-			return 0;
-		}
-		const side = SIDE_PREFIX.test(trimmed) ? trimmed[0]?.toUpperCase() : null;
-		const digits = (side ? trimmed.slice(1) : trimmed).trim();
-		const amount = Number(digits) / PERCENT;
-		if (digits === "" || Number.isNaN(amount)) {
-			return null;
-		}
-		return side === "L" ? -Math.abs(amount) : amount;
-	};
-
-	const describePan = (value: number): string => {
-		const amount = Math.round(Math.abs(value) * PERCENT);
-		if (amount === 0) {
-			return "Center";
-		}
-		return `${amount}% ${value < 0 ? "left" : "right"}`;
-	};
-</script>
-
 <script lang="ts">
+	import { describePan, formatPan, parsePan } from "#lib/components/ui/pan-control/index.js";
 	import { setAudioConfig } from "#lib/hooks/use-audio-config.svelte.js";
 	import {
 		Knob,
