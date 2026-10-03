@@ -4,6 +4,8 @@ Audio components for Svelte, built the shadcn-svelte way. Level meters, visualiz
 
 This is a Svelte 5 port of [audiocn](https://github.com/audiocn/ui) by OrcDev and fortysevenfx. It keeps audiocn's components, names, data attributes, styling and behaviour, and changes the API only where Svelte has its own conventions. The relationship is the same as the one between shadcn-svelte and shadcn/ui.
 
+Docs and live demos: [juddisjudd.github.io/audiocn-svelte](https://juddisjudd.github.io/audiocn-svelte)
+
 ## What you get
 
 - **Your code.** It is not a package. The shadcn-svelte CLI copies each component into your project, with everything it depends on.
@@ -83,21 +85,11 @@ Call hooks during component setup. Pass reactive inputs as getters, and read res
 
 You need Svelte 5, Tailwind CSS v4 and a project set up with [shadcn-svelte](https://shadcn-svelte.com/docs/installation).
 
-The registry is not hosted yet. Until it is, build it from this repository and serve it locally:
+Add a component by its registry URL. The CLI also installs the audio core, the audio colour tokens and any hooks the component uses.
 
 ```bash
-git clone https://github.com/juddisjudd/audiocn-svelte
-cd audiocn-svelte
-pnpm install
-pnpm build
-pnpm preview          # site and registry on http://localhost:4173
-```
-
-Then add components to your project by their registry URL. The CLI also installs the audio core, the audio colour tokens and any hooks the component uses.
-
-```bash
-npx shadcn-svelte@latest add http://localhost:4173/r/level-meter.json
-npx shadcn-svelte@latest add http://localhost:4173/r/system-audio-mixer.json
+npx shadcn-svelte@latest add https://juddisjudd.github.io/audiocn-svelte/r/level-meter.json
+npx shadcn-svelte@latest add https://juddisjudd.github.io/audiocn-svelte/r/system-audio-mixer.json
 ```
 
 Then use it:
