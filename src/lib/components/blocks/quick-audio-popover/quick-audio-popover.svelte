@@ -10,7 +10,8 @@
 </script>
 
 <script lang="ts">
-	import { MicrophoneIcon, MicrophoneSlashIcon } from "phosphor-svelte";
+	import MicrophoneIcon from "phosphor-svelte/lib/MicrophoneIcon";
+	import MicrophoneSlashIcon from "phosphor-svelte/lib/MicrophoneSlashIcon";
 
 	import { AudioDeviceSelect } from "#lib/components/ui/audio-device-select/index.js";
 	import { BarVisualizer } from "#lib/components/ui/bar-visualizer/index.js";

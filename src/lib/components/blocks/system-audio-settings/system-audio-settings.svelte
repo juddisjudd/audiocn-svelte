@@ -27,7 +27,9 @@
 
 <script lang="ts">
 	import { untrack } from "svelte";
-	import { DesktopIcon, InfoIcon, WarningIcon } from "phosphor-svelte";
+	import DesktopIcon from "phosphor-svelte/lib/DesktopIcon";
+	import InfoIcon from "phosphor-svelte/lib/InfoIcon";
+	import WarningIcon from "phosphor-svelte/lib/WarningIcon";
 
 	import { Alert, AlertDescription, AlertTitle } from "#lib/components/ui/alert/index.js";
 	import { Badge } from "#lib/components/ui/badge/index.js";

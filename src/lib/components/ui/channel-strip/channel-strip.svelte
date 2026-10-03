@@ -14,8 +14,7 @@
 				// A row measures itself, so it can stack its header on narrow widths.
 				horizontal: "@container/channel-strip w-full",
 				// Console strips keep their width and let the mixer scroll instead.
-				vertical:
-					"flex h-full min-h-72 w-[var(--channel-strip-width,6.5rem)] shrink-0 flex-col",
+				vertical: "flex h-full min-h-72 w-[var(--channel-strip-width,6.5rem)] shrink-0 flex-col",
 			},
 			variant: {
 				card: "bg-card text-card-foreground rounded-xl border p-3 shadow-xs",

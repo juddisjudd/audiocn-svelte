@@ -16,7 +16,7 @@
 	data-slot="channel-strip-value"
 	class={cn(
 		// Wide enough for "−60.0 dB", so dragging a fader never resizes the row.
-		"text-muted-foreground flex min-w-[8ch] items-center justify-end font-mono text-xs whitespace-nowrap tabular-nums [grid-area:value] group-data-[orientation=vertical]/channel-strip:justify-center",
+		"flex min-w-[8ch] items-center justify-end font-mono text-xs whitespace-nowrap text-muted-foreground tabular-nums [grid-area:value] group-data-[orientation=vertical]/channel-strip:justify-center",
 		className
 	)}
 	{...restProps}

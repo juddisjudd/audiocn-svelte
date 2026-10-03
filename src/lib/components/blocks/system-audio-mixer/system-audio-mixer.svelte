@@ -64,16 +64,14 @@
 
 <script lang="ts">
 	import { untrack } from "svelte";
-	import {
-		ArrowCounterClockwiseIcon,
-		DesktopIcon,
-		MusicNotesIcon,
-		PauseIcon,
-		PlayIcon,
-		SkipForwardIcon,
-		SquaresFourIcon,
-		WaveformIcon,
-	} from "phosphor-svelte";
+	import ArrowCounterClockwiseIcon from "phosphor-svelte/lib/ArrowCounterClockwiseIcon";
+	import DesktopIcon from "phosphor-svelte/lib/DesktopIcon";
+	import MusicNotesIcon from "phosphor-svelte/lib/MusicNotesIcon";
+	import PauseIcon from "phosphor-svelte/lib/PauseIcon";
+	import PlayIcon from "phosphor-svelte/lib/PlayIcon";
+	import SkipForwardIcon from "phosphor-svelte/lib/SkipForwardIcon";
+	import SquaresFourIcon from "phosphor-svelte/lib/SquaresFourIcon";
+	import WaveformIcon from "phosphor-svelte/lib/WaveformIcon";
 
 	import { Button } from "#lib/components/ui/button/index.js";
 	import { ChannelStripNotice } from "#lib/components/ui/channel-strip/index.js";

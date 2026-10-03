@@ -27,7 +27,8 @@
 </script>
 
 <script lang="ts">
-	import { GearSixIcon, MicrophoneIcon } from "phosphor-svelte";
+	import GearSixIcon from "phosphor-svelte/lib/GearSixIcon";
+	import MicrophoneIcon from "phosphor-svelte/lib/MicrophoneIcon";
 
 	import { AudioDeviceSelect } from "#lib/components/ui/audio-device-select/index.js";
 	import { Button } from "#lib/components/ui/button/index.js";

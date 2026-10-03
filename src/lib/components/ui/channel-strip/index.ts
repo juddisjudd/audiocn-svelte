@@ -27,10 +27,7 @@ export {
 	type ChannelStripStatusProps,
 	type ChannelStripStatusTone,
 } from "./channel-strip-status.svelte";
-export {
-	useChannelStrip,
-	type ChannelStripContextValue,
-} from "./channel-strip-context.svelte.js";
+export { useChannelStrip, type ChannelStripContextValue } from "./channel-strip-context.svelte.js";
 
 export {
 	Root,

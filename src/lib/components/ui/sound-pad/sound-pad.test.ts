@@ -5,8 +5,7 @@ import { describe, expect, it, vi } from "vitest";
 import { SoundPad } from "./index.js";
 import Grid from "./sound-pad-grid.test.svelte";
 
-const text = (value: string) =>
-	createRawSnippet(() => ({ render: () => `<span>${value}</span>` }));
+const text = (value: string) => createRawSnippet(() => ({ render: () => `<span>${value}</span>` }));
 
 const holdPad = (props: { loading?: boolean; onStop: () => void }) => ({
 	hotkeyScope: "global" as const,

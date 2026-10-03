@@ -14,7 +14,7 @@
 <span
 	bind:this={ref}
 	data-slot="track-list-item-title"
-	class={cn("group-data-active/track-list-item:text-primary truncate font-medium", className)}
+	class={cn("truncate font-medium group-data-active/track-list-item:text-primary", className)}
 	{...restProps}
 >
 	{@render children?.()}

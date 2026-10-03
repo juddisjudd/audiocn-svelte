@@ -2,11 +2,11 @@
 const config = {
 	useTabs: true,
 	singleQuote: false,
-	trailingComma: 'es5',
+	trailingComma: "es5",
 	printWidth: 100,
-	plugins: ['prettier-plugin-svelte', 'prettier-plugin-tailwindcss'],
-	overrides: [{ files: '*.svelte', options: { parser: 'svelte' } }],
-	tailwindStylesheet: './src/routes/layout.css'
+	plugins: ["prettier-plugin-svelte", "prettier-plugin-tailwindcss"],
+	overrides: [{ files: "*.svelte", options: { parser: "svelte" } }],
+	tailwindStylesheet: "./src/routes/layout.css",
 };
 
 export default config;

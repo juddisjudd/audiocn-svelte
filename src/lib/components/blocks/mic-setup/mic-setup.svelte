@@ -54,7 +54,9 @@
 
 <script lang="ts">
 	import { untrack } from "svelte";
-	import { CheckCircleIcon, MicrophoneIcon, WarningCircleIcon } from "phosphor-svelte";
+	import CheckCircleIcon from "phosphor-svelte/lib/CheckCircleIcon";
+	import MicrophoneIcon from "phosphor-svelte/lib/MicrophoneIcon";
+	import WarningCircleIcon from "phosphor-svelte/lib/WarningCircleIcon";
 
 	import { Alert, AlertDescription, AlertTitle } from "#lib/components/ui/alert/index.js";
 	import {

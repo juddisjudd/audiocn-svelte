@@ -11,7 +11,7 @@
 </script>
 
 <script lang="ts">
-	import { SpeakerHighIcon } from "phosphor-svelte";
+	import SpeakerHighIcon from "phosphor-svelte/lib/SpeakerHighIcon";
 
 	import {
 		ChannelStrip,

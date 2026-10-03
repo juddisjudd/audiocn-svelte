@@ -16,16 +16,6 @@ export default defineConfig(({ mode }) => ({
 			adapter: adapter(),
 			preprocess: docsPreprocess(),
 			extensions: [".svelte", ...MARKDOWN_EXTENSIONS],
-			prerender: {
-				// Docs pages for components that are still being ported are linked before they exist.
-				handleHttpError: ({ path, referrer, message }) => {
-					if (path.startsWith("/docs/") && referrer) {
-						console.warn(`Missing docs page: ${path} (linked from ${referrer})`);
-						return;
-					}
-					throw new Error(message);
-				},
-			},
 		}),
 	],
 	resolve: mode === "test" ? { conditions: ["browser"] } : undefined,

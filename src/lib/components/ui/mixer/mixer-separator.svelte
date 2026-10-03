@@ -19,7 +19,7 @@
 	aria-hidden="true"
 	data-slot="mixer-separator"
 	class={cn(
-		"bg-border shrink-0 [grid-area:separator]",
+		"shrink-0 bg-border [grid-area:separator]",
 		mixer.orientation === "horizontal" ? "h-px w-full" : "h-full w-px",
 		className
 	)}

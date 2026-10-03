@@ -6,26 +6,26 @@ The React source is the reference. Its plans (`plans/002-conventions.md` to `008
 
 ## Stack
 
-| React (audiocn) | Svelte (this repo) |
-| --- | --- |
-| Next.js 16, React 19 | SvelteKit 3, Svelte 5 runes |
-| Base UI (`@base-ui/react`) | bits-ui |
-| `class-variance-authority` (`cva`) | `tailwind-variants` (`tv`) |
-| `@phosphor-icons/react` | `phosphor-svelte` (same `*Icon` names) |
-| `sonner` | `svelte-sonner` |
-| shadcn CLI and registry | shadcn-svelte CLI and registry |
-| Testing Library React, jsdom | Testing Library Svelte, jsdom |
+| React (audiocn)                    | Svelte (this repo)                     |
+| ---------------------------------- | -------------------------------------- |
+| Next.js 16, React 19               | SvelteKit 3, Svelte 5 runes            |
+| Base UI (`@base-ui/react`)         | bits-ui                                |
+| `class-variance-authority` (`cva`) | `tailwind-variants` (`tv`)             |
+| `@phosphor-icons/react`            | `phosphor-svelte` (same `*Icon` names) |
+| `sonner`                           | `svelte-sonner`                        |
+| shadcn CLI and registry            | shadcn-svelte CLI and registry         |
+| Testing Library React, jsdom       | Testing Library Svelte, jsdom          |
 
 ## Layout
 
-| React | Svelte |
-| --- | --- |
-| `lib/audio/*.ts` | `src/lib/audio/*.ts` (copied unchanged) |
-| `lib/electric.ts` | `src/lib/electric.ts` |
-| `hooks/use-x.ts` | `src/lib/hooks/use-x.svelte.ts` |
-| `components/ui/x.tsx` | `src/lib/components/ui/x/`: `x.svelte` (root), `x-<part>.svelte` (one per part), `index.ts`, and optional `x-context.svelte.ts` or `x-utils.ts` for logic shared by the parts |
-| `components/blocks/x/*.tsx` | `src/lib/components/blocks/x/*.svelte` and `index.ts` |
-| `*.test.tsx` | `*.test.ts`, or `*.svelte.test.ts` when the test uses runes, next to the code. Test harness components are `*.test.svelte`. |
+| React                       | Svelte                                                                                                                                                                        |
+| --------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `lib/audio/*.ts`            | `src/lib/audio/*.ts` (copied unchanged)                                                                                                                                       |
+| `lib/electric.ts`           | `src/lib/electric.ts`                                                                                                                                                         |
+| `hooks/use-x.ts`            | `src/lib/hooks/use-x.svelte.ts`                                                                                                                                               |
+| `components/ui/x.tsx`       | `src/lib/components/ui/x/`: `x.svelte` (root), `x-<part>.svelte` (one per part), `index.ts`, and optional `x-context.svelte.ts` or `x-utils.ts` for logic shared by the parts |
+| `components/blocks/x/*.tsx` | `src/lib/components/blocks/x/*.svelte` and `index.ts`                                                                                                                         |
+| `*.test.tsx`                | `*.test.ts`, or `*.svelte.test.ts` when the test uses runes, next to the code. Test harness components are `*.test.svelte`.                                                   |
 
 `index.ts` follows shadcn-svelte: export each part by its short name and by its full name, plus the variants and prop types.
 

@@ -25,7 +25,7 @@
 </script>
 
 <script lang="ts">
-	import { HeadphonesIcon } from "phosphor-svelte";
+	import HeadphonesIcon from "phosphor-svelte/lib/HeadphonesIcon";
 
 	import {
 		ChannelStrip,

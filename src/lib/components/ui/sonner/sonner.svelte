@@ -1,11 +1,11 @@
 <script lang="ts">
 	import { mode } from "mode-watcher";
 	import { Toaster as Sonner, type ToasterProps as SonnerProps } from "svelte-sonner";
-	import SpinnerIcon from 'phosphor-svelte/lib/Spinner';
-	import CheckCircleIcon from 'phosphor-svelte/lib/CheckCircle';
-	import XCircleIcon from 'phosphor-svelte/lib/XCircle';
-	import InfoIcon from 'phosphor-svelte/lib/Info';
-	import WarningIcon from 'phosphor-svelte/lib/Warning';
+	import SpinnerIcon from "phosphor-svelte/lib/Spinner";
+	import CheckCircleIcon from "phosphor-svelte/lib/CheckCircle";
+	import XCircleIcon from "phosphor-svelte/lib/XCircle";
+	import InfoIcon from "phosphor-svelte/lib/Info";
+	import WarningIcon from "phosphor-svelte/lib/Warning";
 
 	let { ...restProps }: SonnerProps = $props();
 </script>

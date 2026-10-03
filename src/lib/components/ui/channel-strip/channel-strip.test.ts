@@ -32,7 +32,9 @@ describe("ChannelStrip", () => {
 			.querySelector('[data-slot="channel-strip-layout"]');
 		const classes = layout?.className.split(" ") ?? [];
 		// Without a fader, the stacked and the wide layout are one meter row.
-		expect(classes).toContain("[grid-template-areas:'header_header_header'_'meter_value_controls']");
+		expect(classes).toContain(
+			"[grid-template-areas:'header_header_header'_'meter_value_controls']"
+		);
 		expect(classes).toContain(
 			"@xl/channel-strip:[grid-template-areas:'header_meter_value_controls']"
 		);

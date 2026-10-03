@@ -16,11 +16,9 @@ const registryDir = path.join(root, "static/r");
 const port = 4999;
 // shadcn-svelte preset code for the rhea style, stone colours and Phosphor icons.
 const preset = "b27Z5c38";
-const shadcnSvelte = `shadcn-svelte@${
-	JSON.parse(readFileSync(path.join(root, "package.json"), "utf-8")).devDependencies[
-		"shadcn-svelte"
-	].replace(/^\^/, "")
-}`;
+const shadcnSvelte = `shadcn-svelte@${JSON.parse(
+	readFileSync(path.join(root, "package.json"), "utf-8")
+).devDependencies["shadcn-svelte"].replace(/^\^/, "")}`;
 
 if (!existsSync(path.join(registryDir, "index.json"))) {
 	console.error("Run `pnpm registry:build` first.");

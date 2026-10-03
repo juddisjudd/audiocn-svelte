@@ -15,6 +15,6 @@
 	bind:this={ref}
 	{alt}
 	data-slot="track-list-item-artwork"
-	class={cn("bg-muted size-9 shrink-0 rounded-md object-cover", className)}
+	class={cn("size-9 shrink-0 rounded-md bg-muted object-cover", className)}
 	{...restProps}
 />

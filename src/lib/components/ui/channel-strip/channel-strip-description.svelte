@@ -14,7 +14,7 @@
 <span
 	bind:this={ref}
 	data-slot="channel-strip-description"
-	class={cn("text-muted-foreground truncate text-xs leading-tight", className)}
+	class={cn("truncate text-xs leading-tight text-muted-foreground", className)}
 	{...restProps}
 >
 	{@render children?.()}

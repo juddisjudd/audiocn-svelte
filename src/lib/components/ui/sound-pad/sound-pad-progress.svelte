@@ -61,10 +61,7 @@
 		data-slot="sound-pad-progress"
 		data-variant={variant}
 		style={progressStyle}
-		class={cn(
-			"pointer-events-none absolute right-2 bottom-2 size-5 [--pad-progress:0]",
-			className
-		)}
+		class={cn("pointer-events-none absolute right-2 bottom-2 size-5 [--pad-progress:0]", className)}
 		{...restProps}
 	>
 		<div

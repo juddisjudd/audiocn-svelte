@@ -16,7 +16,9 @@
 		defaultVariants: { variant: "default" },
 	});
 
-	export type ChannelStripNoticeVariant = VariantProps<typeof channelStripNoticeVariants>["variant"];
+	export type ChannelStripNoticeVariant = VariantProps<
+		typeof channelStripNoticeVariants
+	>["variant"];
 
 	export type ChannelStripNoticeProps = WithElementRef<HTMLAttributes<HTMLDivElement>> & {
 		variant?: ChannelStripNoticeVariant;

@@ -11,7 +11,7 @@ export const siteConfig = {
 		"Copy-and-paste audio components for Svelte and shadcn-svelte. Build mixers, players, meters, knobs and waveforms with accessible UI you own.",
 	url: "https://audiocn-svelte.dev",
 	/** This port's repository. Leave empty to hide the GitHub link. */
-	githubUrl: "",
+	githubUrl: "https://github.com/juddisjudd/audiocn-svelte",
 	upstream: {
 		name: "audiocn",
 		url: "https://github.com/audiocn/ui",

@@ -64,7 +64,10 @@
 		...restProps
 	}: SoundPadGridProps = $props();
 
+	// Hotkey registries; nothing renders from them.
+	// eslint-disable-next-line svelte/prefer-svelte-reactivity
 	const pads = new Map<string, PadHandlers>();
+	// eslint-disable-next-line svelte/prefer-svelte-reactivity
 	const held = new Set<string>();
 
 	const register = (hotkey: string, handlers: PadHandlers) => {
@@ -176,7 +179,6 @@
 	);
 </script>
 
-<!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
 <div
 	bind:this={ref}
 	data-slot="sound-pad-grid"

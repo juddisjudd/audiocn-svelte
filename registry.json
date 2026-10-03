@@ -1,7 +1,7 @@
 {
 	"$schema": "https://shadcn-svelte.com/schema/registry.json",
 	"name": "audiocn-svelte",
-	"homepage": "https://audiocn-svelte.dev",
+	"homepage": "https://github.com/juddisjudd/audiocn-svelte",
 	"aliases": {
 		"components": "#lib/components",
 		"ui": "#lib/components/ui",
@@ -133,9 +133,7 @@
 			"type": "registry:lib",
 			"title": "Electric drawing",
 			"description": "Shared drawing for the electric visualizers: repeatable crackle, a spark pool, canvas sizing and theme colours read from CSS.",
-			"registryDependencies": [
-				"local:core"
-			],
+			"registryDependencies": ["local:core"],
 			"files": [
 				{
 					"path": "./src/lib/electric.ts",
@@ -149,12 +147,8 @@
 			"type": "registry:hook",
 			"title": "useFrameSource",
 			"description": "Subscribe a callback to a frame source, with a stable callback and automatic cleanup.",
-			"dependencies": [
-				"runed"
-			],
-			"registryDependencies": [
-				"local:core"
-			],
+			"dependencies": ["runed"],
+			"registryDependencies": ["local:core"],
 			"files": [
 				{
 					"path": "./src/lib/hooks/use-frame-source.svelte.ts",
@@ -167,13 +161,8 @@
 			"type": "registry:hook",
 			"title": "useLevel",
 			"description": "Read a meter source into React state at a low rate, for labels and conditional UI.",
-			"dependencies": [
-				"runed"
-			],
-			"registryDependencies": [
-				"local:core",
-				"local:use-frame-source"
-			],
+			"dependencies": ["runed"],
+			"registryDependencies": ["local:core", "local:use-frame-source"],
 			"files": [
 				{
 					"path": "./src/lib/hooks/use-level.svelte.ts",
@@ -186,12 +175,8 @@
 			"type": "registry:hook",
 			"title": "useClipHold",
 			"description": "Clip detection with a hold time, a clip count and a reset.",
-			"dependencies": [
-				"runed"
-			],
-			"registryDependencies": [
-				"local:core"
-			],
+			"dependencies": ["runed"],
+			"registryDependencies": ["local:core"],
 			"files": [
 				{
 					"path": "./src/lib/hooks/use-clip-hold.svelte.ts",
@@ -204,9 +189,7 @@
 			"type": "registry:hook",
 			"title": "useReducedMotion",
 			"description": "True when the user asked the system to reduce motion.",
-			"dependencies": [
-				"runed"
-			],
+			"dependencies": ["runed"],
 			"registryDependencies": [],
 			"files": [
 				{
@@ -220,9 +203,7 @@
 			"type": "registry:hook",
 			"title": "useVisibility",
 			"description": "Whether an element is on screen, in a ref, so animation loops can skip frames nobody sees.",
-			"dependencies": [
-				"runed"
-			],
+			"dependencies": ["runed"],
 			"registryDependencies": [],
 			"files": [
 				{
@@ -236,12 +217,8 @@
 			"type": "registry:hook",
 			"title": "useDemoSignal",
 			"description": "A synthetic speech, music, tone or noise signal as frame sources, for previews, prototypes and tests.",
-			"dependencies": [
-				"runed"
-			],
-			"registryDependencies": [
-				"local:core"
-			],
+			"dependencies": ["runed"],
+			"registryDependencies": ["local:core"],
 			"files": [
 				{
 					"path": "./src/lib/hooks/use-demo-signal.svelte.ts",
@@ -254,9 +231,7 @@
 			"type": "registry:hook",
 			"title": "useAudioContext",
 			"description": "One shared AudioContext that resumes on the first user gesture, plus a provider to supply your own.",
-			"dependencies": [
-				"runed"
-			],
+			"dependencies": ["runed"],
 			"registryDependencies": [],
 			"files": [
 				{
@@ -270,12 +245,8 @@
 			"type": "registry:hook",
 			"title": "useGainNode",
 			"description": "A gain node on the shared AudioContext, wired from an input to a destination, with click-free level changes.",
-			"dependencies": [
-				"runed"
-			],
-			"registryDependencies": [
-				"local:use-audio-context"
-			],
+			"dependencies": ["runed"],
+			"registryDependencies": ["local:use-audio-context"],
 			"files": [
 				{
 					"path": "./src/lib/hooks/use-gain-node.svelte.ts",
@@ -288,13 +259,8 @@
 			"type": "registry:hook",
 			"title": "useAudioAnalyser",
 			"description": "Meter and visual frame sources from a MediaStream, media element or AudioNode, using the Web Audio AnalyserNode.",
-			"dependencies": [
-				"runed"
-			],
-			"registryDependencies": [
-				"local:core",
-				"local:use-audio-context"
-			],
+			"dependencies": ["runed"],
+			"registryDependencies": ["local:core", "local:use-audio-context"],
 			"files": [
 				{
 					"path": "./src/lib/hooks/use-audio-analyser.svelte.ts",
@@ -307,9 +273,7 @@
 			"type": "registry:hook",
 			"title": "useAudioDevices",
 			"description": "The list of audio input or output devices, with permission state and live updates when devices change.",
-			"dependencies": [
-				"runed"
-			],
+			"dependencies": ["runed"],
 			"registryDependencies": [],
 			"files": [
 				{
@@ -323,9 +287,7 @@
 			"type": "registry:hook",
 			"title": "useMicrophone",
 			"description": "Open a microphone as a MediaStream, with browser processing off by default so meters show the real signal.",
-			"dependencies": [
-				"runed"
-			],
+			"dependencies": ["runed"],
 			"registryDependencies": [],
 			"files": [
 				{
@@ -339,9 +301,7 @@
 			"type": "registry:hook",
 			"title": "useSystemAudio",
 			"description": "Capture system or tab audio through the browser's screen-share picker.",
-			"dependencies": [
-				"runed"
-			],
+			"dependencies": ["runed"],
 			"registryDependencies": [],
 			"files": [
 				{
@@ -355,12 +315,8 @@
 			"type": "registry:hook",
 			"title": "useAudioConfig",
 			"description": "The context a mixer or channel strip uses to pass orientation, size, range, zones and ballistics down to the components inside it.",
-			"dependencies": [
-				"runed"
-			],
-			"registryDependencies": [
-				"local:core"
-			],
+			"dependencies": ["runed"],
+			"registryDependencies": ["local:core"],
 			"files": [
 				{
 					"path": "./src/lib/hooks/use-audio-config.svelte.ts",
@@ -373,12 +329,8 @@
 			"type": "registry:hook",
 			"title": "useMixer",
 			"description": "Mixer state with no audio attached: gain, mute, solo, pan and monitor per channel, a master, persistence and a controlled mode.",
-			"dependencies": [
-				"runed"
-			],
-			"registryDependencies": [
-				"local:core"
-			],
+			"dependencies": ["runed"],
+			"registryDependencies": ["local:core"],
 			"files": [
 				{
 					"path": "./src/lib/hooks/use-mixer.svelte.ts",
@@ -391,9 +343,7 @@
 			"type": "registry:hook",
 			"title": "useWebAudioMixer",
 			"description": "Binds mixer state to a Web Audio graph: per-channel gain, ducking, pan and monitor sends, a limited master bus, post-fader meters and a mixed output stream.",
-			"dependencies": [
-				"runed"
-			],
+			"dependencies": ["runed"],
 			"registryDependencies": [
 				"local:core",
 				"local:use-mixer",
@@ -412,12 +362,8 @@
 			"type": "registry:hook",
 			"title": "useAudioPlayer",
 			"description": "Playback state for an audio element the hook owns: status, time, duration, buffering, volume, rate and loop, plus a smooth time source.",
-			"dependencies": [
-				"runed"
-			],
-			"registryDependencies": [
-				"local:core"
-			],
+			"dependencies": ["runed"],
+			"registryDependencies": ["local:core"],
 			"files": [
 				{
 					"path": "./src/lib/hooks/use-audio-player.svelte.ts",
@@ -430,14 +376,8 @@
 			"type": "registry:hook",
 			"title": "useSound",
 			"description": "Low-latency playback of short sounds decoded into memory, with voices, looping, progress and a routable output node.",
-			"dependencies": [
-				"runed"
-			],
-			"registryDependencies": [
-				"local:core",
-				"local:use-audio-context",
-				"local:use-gain-node"
-			],
+			"dependencies": ["runed"],
+			"registryDependencies": ["local:core", "local:use-audio-context", "local:use-gain-node"],
 			"files": [
 				{
 					"path": "./src/lib/hooks/use-sound.svelte.ts",
@@ -450,13 +390,8 @@
 			"type": "registry:hook",
 			"title": "useWaveformData",
 			"description": "Decode an audio file, or take an AudioBuffer, and reduce it to cached waveform peaks.",
-			"dependencies": [
-				"runed"
-			],
-			"registryDependencies": [
-				"local:use-audio-context",
-				"local:use-sound"
-			],
+			"dependencies": ["runed"],
+			"registryDependencies": ["local:use-audio-context", "local:use-sound"],
 			"files": [
 				{
 					"path": "./src/lib/hooks/use-waveform-data.svelte.ts",
@@ -470,10 +405,7 @@
 			"title": "dB Scale",
 			"description": "Tick marks and labels for a decibel range, shared by meters and faders.",
 			"dependencies": [],
-			"registryDependencies": [
-				"local:core",
-				"local:use-audio-config"
-			],
+			"registryDependencies": ["local:core", "local:use-audio-config"],
 			"files": [
 				{
 					"path": "./src/lib/components/ui/db-scale/db-scale-tick.svelte",
@@ -499,10 +431,7 @@
 			"title": "dB Readout",
 			"description": "A numeric level label that updates at a readable rate, with a reserved width so the layout never shifts.",
 			"dependencies": [],
-			"registryDependencies": [
-				"local:core",
-				"local:use-frame-source"
-			],
+			"registryDependencies": ["local:core", "local:use-frame-source"],
 			"files": [
 				{
 					"path": "./src/lib/components/ui/db-readout/db-readout.svelte",
@@ -519,14 +448,8 @@
 			"type": "registry:ui",
 			"title": "Clip Indicator",
 			"description": "A clip light that holds after the signal clips, with an optional count and click to reset.",
-			"dependencies": [
-				"bits-ui"
-			],
-			"registryDependencies": [
-				"local:core",
-				"local:use-clip-hold",
-				"local:use-frame-source"
-			],
+			"dependencies": ["bits-ui"],
+			"registryDependencies": ["local:core", "local:use-clip-hold", "local:use-frame-source"],
 			"files": [
 				{
 					"path": "./src/lib/components/ui/clip-indicator/clip-indicator.svelte",
@@ -543,9 +466,7 @@
 			"type": "registry:ui",
 			"title": "Level Meter",
 			"description": "A peak and RMS level meter: mono or stereo, horizontal or vertical, solid, segmented or gradient, with zones, peak hold, a scale, a readout and a clip light.",
-			"dependencies": [
-				"tailwind-variants"
-			],
+			"dependencies": ["tailwind-variants"],
 			"registryDependencies": [
 				"local:core",
 				"local:use-frame-source",
@@ -735,15 +656,8 @@
 			"type": "registry:ui",
 			"title": "Fader",
 			"description": "A volume fader in decibels: linear or console taper, detents, a scale, reset, an editable value, silence at the bottom, horizontal or vertical.",
-			"dependencies": [
-				"bits-ui",
-				"tailwind-variants"
-			],
-			"registryDependencies": [
-				"local:core",
-				"local:db-scale",
-				"local:use-audio-config"
-			],
+			"dependencies": ["bits-ui", "tailwind-variants"],
+			"registryDependencies": ["local:core", "local:db-scale", "local:use-audio-config"],
 			"files": [
 				{
 					"path": "./src/lib/components/ui/fader/fader-label.svelte",
@@ -792,13 +706,8 @@
 			"type": "registry:ui",
 			"title": "Parameter Slider",
 			"description": "A labelled slider with a numeric input, unit, marks, reset and a linear or log scale, for gain trims, delays, thresholds and frequencies.",
-			"dependencies": [
-				"bits-ui"
-			],
-			"registryDependencies": [
-				"local:core",
-				"local:use-audio-config"
-			],
+			"dependencies": ["bits-ui"],
+			"registryDependencies": ["local:core", "local:use-audio-config"],
 			"files": [
 				{
 					"path": "./src/lib/components/ui/parameter-slider/index.ts",
@@ -851,14 +760,8 @@
 			"type": "registry:ui",
 			"title": "Knob",
 			"description": "A rotary control drawn in SVG, with vertical, horizontal or circular dragging, fine adjustment, reset, a bipolar origin, an optional click sound and a volume dial skin with a numbered scale and an aluminium cap.",
-			"dependencies": [
-				"tailwind-variants"
-			],
-			"registryDependencies": [
-				"local:core",
-				"local:use-audio-config",
-				"local:use-audio-context"
-			],
+			"dependencies": ["tailwind-variants"],
+			"registryDependencies": ["local:core", "local:use-audio-config", "local:use-audio-context"],
 			"files": [
 				{
 					"path": "./src/lib/components/ui/knob/index.ts",
@@ -919,14 +822,8 @@
 			"type": "registry:ui",
 			"title": "Pan Control",
 			"description": "Left and right balance with a fill from the centre, a centre detent and reset.",
-			"dependencies": [
-				"bits-ui",
-				"tailwind-variants"
-			],
-			"registryDependencies": [
-				"local:core",
-				"local:use-audio-config"
-			],
+			"dependencies": ["bits-ui", "tailwind-variants"],
+			"registryDependencies": ["local:core", "local:use-audio-config"],
 			"files": [
 				{
 					"path": "./src/lib/components/ui/pan-control/index.ts",
@@ -947,13 +844,8 @@
 			"type": "registry:ui",
 			"title": "Channel Toggle",
 			"description": "Mute, solo and monitor toggle buttons with their own pressed colours.",
-			"dependencies": [
-				"bits-ui",
-				"tailwind-variants"
-			],
-			"registryDependencies": [
-				"local:use-audio-config"
-			],
+			"dependencies": ["bits-ui", "tailwind-variants"],
+			"registryDependencies": ["local:use-audio-config"],
 			"files": [
 				{
 					"path": "./src/lib/components/ui/channel-toggle/channel-toggle.svelte",
@@ -982,13 +874,8 @@
 			"type": "registry:ui",
 			"title": "Volume Control",
 			"description": "A 0..1 volume slider with a mute button and a perceptual curve, for players.",
-			"dependencies": [
-				"bits-ui"
-			],
-			"registryDependencies": [
-				"local:core",
-				"local:use-audio-config"
-			],
+			"dependencies": ["bits-ui"],
+			"registryDependencies": ["local:core", "local:use-audio-config"],
 			"files": [
 				{
 					"path": "./src/lib/components/ui/volume-control/index.ts",
@@ -1022,10 +909,7 @@
 			"title": "Audio Device Select",
 			"description": "A microphone, speaker or source picker with loading, permission, None and disconnected-device states, and a slot for a live preview.",
 			"dependencies": [],
-			"registryDependencies": [
-				"select",
-				"button"
-			],
+			"registryDependencies": ["select", "button"],
 			"files": [
 				{
 					"path": "./src/lib/components/ui/audio-device-select/audio-device-select-content.svelte",
@@ -1070,14 +954,8 @@
 			"type": "registry:ui",
 			"title": "Channel Strip",
 			"description": "One channel of a mixer: header, status, meter, fader, value, controls and a notice, as a row or a console strip. The master strip is a variant.",
-			"dependencies": [
-				"tailwind-variants"
-			],
-			"registryDependencies": [
-				"badge",
-				"local:core",
-				"local:use-audio-config"
-			],
+			"dependencies": ["tailwind-variants"],
+			"registryDependencies": ["badge", "local:core", "local:use-audio-config"],
 			"files": [
 				{
 					"path": "./src/lib/components/ui/channel-strip/channel-strip-actions.svelte",
@@ -1151,11 +1029,7 @@
 			"title": "Mixer",
 			"description": "The container for channel strips: shared meter settings, keyboard navigation between strips, a master area and an empty state.",
 			"dependencies": [],
-			"registryDependencies": [
-				"local:core",
-				"local:use-audio-config",
-				"local:channel-strip"
-			],
+			"registryDependencies": ["local:core", "local:use-audio-config", "local:channel-strip"],
 			"files": [
 				{
 					"path": "./src/lib/components/ui/mixer/index.ts",
@@ -1204,14 +1078,8 @@
 			"type": "registry:ui",
 			"title": "Waveform",
 			"description": "A static waveform of a clip with a smooth playhead, seeking by pointer and keyboard, hover time, draggable regions and markers.",
-			"dependencies": [
-				"bits-ui"
-			],
-			"registryDependencies": [
-				"local:core",
-				"local:use-frame-source",
-				"local:use-visibility"
-			],
+			"dependencies": ["bits-ui"],
+			"registryDependencies": ["local:core", "local:use-frame-source", "local:use-visibility"],
 			"files": [
 				{
 					"path": "./src/lib/components/ui/waveform/index.ts",
@@ -1252,12 +1120,8 @@
 			"type": "registry:ui",
 			"title": "Track List",
 			"description": "A list of tracks with active and playing states, arrow-key navigation and slots for artwork, duration and actions.",
-			"dependencies": [
-				"tailwind-variants"
-			],
-			"registryDependencies": [
-				"local:core"
-			],
+			"dependencies": ["tailwind-variants"],
+			"registryDependencies": ["local:core"],
 			"files": [
 				{
 					"path": "./src/lib/components/ui/track-list/index.ts",
@@ -1310,14 +1174,8 @@
 			"type": "registry:ui",
 			"title": "Sound Pad",
 			"description": "A trigger pad with one-shot, toggle, hold and loop modes, a hotkey, playback progress and an accent colour, plus a grid with hotkeys and arrow navigation.",
-			"dependencies": [
-				"tailwind-variants"
-			],
-			"registryDependencies": [
-				"kbd",
-				"local:core",
-				"local:use-frame-source"
-			],
+			"dependencies": ["tailwind-variants"],
+			"registryDependencies": ["kbd", "local:core", "local:use-frame-source"],
 			"files": [
 				{
 					"path": "./src/lib/components/ui/sound-pad/index.ts",
@@ -1397,9 +1255,7 @@
 			"type": "registry:ui",
 			"title": "Audio Player",
 			"description": "A composable audio player: transport, seek bar with buffering, time, volume, playback rate, loop and keyboard shortcuts.",
-			"dependencies": [
-				"bits-ui"
-			],
+			"dependencies": ["bits-ui"],
 			"registryDependencies": [
 				"local:core",
 				"local:use-audio-player",
@@ -1498,9 +1354,7 @@
 			"type": "registry:block",
 			"title": "System Audio Mixer",
 			"description": "The complete mixer: microphone, system audio, music and sound pads with meters, faders, mute, solo, monitor and ducking, a limited master and a mixed output stream, all running on Web Audio.",
-			"dependencies": [
-				"phosphor-svelte"
-			],
+			"dependencies": ["phosphor-svelte"],
 			"registryDependencies": [
 				"button",
 				"switch",
@@ -1562,9 +1416,7 @@
 			"type": "registry:block",
 			"title": "Microphone Setup",
 			"description": "Choose and check a microphone: device select with a live preview, a level meter, gain, mute and a level check that says whether you sound right.",
-			"dependencies": [
-				"phosphor-svelte"
-			],
+			"dependencies": ["phosphor-svelte"],
 			"registryDependencies": [
 				"alert",
 				"button",
@@ -1601,9 +1453,7 @@
 			"type": "registry:block",
 			"title": "System Audio Settings",
 			"description": "Turn system audio capture on, set its level, watch its meter and explain what the browser will capture.",
-			"dependencies": [
-				"phosphor-svelte"
-			],
+			"dependencies": ["phosphor-svelte"],
 			"registryDependencies": [
 				"alert",
 				"badge",
@@ -1636,9 +1486,7 @@
 			"type": "registry:block",
 			"title": "Music Player",
 			"description": "A playlist player with a waveform seek bar, shuffle, repeat, volume and optional ducking under the microphone.",
-			"dependencies": [
-				"phosphor-svelte"
-			],
+			"dependencies": ["phosphor-svelte"],
 			"registryDependencies": [
 				"card",
 				"empty",
@@ -1675,9 +1523,7 @@
 			"type": "registry:block",
 			"title": "Soundboard",
 			"description": "A grid of sound pads with global hotkeys, per-pad mode and volume in a context menu, master volume, stop all, and drag-and-drop to add sounds.",
-			"dependencies": [
-				"phosphor-svelte"
-			],
+			"dependencies": ["phosphor-svelte"],
 			"registryDependencies": [
 				"alert",
 				"button",
@@ -1714,9 +1560,7 @@
 			"type": "registry:block",
 			"title": "Quick Audio Popover",
 			"description": "Compact microphone and system audio controls behind one toolbar button that shows a live level.",
-			"dependencies": [
-				"phosphor-svelte"
-			],
+			"dependencies": ["phosphor-svelte"],
 			"registryDependencies": [
 				"button",
 				"field",

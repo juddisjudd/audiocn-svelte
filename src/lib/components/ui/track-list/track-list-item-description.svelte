@@ -14,7 +14,7 @@
 <span
 	bind:this={ref}
 	data-slot="track-list-item-description"
-	class={cn("text-muted-foreground truncate text-xs", className)}
+	class={cn("truncate text-xs text-muted-foreground", className)}
 	{...restProps}
 >
 	{@render children?.()}

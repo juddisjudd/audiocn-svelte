@@ -14,7 +14,7 @@
 <span
 	bind:this={ref}
 	data-slot="track-list-item-duration"
-	class={cn("text-muted-foreground shrink-0 font-mono text-xs tabular-nums", className)}
+	class={cn("shrink-0 font-mono text-xs text-muted-foreground tabular-nums", className)}
 	{...restProps}
 >
 	{@render children?.()}

@@ -19,7 +19,7 @@
 	bind:this={ref}
 	data-slot="mixer-empty"
 	class={cn(
-		"text-muted-foreground hidden min-h-24 items-center justify-center rounded-xl border border-dashed p-6 text-center text-sm [grid-area:channels] group-has-[[data-slot=mixer-channels]:empty]/mixer:flex",
+		"hidden min-h-24 items-center justify-center rounded-xl border border-dashed p-6 text-center text-sm text-muted-foreground [grid-area:channels] group-has-[[data-slot=mixer-channels]:empty]/mixer:flex",
 		className
 	)}
 	{...restProps}

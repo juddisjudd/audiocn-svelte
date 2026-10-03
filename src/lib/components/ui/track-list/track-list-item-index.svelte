@@ -18,15 +18,14 @@
 	bind:this={ref}
 	data-slot="track-list-item-index"
 	class={cn(
-		"text-muted-foreground group-data-active/track-list-item:text-primary flex w-5 shrink-0 items-center justify-center font-mono text-xs tabular-nums",
+		"flex w-5 shrink-0 items-center justify-center font-mono text-xs text-muted-foreground tabular-nums group-data-active/track-list-item:text-primary",
 		className
 	)}
 	{...restProps}
 >
 	{#if item.playing}
 		<span aria-label="Playing" class="flex h-3 items-end gap-px" role="img">
-			<span
-				class="h-3 w-0.5 animate-pulse rounded-full bg-current motion-reduce:animate-none"
+			<span class="h-3 w-0.5 animate-pulse rounded-full bg-current motion-reduce:animate-none"
 			></span>
 			<span
 				class="h-2 w-0.5 animate-pulse rounded-full bg-current [animation-delay:200ms] motion-reduce:animate-none"
