@@ -15,7 +15,8 @@
 		"format": "prettier --write .",
 		"test:watch": "vitest",
 		"docs:convert": "node scripts/convert-mdx.mjs",
-		"registry:build": "shadcn-svelte registry build"
+		"registry:build": "shadcn-svelte registry build",
+		"test:install": "node scripts/test-install.mjs"
 	},
 	"devDependencies": {
 		"@eslint/js": "^10.0.1",
