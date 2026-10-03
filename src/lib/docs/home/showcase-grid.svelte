@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { cn } from "#lib/utils.js";
+	import { withBase } from "../paths.js";
 	import ShowcaseCard from "./showcase-card.svelte";
 	import ShowcaseTile from "./showcase-tile.svelte";
 	import { GRID, TILES, type TileName } from "./tiles.js";
@@ -8,7 +9,7 @@
 {#snippet column(names: TileName[], className: string)}
 	<div class={cn("flex min-w-0 flex-col gap-4", className)}>
 		{#each names as name (name)}
-			<ShowcaseCard label={TILES[name].label} href={TILES[name].href}>
+			<ShowcaseCard label={TILES[name].label} href={withBase(TILES[name].href)}>
 				<ShowcaseTile {name} />
 			</ShowcaseCard>
 		{/each}

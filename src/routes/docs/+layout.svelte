@@ -4,6 +4,7 @@
 	import XIcon from "phosphor-svelte/lib/XIcon";
 	import { afterNavigate } from "$app/navigation";
 	import { page } from "$app/state";
+	import { withoutBase } from "#lib/docs/paths.js";
 	import { Button } from "#lib/components/ui/button/index.js";
 	import DocsSidebar from "#lib/docs/layout/docs-sidebar.svelte";
 	import ThemePicker from "#lib/docs/layout/theme-picker.svelte";
@@ -12,7 +13,7 @@
 
 	let menuOpen = $state(false);
 
-	const pathname = $derived(page.url.pathname);
+	const pathname = $derived(withoutBase(page.url.pathname));
 	const current = $derived(
 		data.nav.find((item) => item.type === "page" && item.href === pathname)?.title
 	);

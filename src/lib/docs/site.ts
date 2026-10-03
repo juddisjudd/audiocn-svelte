@@ -1,5 +1,5 @@
 /** Where the built registry (`static/r/`) is served. Change this one value to move it. */
-export const REGISTRY_URL = "https://audiocn-svelte.dev/r";
+export const REGISTRY_URL = "https://juddisjudd.github.io/audiocn-svelte/r";
 
 /** Shorthand for a registry item in docs commands: `@audiocn-svelte/level-meter`. */
 export const REGISTRY_SHORTHAND = "@audiocn-svelte";
@@ -9,7 +9,7 @@ export const siteConfig = {
 	title: "audiocn-svelte — Audio components for Svelte and shadcn-svelte",
 	description:
 		"Copy-and-paste audio components for Svelte and shadcn-svelte. Build mixers, players, meters, knobs and waveforms with accessible UI you own.",
-	url: "https://audiocn-svelte.dev",
+	url: "https://juddisjudd.github.io/audiocn-svelte",
 	/** This port's repository. Leave empty to hide the GitHub link. */
 	githubUrl: "https://github.com/juddisjudd/audiocn-svelte",
 	upstream: {

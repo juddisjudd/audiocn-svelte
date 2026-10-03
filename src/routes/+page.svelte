@@ -4,6 +4,7 @@
 	import { InstallCommand } from "#lib/docs/components/index.js";
 	import ShowcaseGrid from "#lib/docs/home/showcase-grid.svelte";
 	import ThemeSwatches from "#lib/docs/home/theme-swatches.svelte";
+	import { withBase } from "#lib/docs/paths.js";
 	import { siteConfig } from "#lib/docs/site.js";
 
 	let { data } = $props();
@@ -25,7 +26,7 @@
 		></div>
 		<div class="mx-auto flex max-w-7xl flex-col items-center gap-6 text-center">
 			<a
-				href="/docs/components"
+				href={withBase("/docs/components")}
 				class="group/pill flex items-center gap-1.5 rounded-full border px-3 py-1 text-xs text-muted-foreground transition-colors outline-none hover:bg-muted/60 hover:text-foreground focus-visible:ring-3 focus-visible:ring-ring/50"
 			>
 				Audio components for shadcn-svelte
@@ -44,8 +45,10 @@
 				you own every line.
 			</p>
 			<div class="flex flex-wrap justify-center gap-3">
-				<Button href="/docs" size="lg">Get started</Button>
-				<Button href="/docs/components" size="lg" variant="outline">Browse components</Button>
+				<Button href={withBase("/docs")} size="lg">Get started</Button>
+				<Button href={withBase("/docs/components")} size="lg" variant="outline"
+					>Browse components</Button
+				>
 			</div>
 			<div class="w-full max-w-xl text-left">
 				<InstallCommand name="mixer" />
@@ -71,7 +74,7 @@
 		</div>
 		<ShowcaseGrid />
 		<div class="mt-12 flex justify-center">
-			<Button href="/docs/components" size="lg" variant="outline">
+			<Button href={withBase("/docs/components")} size="lg" variant="outline">
 				{data.componentCount > 0
 					? `Browse all ${data.componentCount} components`
 					: "Browse components"}

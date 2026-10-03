@@ -1,12 +1,13 @@
 <script lang="ts">
 	import { cn } from "#lib/utils.js";
+	import { withBase } from "../paths.js";
 	import { siteConfig } from "../site.js";
 
 	let { class: className }: { class?: string } = $props();
 </script>
 
 <a
-	href="/"
+	href={withBase("/")}
 	class={cn(
 		"inline-flex items-center gap-1.5 rounded-md font-semibold tracking-tight outline-none focus-visible:ring-3 focus-visible:ring-ring/50",
 		className

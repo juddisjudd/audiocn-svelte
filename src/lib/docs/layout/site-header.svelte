@@ -3,6 +3,7 @@
 	import { page } from "$app/state";
 	import { buttonVariants } from "#lib/components/ui/button/index.js";
 	import { cn } from "#lib/utils.js";
+	import { withBase, withoutBase } from "../paths.js";
 	import { siteConfig } from "../site.js";
 	import Brand from "./brand.svelte";
 	import ModeToggle from "./mode-toggle.svelte";
@@ -14,7 +15,7 @@
 		{ href: "/docs/blocks", label: "Blocks" },
 	];
 
-	const pathname = $derived(page.url.pathname);
+	const pathname = $derived(withoutBase(page.url.pathname));
 
 	const isActive = (href: string) => {
 		const nested = LINKS.some(
@@ -32,7 +33,7 @@
 		<nav aria-label="Main" class="hidden items-center gap-1 text-sm md:flex">
 			{#each LINKS as link (link.href)}
 				<a
-					href={link.href}
+					href={withBase(link.href)}
 					aria-current={isActive(link.href) ? "page" : undefined}
 					class="rounded-md px-2.5 py-1.5 font-medium text-muted-foreground transition-colors outline-none hover:text-foreground focus-visible:ring-3 focus-visible:ring-ring/50 aria-[current=page]:text-primary"
 				>

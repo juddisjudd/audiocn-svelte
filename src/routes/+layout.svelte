@@ -7,6 +7,7 @@
 	import SiteFooter from "#lib/docs/layout/site-footer.svelte";
 	import SiteHeader from "#lib/docs/layout/site-header.svelte";
 	import { packageManager } from "#lib/docs/package-manager.svelte.js";
+	import { withBase } from "#lib/docs/paths.js";
 	import { siteConfig } from "#lib/docs/site.js";
 	import { THEME_STORAGE_KEY } from "#lib/docs/site-themes.js";
 
@@ -42,7 +43,7 @@
 <svelte:window {onkeydown} />
 
 <svelte:head>
-	<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+	<link rel="icon" href={withBase("/favicon.svg")} type="image/svg+xml" />
 	<meta property="og:site_name" content={siteConfig.name} />
 </svelte:head>
 

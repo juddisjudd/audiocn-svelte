@@ -1,6 +1,7 @@
 import { mdsvex } from "mdsvex";
 import type { PreprocessorGroup } from "svelte/compiler";
 import { highlightCodeBlock } from "./highlight.ts";
+import { rehypeBaseLinks } from "./rehype-base-links.ts";
 import { rehypeHeadings } from "./rehype-headings.ts";
 import { rehypeTables } from "./rehype-tables.ts";
 import { remarkDocs } from "./remark-docs.ts";
@@ -25,7 +26,11 @@ export const docsPreprocess = (): PreprocessorGroup[] => [
 		extensions: MARKDOWN_EXTENSIONS,
 		smartypants: false,
 		remarkPlugins: [remarkDocs as never],
-		rehypePlugins: [rehypeHeadings as never, rehypeTables as never],
+		rehypePlugins: [
+			rehypeHeadings as never,
+			rehypeTables as never,
+			rehypeBaseLinks(process.env.VITE_BASE_PATH ?? "") as never,
+		],
 		highlight: { highlighter: highlightCodeBlock },
 	}) as PreprocessorGroup,
 	moduleScript,

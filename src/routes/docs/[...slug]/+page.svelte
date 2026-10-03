@@ -4,6 +4,7 @@
 	import DocsPager from "#lib/docs/layout/docs-pager.svelte";
 	import DocsToc from "#lib/docs/layout/docs-toc.svelte";
 	import { navPages } from "#lib/docs/nav.js";
+	import { withoutBase } from "#lib/docs/paths.js";
 	import { siteConfig } from "#lib/docs/site.js";
 
 	let { data } = $props();
@@ -15,14 +16,15 @@
 	}));
 
 	const pages = $derived(navPages(data.nav));
-	const index = $derived(pages.findIndex((item) => item.href === page.url.pathname));
+	const pathname = $derived(withoutBase(page.url.pathname));
+	const index = $derived(pages.findIndex((item) => item.href === pathname));
 	const previous = $derived(index > 0 ? pages[index - 1] : undefined);
 	const next = $derived(index >= 0 ? pages[index + 1] : undefined);
 
 	const metadata = $derived(data.metadata);
 	const Content = $derived(data.content);
 
-	const isItemPage = $derived(/^\/docs\/(components|blocks)\/./.test(page.url.pathname));
+	const isItemPage = $derived(/^\/docs\/(components|blocks)\/./.test(pathname));
 	const title = $derived(
 		metadata.seoTitle ?? (isItemPage ? `${metadata.title} for Svelte` : metadata.title)
 	);
@@ -36,7 +38,7 @@
 		<meta property="og:description" content={description} />
 	{/if}
 	<meta property="og:title" content={title} />
-	<link rel="canonical" href="{siteConfig.url}{page.url.pathname}" />
+	<link rel="canonical" href="{siteConfig.url}{pathname}" />
 </svelte:head>
 
 <div class="flex w-full flex-1">

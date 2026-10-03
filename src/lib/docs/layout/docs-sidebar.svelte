@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { cn } from "#lib/utils.js";
+	import { withBase } from "../paths.js";
 	import type { NavItem } from "../types.js";
 
 	interface Props {
@@ -19,7 +20,7 @@
 			</p>
 		{:else}
 			<a
-				href={item.href}
+				href={withBase(item.href)}
 				aria-current={item.href === pathname ? "page" : undefined}
 				class="rounded-md px-2 py-1.5 text-muted-foreground transition-colors outline-none hover:bg-accent hover:text-accent-foreground focus-visible:ring-2 focus-visible:ring-ring/50 aria-[current=page]:bg-primary/10 aria-[current=page]:font-medium aria-[current=page]:text-primary"
 			>

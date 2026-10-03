@@ -1,6 +1,7 @@
 <script lang="ts">
 	import CaretLeftIcon from "phosphor-svelte/lib/CaretLeftIcon";
 	import CaretRightIcon from "phosphor-svelte/lib/CaretRightIcon";
+	import { withBase } from "../paths.js";
 
 	interface PagerLink {
 		title: string;
@@ -16,7 +17,7 @@
 {#if previous || next}
 	<nav aria-label="Previous and next page" class="mt-16 grid grid-cols-2 gap-4">
 		{#if previous}
-			<a href={previous.href} class={CARD}>
+			<a href={withBase(previous.href)} class={CARD}>
 				<span class="inline-flex items-center gap-1 text-muted-foreground">
 					<CaretLeftIcon aria-hidden="true" class="size-3.5" />
 					Previous
@@ -27,7 +28,7 @@
 			<span></span>
 		{/if}
 		{#if next}
-			<a href={next.href} class="{CARD} items-end text-end">
+			<a href={withBase(next.href)} class="{CARD} items-end text-end">
 				<span class="inline-flex items-center gap-1 text-muted-foreground">
 					Next
 					<CaretRightIcon aria-hidden="true" class="size-3.5" />
