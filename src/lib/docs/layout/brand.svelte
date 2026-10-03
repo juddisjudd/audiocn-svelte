@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { cn } from "#lib/utils.js";
 	import { withBase } from "../paths.js";
-	import { siteConfig } from "../site.js";
 
 	let { class: className }: { class?: string } = $props();
 </script>
@@ -24,5 +23,5 @@
 		<path d="M38.4 102.9a43.5 43.5 0 1 1 51.2 0" stroke-width="8.6" />
 		<path d="m63.3 70 20.5-23.8" stroke-width="8" />
 	</svg>
-	{siteConfig.name}
+	<span>audiocn-<span class="text-[#ff3e00]">svelte</span></span>
 </a>
