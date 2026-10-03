@@ -1,11 +1,11 @@
 <script lang="ts">
-	import ChannelToggle, { type ChannelToggleProps } from "./channel-toggle.svelte";
+	import ChannelToggle, { type ChannelTogglePresetProps } from "./channel-toggle.svelte";
 
 	let {
 		ref = $bindable(null),
 		pressed = $bindable(false),
 		...restProps
-	}: Omit<ChannelToggleProps, "tone"> = $props();
+	}: ChannelTogglePresetProps = $props();
 </script>
 
 <ChannelToggle

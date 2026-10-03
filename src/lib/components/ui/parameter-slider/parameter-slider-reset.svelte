@@ -21,6 +21,7 @@
 		class: className,
 		children,
 		child,
+		onclick,
 		...restProps
 	}: ParameterSliderResetProps = $props();
 
@@ -38,7 +39,11 @@
 				"data-modified": modified ? "" : undefined,
 				"data-slot": "parameter-slider-reset",
 				disabled: slider.disabled || !modified,
-				onclick: () => {
+				onclick: (event: MouseEvent & { currentTarget: EventTarget & HTMLButtonElement }) => {
+					onclick?.(event);
+					if (event.defaultPrevented) {
+						return;
+					}
 					slider.change(slider.resetValue, { reason: "reset" });
 					slider.commit(slider.resetValue);
 				},

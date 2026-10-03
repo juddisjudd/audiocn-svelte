@@ -27,6 +27,7 @@
 		type = "current",
 		format = defaultTimeFormat,
 		class: className,
+		style,
 		...restProps
 	}: AudioPlayerTimeProps = $props();
 
@@ -57,7 +58,7 @@
 	)}
 	data-slot="audio-player-time"
 	data-type={type}
-	style:--audio-player-time-width="{timeWidth}ch"
+	style={`--audio-player-time-width:${timeWidth}ch;${style ?? ""}`}
 	{...restProps}
 >
 	{format(seconds, type)}

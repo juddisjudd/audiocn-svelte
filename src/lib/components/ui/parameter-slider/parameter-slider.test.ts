@@ -53,6 +53,19 @@ describe("ParameterSlider", () => {
 		await fireEvent.keyDown(input, { key: "ArrowDown", shiftKey: true });
 		expect(onValueCommit).toHaveBeenLastCalledWith(490);
 	});
+
+	it("steps the input like a number field, committing only real changes", async () => {
+		const onValueCommit = vi.fn();
+		render(Harness, { input: true, label: "Mix", onValueCommit, step: 0.5, value: 100 });
+		const input = screen.getByRole("textbox", { name: "Mix" });
+		await fireEvent.keyDown(input, { key: "ArrowUp" });
+		await fireEvent.keyDown(input, { key: "End" });
+		await fireEvent.keyDown(input, { key: "PageDown" });
+		await fireEvent.keyDown(input, { ctrlKey: true, key: "ArrowDown" });
+		expect(onValueCommit).not.toHaveBeenCalled();
+		await fireEvent.keyDown(input, { altKey: true, key: "ArrowDown" });
+		expect(onValueCommit).toHaveBeenLastCalledWith(99.9);
+	});
 });
 
 describe("controls", () => {

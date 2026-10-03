@@ -185,8 +185,10 @@
 		}
 		event.preventDefault();
 		const next = target();
-		setValue(next);
-		onValueCommit?.(next);
+		if (next !== value) {
+			setValue(next);
+			onValueCommit?.(next);
+		}
 	};
 
 	const handleDoubleClick = () => {

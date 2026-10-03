@@ -1,3 +1,4 @@
+import { untrack } from "svelte";
 import { extract, type MaybeGetter } from "runed";
 
 import { CLIP_HOLD_MS, CLIP_THRESHOLD_DB } from "#lib/audio/zones.js";
@@ -23,11 +24,12 @@ export interface ClipHold {
 export const useClipHold = (options: MaybeGetter<UseClipHoldOptions> = {}): ClipHold => {
 	let clipping = $state(false);
 	let count = $state(0);
-	// Plain mirrors, so calling `report` inside an effect never subscribes it.
+	// Plain mirrors and `untrack`, so calling `report` inside an effect never subscribes it.
 	let clippingNow = false;
 	let countNow = 0;
 	let above = false;
 	let timer: ReturnType<typeof setTimeout> | null = null;
+	const holdMs = $derived(extract(options).holdMs ?? CLIP_HOLD_MS);
 
 	const update = (next: boolean) => {
 		if (clippingNow === next) {
@@ -52,7 +54,6 @@ export const useClipHold = (options: MaybeGetter<UseClipHoldOptions> = {}): Clip
 
 	const scheduleRelease = () => {
 		clearTimer();
-		const holdMs = extract(options).holdMs ?? CLIP_HOLD_MS;
 		if (Number.isFinite(holdMs)) {
 			timer = setTimeout(() => {
 				timer = null;
@@ -61,28 +62,39 @@ export const useClipHold = (options: MaybeGetter<UseClipHoldOptions> = {}): Clip
 		}
 	};
 
-	const report = (db: number) => {
-		const isAbove = db >= (extract(options).thresholdDb ?? CLIP_THRESHOLD_DB);
-		const wasAbove = above;
-		above = isAbove;
-		if (!isAbove) {
-			return;
-		}
-		if (!wasAbove) {
-			setCount(countNow + 1);
-		}
-		update(true);
-		scheduleRelease();
-	};
+	const report = (db: number) =>
+		untrack(() => {
+			const isAbove = db >= (extract(options).thresholdDb ?? CLIP_THRESHOLD_DB);
+			const wasAbove = above;
+			above = isAbove;
+			if (!isAbove) {
+				return;
+			}
+			if (!wasAbove) {
+				setCount(countNow + 1);
+			}
+			update(true);
+			scheduleRelease();
+		});
 
-	const reset = () => {
-		clearTimer();
-		above = false;
-		setCount(0);
-		update(false);
-	};
+	const reset = () =>
+		untrack(() => {
+			clearTimer();
+			above = false;
+			setCount(0);
+			update(false);
+		});
 
-	$effect(() => clearTimer);
+	$effect(() => {
+		// A new hold time re-arms a lit light, so a latched one can release.
+		void holdMs;
+		untrack(() => {
+			if (clippingNow && timer === null) {
+				scheduleRelease();
+			}
+		});
+		return clearTimer;
+	});
 
 	return {
 		get clipping() {

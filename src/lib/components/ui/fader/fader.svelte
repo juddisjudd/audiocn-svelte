@@ -231,7 +231,7 @@
 			return ariaLabel ?? undefined;
 		},
 		get ariaLabelledBy() {
-			return ariaLabelledBy ?? labelId;
+			return ariaLabelledBy ?? (ariaLabel == null ? labelId : undefined);
 		},
 		get value() {
 			return value;
@@ -280,6 +280,11 @@
 				}
 			};
 		},
+		focusThumb: () => {
+			if (!disabled) {
+				ref?.querySelector<HTMLElement>("[data-slider-thumb]")?.focus({ focusVisible: true });
+			}
+		},
 		format: (db) => format(db),
 		fromPosition,
 		change,
@@ -290,6 +295,8 @@
 
 <div
 	bind:this={ref}
+	role="group"
+	aria-labelledby={labelId}
 	data-slot="fader"
 	data-at-detent={detents.includes(value) ? "" : undefined}
 	data-disabled={disabled ? "" : undefined}

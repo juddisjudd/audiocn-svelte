@@ -5,7 +5,7 @@ import BlocksTwice from "./blocks-twice.test.svelte";
 
 describe("blocks rendered twice on one page", () => {
 	it("keep every DOM id unique", () => {
-		render(BlocksTwice, { props: { withSettings: true } });
+		render(BlocksTwice, { props: { all: true } });
 		const ids = [...document.querySelectorAll("[id]")].map(({ id }) => id);
 		expect(ids.length).toBeGreaterThan(0);
 		expect(new Set(ids).size).toBe(ids.length);

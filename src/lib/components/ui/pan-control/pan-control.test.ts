@@ -39,4 +39,15 @@ describe("PanControl", () => {
 		expect(onValueCommit).toHaveBeenLastCalledWith(0);
 		expect(thumb).toHaveAttribute("aria-valuetext", "Center");
 	});
+
+	it("commits only keys that move it", async () => {
+		const onValueCommit = vi.fn();
+		render(PanControl, { onValueCommit, value: 1 });
+		const thumb = screen.getByRole("slider", { name: "Pan" });
+		await fireEvent.keyDown(thumb, { key: "ArrowRight" });
+		await fireEvent.keyDown(thumb, { key: "End" });
+		expect(onValueCommit).not.toHaveBeenCalled();
+		await fireEvent.keyDown(thumb, { key: "Home" });
+		expect(onValueCommit).toHaveBeenCalledWith(-1);
+	});
 });

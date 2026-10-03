@@ -9,16 +9,19 @@
 		FaderTrack,
 		FaderValue,
 		type FaderProps,
+		type FaderResetProps,
 	} from "./index.js";
 
 	let {
 		value,
 		layout = "controlled",
+		resetProps = {},
 		...faderProps
 	}: FaderProps & {
 		value: number;
 		/** `controlled`: a parent that never takes the new value. `full`: every part. */
 		layout?: "controlled" | "full";
+		resetProps?: FaderResetProps;
 	} = $props();
 </script>
 
@@ -27,7 +30,7 @@
 {:else}
 	<Fader {value} {...faderProps}>
 		<FaderLabel>Microphone</FaderLabel>
-		<FaderReset />
+		<FaderReset {...resetProps} />
 		<FaderValue editable />
 		<FaderTrack>
 			<FaderRange />

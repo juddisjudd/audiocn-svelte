@@ -41,6 +41,8 @@
 		tone?: ChannelToggleTone;
 		variant?: ChannelToggleVariant;
 	};
+
+	export type ChannelTogglePresetProps = Omit<ChannelToggleProps, "tone">;
 </script>
 
 <script lang="ts">

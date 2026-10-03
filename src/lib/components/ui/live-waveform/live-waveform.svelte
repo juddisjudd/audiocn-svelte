@@ -347,32 +347,21 @@
 	let latest: VisualFrame | null = null;
 	let dirty = true;
 	const historyPlayback = createHistoryPlayback();
-	// Its own signal, so the source effects re-run only when the source changes.
+	// One signal per value, so an effect re-runs only when its own value
+	// changes, not whenever any prop does.
 	const frameSource = $derived(source);
+	const drawActive = $derived(active);
+	const drawBarGap = $derived(barGap);
+	const drawBarRadius = $derived(barRadius);
+	const drawBarWidth = $derived(barWidth);
+	const drawFadeEdges = $derived(fadeEdges);
+	const drawFadeWidth = $derived(fadeWidth);
+	const drawLineWidth = $derived(lineWidth);
+	const drawMinBarHeight = $derived(minBarHeight);
+	const drawMode = $derived(mode);
+	const drawSensitivity = $derived(sensitivity);
+	const drawVariant = $derived(variant);
 	let previousSource = untrack(() => frameSource);
-
-	const readOptions = (): DrawOptions => ({
-		active,
-		barGap,
-		barRadius,
-		barWidth,
-		fadeEdges,
-		fadeWidth,
-		lineWidth,
-		minBarHeight,
-		mode,
-		sensitivity,
-		variant,
-	});
-	// The painter reads these on every paint, so a new option repaints without
-	// rebuilding the painter.
-	let options = readOptions();
-
-	$effect(() => {
-		options = readOptions();
-		dirty = true;
-		wake();
-	});
 
 	$effect(() => {
 		const current = frameSource;
@@ -407,6 +396,19 @@
 			return;
 		}
 		const reduced = reducedMotion.current;
+		const options: DrawOptions = {
+			active: drawActive,
+			barGap: drawBarGap,
+			barRadius: drawBarRadius,
+			barWidth: drawBarWidth,
+			fadeEdges: drawFadeEdges,
+			fadeWidth: drawFadeWidth,
+			lineWidth: drawLineWidth,
+			minBarHeight: drawMinBarHeight,
+			mode: drawMode,
+			sensitivity: drawSensitivity,
+			variant: drawVariant,
+		};
 		const size: Size = { height: 0, ratio: 1, width: 0 };
 		let color = "";
 		let framesSinceColor = COLOR_REFRESH_FRAMES;

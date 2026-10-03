@@ -90,4 +90,31 @@ describe("Fader", () => {
 		expect(onValueCommit).toHaveBeenCalledTimes(2);
 		expect(reset).toBeDisabled();
 	});
+
+	it("runs your onclick on reset first, and preventDefault skips the reset", async () => {
+		const onValueCommit = vi.fn();
+		const seen: string[] = [];
+		render(Harness, {
+			layout: "full",
+			onValueCommit,
+			resetProps: {
+				onclick: (event: MouseEvent) => {
+					seen.push(faderInput().getAttribute("aria-valuetext") ?? "");
+					event.preventDefault();
+				},
+			},
+			value: -6,
+		});
+		await fireEvent.click(screen.getByRole("button", { name: "Reset" }));
+		expect(seen).toEqual(["−6.0 dB"]);
+		expect(onValueCommit).not.toHaveBeenCalled();
+	});
+
+	it("names its group from the label, and focuses the thumb when the label is clicked", async () => {
+		render(Harness, { "aria-label": "Mic", layout: "full", value: -6 });
+		expect(screen.getByRole("group", { name: "Microphone" })).toHaveAttribute("data-slot", "fader");
+		expect(faderInput()).toHaveAccessibleName("Mic");
+		await fireEvent.click(screen.getByText("Microphone"));
+		expect(faderInput()).toHaveFocus();
+	});
 });

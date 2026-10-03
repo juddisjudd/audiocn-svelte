@@ -431,10 +431,9 @@ export const useWebAudioMixer = (
 		if (!(context && enabled)) {
 			return;
 		}
-		graph.start(context, {
-			analyser: JSON.parse(analyserKey) as AnalyserTapOptions,
-			limiter,
-		});
+		const analyser = JSON.parse(analyserKey) as AnalyserTapOptions;
+		// start() re-applies the mixer state; reading it here must not rebuild the graph.
+		untrack(() => graph.start(context, { analyser, limiter }));
 		return () => {
 			graph.stop();
 		};
@@ -444,15 +443,17 @@ export const useWebAudioMixer = (
 	// are read when the graph reconciles.
 	$effect(() => {
 		const key = inputsKey;
-		const latest = untrack(() => extract(options).inputs);
-		const wanted: Record<string, AnalyserInput | undefined> = {};
-		for (const entry of key.split("|")) {
-			const [id] = entry.split(":");
-			if (id) {
-				wanted[id] = latest[id];
+		untrack(() => {
+			const latest = extract(options).inputs;
+			const wanted: Record<string, AnalyserInput | undefined> = {};
+			for (const entry of key.split("|")) {
+				const [id] = entry.split(":");
+				if (id) {
+					wanted[id] = latest[id];
+				}
 			}
-		}
-		graph.reconcile(wanted);
+			graph.reconcile(wanted);
+		});
 	});
 
 	$effect(() => {

@@ -2,7 +2,7 @@
 
 audiocn-svelte is a Svelte 5 port of [audiocn](https://github.com/audiocn/ui) (MIT). Every item keeps audiocn's name, props, data attributes, class strings and behaviour, translated to the shadcn-svelte conventions below. The test for every component: a developer who knows shadcn-svelte can guess its API.
 
-The React source is the reference. Its plans (`plans/002-conventions.md` to `008-blocks.md`) are the specs.
+The React source is the reference. Its plans (`plans/002-conventions.md` to `008-blocks.md`) are the specs. The port matches upstream commit `199b0b8`; diff from there to find new work.
 
 ## Stack
 
@@ -65,7 +65,7 @@ export {
 - `useEffect` becomes `$effect` with a returned teardown. Read values the effect must not depend on inside `untrack`. `useEffectEvent` is not needed: props are live, so a callback reads the current prop. `useMemo` becomes `$derived`, `useState` becomes `$state`, `useCallback` becomes a plain function, `useId` becomes `$props.id()`.
 - Element refs: `bind:this` into a `$state(null)` variable, or the `ref` bindable.
 - JSX attributes become HTML attributes: `class`, `for`, `tabindex`, lowercase events (`onclick`, `onpointerdown`). `style={{ ... }}` becomes `style:prop={...}`; CSS variables use `style:--meter-level={x}`.
-- When a component sets its own handler and also spreads `restProps`, chain the user's handler (`mergeProps`, or call `restProps.onclick?.(event)`), so neither is lost.
+- When a component sets its own handler and also spreads `restProps`, chain the user's handler, so neither is lost. Base UI runs the user's handler first and lets it cancel the built-in one, so call the user's first and skip ours when it called `event.preventDefault()`.
 - No icon imports in `ui` components. Icons are children. Blocks use `phosphor-svelte`.
 - Components render on the server. Touch browser APIs only in `$effect`, event handlers, or behind `typeof window` checks. Drop `"use client"`.
 - Formatting: tabs and double quotes. Keep the React file's comments where they are still true. Add no change-narration comments.

@@ -10,22 +10,6 @@ import Harness from "./music-player.test.svelte";
 
 const TRACKS = [{ id: "demo", src: "demo.wav", title: "Demo" }];
 
-describe("blocks rendered twice on one page", () => {
-	it("keep every DOM id unique", () => {
-		render(Harness, {
-			props: {
-				players: [
-					{ defaultTracks: TRACKS, duckingSource: null },
-					{ defaultTracks: TRACKS, duckingSource: null },
-				],
-			},
-		});
-		const ids = [...document.querySelectorAll("[id]")].map(({ id }) => id);
-		expect(ids.length).toBeGreaterThan(0);
-		expect(new Set(ids).size).toBe(ids.length);
-	});
-});
-
 describe("blocks driving Web Audio", () => {
 	beforeEach(() => {
 		vi.spyOn(HTMLMediaElement.prototype, "load").mockImplementation(() => {

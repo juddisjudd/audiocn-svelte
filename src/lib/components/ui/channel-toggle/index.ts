@@ -6,6 +6,7 @@ import Solo from "./solo-toggle.svelte";
 export {
 	channelToggleVariants,
 	type ChannelToggleProps,
+	type ChannelTogglePresetProps,
 	type ChannelToggleSize,
 	type ChannelToggleTone,
 	type ChannelToggleVariant,
