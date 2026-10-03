@@ -5,7 +5,7 @@
 	"type": "module",
 	"scripts": {
 		"dev": "vite dev",
-		"build": "vite build",
+		"build": "pnpm registry:build && vite build",
 		"preview": "vite preview",
 		"prepare": "svelte-kit sync || echo ''",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
@@ -13,13 +13,16 @@
 		"test": "vitest run",
 		"lint": "prettier --check . && eslint .",
 		"format": "prettier --write .",
-		"test:watch": "vitest"
+		"test:watch": "vitest",
+		"docs:convert": "node scripts/convert-mdx.mjs",
+		"registry:build": "shadcn-svelte registry build"
 	},
 	"devDependencies": {
 		"@eslint/js": "^10.0.1",
 		"@fontsource-variable/inter": "^5.3.0",
 		"@internationalized/date": "^3.12.4",
 		"@sveltejs/adapter-auto": "^8.0.0",
+		"@sveltejs/adapter-static": "^4.0.0",
 		"@sveltejs/kit": "^3.0.0",
 		"@sveltejs/vite-plugin-svelte": "^7.2.0",
 		"@tailwindcss/vite": "^4.3.0",
@@ -42,6 +45,7 @@
 		"prettier-plugin-svelte": "^4.1.0",
 		"prettier-plugin-tailwindcss": "^0.8.0",
 		"shadcn-svelte": "^1.7.0",
+		"shiki": "^4.5.0",
 		"svelte": "^5.56.7",
 		"svelte-check": "^4.6.0",
 		"svelte-sonner": "^1.2.1",
