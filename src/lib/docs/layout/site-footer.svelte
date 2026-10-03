@@ -10,7 +10,7 @@
 		class="mx-auto flex w-full max-w-360 flex-col items-center justify-between gap-3 px-4 py-6 text-center sm:flex-row sm:px-6 sm:text-left"
 	>
 		<p class="text-sm text-balance text-muted-foreground">
-			{siteConfig.name} is a Svelte port of
+			audiocn-<span class="text-[#ff3e00]">svelte</span> is a Svelte port of
 			<a
 				href={siteConfig.upstream.url}
 				target="_blank"
