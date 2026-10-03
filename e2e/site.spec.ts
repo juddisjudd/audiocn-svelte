@@ -261,6 +261,9 @@ test("the home theme swatches retheme the site in place of the navbar picker", a
 	await expect(page.getByRole("button", { name: "Theme" }).first()).toContainText("Rose");
 });
 
+/** Shared CI runners draw without a GPU, so they get a floor that still catches a re-render storm. */
+const MIN_FPS = process.env.CI ? 15 : 50;
+
 /** The attributes a meter writes as it paints: fill, reading, zone and clip light. */
 const PAINTED_ATTRIBUTES = [
 	"style",
@@ -361,7 +364,7 @@ test("a 16-strip console meters at full frame rate without re-rendering", async 
 	expect(result.meterPaints).toBeGreaterThan(0);
 	expect(result.otherPaints).toBe(0);
 	expect(result.rerenders).toBe(0);
-	expect(result.fps).toBeGreaterThan(50);
+	expect(result.fps).toBeGreaterThan(MIN_FPS);
 });
 
 test.describe("the whole home showcase on screen", () => {
@@ -379,7 +382,7 @@ test.describe("the whole home showcase on screen", () => {
 		expect(result.meterPaints).toBeGreaterThan(0);
 		// Meters paint without re-rendering; a latching clip light may update once.
 		expect(result.rerenders).toBeLessThanOrEqual(2);
-		expect(result.fps).toBeGreaterThan(50);
+		expect(result.fps).toBeGreaterThan(MIN_FPS);
 	});
 });
 
