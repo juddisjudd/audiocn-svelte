@@ -5,7 +5,7 @@ import type { FrameSource } from "#lib/audio/types.js";
 
 export interface UseFrameSourceOptions {
 	/** Pause the subscription without unmounting. Default true. */
-	enabled?: MaybeGetter<boolean>;
+	enabled?: boolean;
 }
 
 /**
@@ -16,11 +16,13 @@ export interface UseFrameSourceOptions {
 export const useFrameSource = <T>(
 	source: MaybeGetter<FrameSource<T> | null | undefined>,
 	onFrame: (frame: T) => void,
-	{ enabled = true }: UseFrameSourceOptions = {}
+	options: MaybeGetter<UseFrameSourceOptions> = {}
 ): void => {
+	const enabled = $derived(extract(options).enabled ?? true);
+
 	$effect(() => {
 		const current = extract(source);
-		if (!(current && extract(enabled))) {
+		if (!(current && enabled)) {
 			return;
 		}
 		return current.subscribe((frame) => {
