@@ -17,6 +17,29 @@ if (!("ResizeObserver" in globalThis)) {
     ResizeObserverStub as unknown as typeof ResizeObserver;
 }
 
+// Node 25+ shadows jsdom's localStorage with its own, which is undefined without --localstorage-file.
+if (typeof globalThis.localStorage?.getItem !== "function") {
+  const store = new Map<string, string>();
+  const storage: Storage = {
+    clear: () => store.clear(),
+    getItem: (key) => store.get(key) ?? null,
+    key: (index) => [...store.keys()][index] ?? null,
+    get length() {
+      return store.size;
+    },
+    removeItem: (key) => {
+      store.delete(key);
+    },
+    setItem: (key, value) => {
+      store.set(key, String(value));
+    },
+  };
+  Object.defineProperty(globalThis, "localStorage", {
+    configurable: true,
+    value: storage,
+  });
+}
+
 if (typeof globalThis.matchMedia !== "function") {
   Object.defineProperty(globalThis, "matchMedia", {
     value: (query: string) => ({
