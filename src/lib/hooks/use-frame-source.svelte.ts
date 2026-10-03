@@ -18,10 +18,10 @@ export const useFrameSource = <T>(
 	onFrame: (frame: T) => void,
 	options: MaybeGetter<UseFrameSourceOptions> = {}
 ): void => {
+	const current = $derived(extract(source));
 	const enabled = $derived(extract(options).enabled ?? true);
 
 	$effect(() => {
-		const current = extract(source);
 		if (!(current && enabled)) {
 			return;
 		}
