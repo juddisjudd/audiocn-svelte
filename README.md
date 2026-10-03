@@ -145,5 +145,3 @@ pnpm test:install     # installs every item into fresh SvelteKit 2 and 3 apps an
 ## Licence
 
 [MIT](./LICENSE). audiocn is MIT licensed by OrcDev; its copyright notice is kept in `LICENSE`.
-
-The site icons are from shadcn-svelte, under its MIT licence. See [`THIRD_PARTY_NOTICES.md`](./THIRD_PARTY_NOTICES.md).
