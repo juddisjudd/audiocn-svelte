@@ -670,6 +670,8 @@
 		border-radius: 0.3em;
 		background: var(--bg-soft);
 		border: 1px solid var(--line);
+		/* long names such as MediaStreamAudioDestinationNode wrap on phones */
+		overflow-wrap: anywhere;
 	}
 
 	.prose :global(.heading-anchor) {
