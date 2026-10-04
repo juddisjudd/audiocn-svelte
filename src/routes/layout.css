@@ -155,12 +155,28 @@
 @layer base {
 	* {
 		@apply border-border outline-ring/50;
+		scrollbar-width: thin;
 	}
 	body {
 		@apply bg-background text-foreground;
 	}
 	html {
 		@apply font-sans;
+		/* Quiet scrollbars, as svocs draws them: a slim thumb on a clear track. */
+		scrollbar-color: color-mix(in oklch, var(--muted-foreground) 40%, transparent) transparent;
+	}
+	/* Safari has no scrollbar-width/color; browsers that support them ignore these. */
+	::-webkit-scrollbar {
+		width: 8px;
+		height: 8px;
+	}
+	::-webkit-scrollbar-track {
+		background: transparent;
+	}
+	::-webkit-scrollbar-thumb {
+		border: 2px solid transparent;
+		border-radius: 9999px;
+		background: color-mix(in oklch, var(--muted-foreground) 40%, transparent) padding-box;
 	}
 }
 
