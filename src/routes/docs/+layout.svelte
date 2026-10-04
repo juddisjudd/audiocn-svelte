@@ -273,73 +273,61 @@
 
 <style>
 	/*
-	 * svocs theme tokens. They are scoped to the docs instead of :root so the
-	 * home page keeps its shadcn look. --brand and --text-muted are svocs'
-	 * --accent and --muted, renamed so they never shadow the shadcn tokens of
-	 * the same names that the live previews use.
+	 * svocs theme tokens, mapped onto the site's shadcn tokens so the docs
+	 * match the home page in both modes and follow the colour picker.
+	 * --brand and --text-muted are svocs' --accent and --muted, renamed so
+	 * they never shadow the shadcn tokens of the same names.
 	 */
 	.svocs {
 		color-scheme: light;
-		--bg: #f8f4f2;
-		--bg-elev: #fffdfc;
-		--bg-soft: #f0e9e5;
-		--bg-soft-2: #e7dcd6;
-		--text: #140a06;
-		--text-soft: #514540;
-		--text-dim: #7d6e66;
-		--text-muted: #87766d;
-		--line: #e3d8d2;
-		--line-strong: #cfc0b8;
-		--brand: #ff3e00;
-		--brand-soft: color-mix(in srgb, var(--brand) 91%, black);
-		--brand-strong: color-mix(in srgb, var(--brand) 76%, black);
-		--brand-contrast: #180806;
-		--danger: #b8321c;
+		--bg: var(--background);
+		--bg-elev: var(--card);
+		--bg-soft: var(--muted);
+		--bg-soft-2: color-mix(in oklch, var(--muted), var(--foreground) 6%);
+		--text: var(--foreground);
+		--text-soft: color-mix(in oklch, var(--foreground) 82%, var(--background));
+		--text-dim: var(--muted-foreground);
+		--text-muted: var(--muted-foreground);
+		--line: var(--border);
+		--line-strong: color-mix(in oklch, var(--border), var(--foreground) 10%);
+		--brand: var(--primary);
+		--brand-soft: color-mix(in oklch, var(--brand) 91%, black);
+		--brand-strong: color-mix(in oklch, var(--brand) 76%, black);
+		--brand-contrast: var(--primary-foreground);
+		--danger: var(--destructive);
 		--code-comment: #97867c;
-		--code-keyword: var(--brand-soft);
+		--code-keyword: #c2410c;
 		--code-string: #8a6d2f;
 		--code-function: #a05e14;
 		--code-number: #ab4a30;
 		--code-property: #33695f;
 		--code-punctuation: #8d7f77;
 		--code-operator: #6f6058;
-		--glow-a: color-mix(in srgb, var(--brand) 15%, white);
-		--glow-b: #efe7e2;
+		/* The home page has a plain background and a flat header. */
+		--glow-a: transparent;
+		--glow-b: transparent;
 		--shadow-card:
-			0 1px 2px rgba(52, 20, 8, 0.05), 0 4px 12px rgba(52, 20, 8, 0.07),
+			0 1px 2px rgba(0, 0, 0, 0.05), 0 4px 12px rgba(0, 0, 0, 0.06),
 			inset 0 1px 0 rgba(255, 255, 255, 0.6);
-		--shadow-lift: 0 1px 2px rgba(52, 20, 8, 0.06), 0 12px 32px rgba(52, 20, 8, 0.12);
-		--shadow-bar: 0 8px 28px rgba(52, 20, 8, 0.08);
+		--shadow-lift: 0 1px 2px rgba(0, 0, 0, 0.06), 0 12px 32px rgba(0, 0, 0, 0.12);
+		--shadow-bar: none;
 	}
 
 	:global(.dark) .svocs {
 		color-scheme: dark;
-		--bg: #070304;
-		--bg-elev: #121011;
-		--bg-soft: #1c1919;
-		--bg-soft-2: #262221;
-		--text: #f5f1ef;
-		--text-soft: #d9cdc7;
-		--text-dim: #a09189;
-		--text-muted: #a89890;
-		--line: #2a2523;
-		--line-strong: #3d3532;
-		--brand-soft: color-mix(in srgb, var(--brand) 78%, white);
-		--brand-strong: color-mix(in srgb, var(--brand) 60%, white);
-		--danger: #ff7d6b;
+		--brand-soft: color-mix(in oklch, var(--brand) 78%, white);
+		--brand-strong: color-mix(in oklch, var(--brand) 60%, white);
 		--code-comment: #857468;
+		--code-keyword: #fb8c4b;
 		--code-string: #c8b482;
 		--code-function: #e0af68;
 		--code-number: #e39a86;
 		--code-property: #8fb8b2;
 		--code-operator: #b3a49b;
-		--glow-a: color-mix(in srgb, var(--brand) 10%, black);
-		--glow-b: #0e0c0c;
 		--shadow-card:
 			0 1px 2px rgba(0, 0, 0, 0.2), 0 4px 12px rgba(0, 0, 0, 0.22),
 			inset 0 1px 0 rgba(255, 255, 255, 0.035);
 		--shadow-lift: 0 1px 2px rgba(0, 0, 0, 0.25), 0 12px 32px rgba(0, 0, 0, 0.38);
-		--shadow-bar: 0 8px 28px rgba(0, 0, 0, 0.35);
 	}
 
 	/* Theme-switch dissolve: the #svocs-dissolve filter disintegrates the old
