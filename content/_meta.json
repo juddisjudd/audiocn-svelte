@@ -1,0 +1,29 @@
+{
+	"items": {
+		"getting-started": {
+			"type": "separator",
+			"title": "Getting started",
+			"order": 1
+		},
+		"introduction": {
+			"order": 2
+		},
+		"installation": {
+			"order": 3
+		},
+		"concepts": {
+			"title": "Concepts",
+			"order": 4
+		},
+		"components": {
+			"order": 5
+		},
+		"hooks": {
+			"title": "Hooks",
+			"order": 6
+		},
+		"blocks": {
+			"order": 7
+		}
+	}
+}

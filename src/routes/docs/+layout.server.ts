@@ -1,3 +1,11 @@
-import { docsNav } from "#lib/docs/server/pages.js";
+import type { LayoutServerLoad } from './$types';
+import { getDocsEntries, loadMetaByDirectory } from '#lib/server/content.js';
+import { buildDocsPageMap } from '#lib/core/page-map.js';
 
-export const load = () => ({ nav: docsNav });
+export const prerender = true;
+
+export const load: LayoutServerLoad = async () => {
+	return {
+		pageMap: buildDocsPageMap(getDocsEntries(), loadMetaByDirectory())
+	};
+};

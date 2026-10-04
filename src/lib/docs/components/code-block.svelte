@@ -1,50 +1,46 @@
 <script lang="ts">
-	import type { Snippet } from "svelte";
-	import { cn } from "#lib/utils.js";
-	import CopyButton from "./copy-button.svelte";
+	import { enhanceCodeBlocks } from "#lib/themes/docs/code-blocks.js";
 
 	interface Props {
-		title?: string;
-		lang?: string;
-		/** Highlighted HTML. The markdown pipeline passes it as children instead. */
+		/** Highlighted `<pre>` HTML from `highlightCode`. */
 		html?: string;
-		class?: string;
-		children?: Snippet;
+		/** Plain source, shown unhighlighted when there is no `html`. */
+		code?: string;
+		title?: string;
+		/** Scroll the code past this height, such as `28rem`. */
+		maxHeight?: string;
 	}
 
-	let { title, lang, html, class: className, children }: Props = $props();
+	let { html, code, title, maxHeight }: Props = $props();
 
-	let body = $state<HTMLElement | null>(null);
+	let body = $state<HTMLElement>();
 
-	const text = () => body?.querySelector("pre")?.textContent ?? "";
+	// The svocs copy button, added when this block mounts. A preview's Code tab
+	// mounts after the layout has enhanced the page's static code blocks.
+	$effect(() => {
+		void html;
+		void code;
+		enhanceCodeBlocks(body ?? null);
+	});
 </script>
 
-<figure
-	data-slot="code-block"
-	data-lang={lang}
-	class={cn(
-		"not-prose group/code relative my-4 overflow-hidden rounded-xl border bg-code text-sm text-code-foreground",
-		className
-	)}
->
+<!-- The same .code-frame markup the svocs highlighter emits for fences, styled by the docs layout. -->
+<div class="code-frame" data-slot="code-block" style:--code-max-height={maxHeight}>
 	{#if title}
-		<figcaption
-			class="flex h-10 items-center border-b px-4 pr-12 font-mono text-xs text-muted-foreground"
-		>
-			{title}
-		</figcaption>
+		<div class="code-frame-header"><span>{title}</span></div>
 	{/if}
-	<div bind:this={body} class="code-block-body">
+	<div class="code-frame-body" bind:this={body}>
 		{#if html !== undefined}
-			<!-- eslint-disable-next-line svelte/no-at-html-tags -- shiki output from our own sources -->
+			<!-- eslint-disable-next-line svelte/no-at-html-tags -- Prism output from our own sources -->
 			{@html html}
 		{:else}
-			{@render children?.()}
+			<pre><code>{code}</code></pre>
 		{/if}
 	</div>
-	<CopyButton
-		{text}
-		label="Copy code"
-		class={cn("absolute right-2", title ? "top-1.5" : "top-2")}
-	/>
-</figure>
+</div>
+
+<style>
+	.code-frame-body :global(pre) {
+		max-height: var(--code-max-height, none);
+	}
+</style>

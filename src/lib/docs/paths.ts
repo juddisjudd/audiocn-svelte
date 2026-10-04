@@ -1,7 +1,7 @@
 /**
  * The path the site is served under, such as `/audiocn-svelte` on GitHub
- * Pages. Empty when it is served from the domain root. Set by `VITE_BASE_PATH`
- * at build time, the same variable that sets SvelteKit's `paths.base`.
+ * Pages. Empty when it is served from the domain root. vite.config.ts sets it
+ * from `BASE_PATH` at build time, the same variable that sets `paths.base`.
  */
 export const BASE_PATH: string = import.meta.env.VITE_BASE_PATH ?? "";
 

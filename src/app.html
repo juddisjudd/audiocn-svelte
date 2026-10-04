@@ -4,6 +4,37 @@
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<meta name="text-scale" content="scale" />
+		<!-- svocs' Satoshi, used by the docs. Declaring a face downloads nothing until a page uses it. -->
+		<style>
+			@font-face {
+				font-family: "Satoshi";
+				src: url("%sveltekit.assets%/fonts/satoshi-400.woff2") format("woff2");
+				font-weight: 400;
+				font-style: normal;
+				font-display: swap;
+			}
+			@font-face {
+				font-family: "Satoshi";
+				src: url("%sveltekit.assets%/fonts/satoshi-500.woff2") format("woff2");
+				font-weight: 500;
+				font-style: normal;
+				font-display: swap;
+			}
+			@font-face {
+				font-family: "Satoshi";
+				src: url("%sveltekit.assets%/fonts/satoshi-700.woff2") format("woff2");
+				font-weight: 700;
+				font-style: normal;
+				font-display: swap;
+			}
+			@font-face {
+				font-family: "Satoshi";
+				src: url("%sveltekit.assets%/fonts/satoshi-900.woff2") format("woff2");
+				font-weight: 900;
+				font-style: normal;
+				font-display: swap;
+			}
+		</style>
 		%sveltekit.head%
 	</head>
 	<body data-sveltekit-preload-data="hover">

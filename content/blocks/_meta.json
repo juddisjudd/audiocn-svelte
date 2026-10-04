@@ -1,0 +1,22 @@
+{
+	"items": {
+		"system-audio-mixer": {
+			"order": 1
+		},
+		"mic-setup": {
+			"order": 2
+		},
+		"system-audio-settings": {
+			"order": 3
+		},
+		"quick-audio-popover": {
+			"order": 4
+		},
+		"soundboard": {
+			"order": 5
+		},
+		"music-player": {
+			"order": 6
+		}
+	}
+}

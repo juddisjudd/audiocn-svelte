@@ -5,7 +5,7 @@ interface HastNode {
 	children?: HastNode[];
 }
 
-/** Wraps markdown tables in a scrolling, bordered box. */
+/** Wraps markdown tables in a box that scrolls sideways, so wide tables never widen the page. */
 export const rehypeTables = () => (tree: HastNode) => {
 	const visit = (node: HastNode) => {
 		node.children = node.children?.map((child) => {

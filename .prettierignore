@@ -9,6 +9,7 @@ bun.lockb
 /static/
 
 # Prettier mangles multi-line props in mdsvex component tags
-src/content/**/*.md
+content/**/*.md
+content/**/*.svx
 
 /build
