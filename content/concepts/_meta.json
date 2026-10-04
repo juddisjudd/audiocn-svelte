@@ -1,0 +1,19 @@
+{
+	"items": {
+		"decibels": {
+			"order": 1
+		},
+		"feeding-data": {
+			"order": 2
+		},
+		"theming": {
+			"order": 3
+		},
+		"accessibility": {
+			"order": 4
+		},
+		"custom-engine": {
+			"order": 5
+		}
+	}
+}

@@ -32,7 +32,7 @@ jobs:
       - run: pnpm test
       - run: pnpm build
         env:
-          VITE_BASE_PATH: /${{ github.event.repository.name }}
+          BASE_PATH: /${{ github.event.repository.name }}
       - uses: actions/upload-pages-artifact@v5
         with:
           path: build

@@ -1,17 +1,21 @@
-import { error } from "@sveltejs/kit";
-import { docsPages, getDocMetadata } from "#lib/docs/server/pages.js";
-import { highlightExamples, highlightFiles } from "#lib/docs/server/source.js";
+import { error } from '@sveltejs/kit';
+import type { PageServerLoad } from './$types';
+import { getDocEntryBySlug, getDocTocBySlug } from '#lib/server/content.js';
+import { loadDocAssets } from '#lib/docs/server/source.js';
 
-export const entries = () => [...docsPages.keys()].map((slug) => ({ slug }));
+export const prerender = true;
 
-export const load = async ({ params }) => {
-	const metadata = getDocMetadata(params.slug);
-	if (!metadata) {
-		error(404, "Page not found");
+export const load: PageServerLoad = async ({ params }) => {
+	const slugParts = params.slug.split('/');
+	const entry = getDocEntryBySlug(slugParts);
+
+	if (!entry) {
+		error(404, `Document not found: ${slugParts.join('/')}`);
 	}
-	const [previewCode, sourceCode] = await Promise.all([
-		highlightExamples(metadata.previewNames),
-		highlightFiles(metadata.sourcePaths),
-	]);
-	return { previewCode, sourceCode };
+
+	return {
+		entry,
+		toc: getDocTocBySlug(slugParts),
+		...(await loadDocAssets(slugParts))
+	};
 };

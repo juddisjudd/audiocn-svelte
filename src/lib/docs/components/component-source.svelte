@@ -13,11 +13,10 @@
 	const page = useDocsPageContext();
 
 	const code = $derived(page()?.sourceCode[path]);
-	const lang = $derived(path.split(".").pop());
 </script>
 
 {#if code}
-	<CodeBlock html={code} title={title ?? path} {lang} class="[&_pre]:max-h-[28rem]" />
+	<CodeBlock html={code} title={title ?? path} maxHeight="28rem" />
 {:else}
-	<p class="my-4 text-sm text-muted-foreground">Source <code>{path}</code> not found.</p>
+	<p>Source <code>{path}</code> not found.</p>
 {/if}

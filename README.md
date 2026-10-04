@@ -120,7 +120,7 @@ Then use it:
 
 ## Develop
 
-This repository holds the docs site, the registry source and the component source, in one SvelteKit app.
+This repository holds the docs site, the registry source and the component source, in one SvelteKit app. The docs are built with [svocs](https://svocs.dev). Its files were copied from the svocs template; `.svocs.json` lists them, so `npx svocs-cli doctor` can check the setup.
 
 | Path                         | What it is                                                                 |
 | ---------------------------- | -------------------------------------------------------------------------- |
@@ -129,7 +129,8 @@ This repository holds the docs site, the registry source and the component sourc
 | `src/lib/hooks/`             | Hooks                                                                      |
 | `src/lib/audio/`             | The audio core: decibel maths, ballistics, tapers, the frame loop          |
 | `src/lib/docs/examples/`     | Docs previews                                                              |
-| `src/content/docs/`          | Docs pages (mdsvex)                                                        |
+| `content/`                   | Docs pages: svocs markdown, `.svx` where a page uses components            |
+| `src/lib/docs/`              | Docs widgets (previews, install commands, props tables) and the home page  |
 | `registry.json`              | The registry. `pnpm registry:build` writes `static/r/`                     |
 
 ```bash
@@ -139,7 +140,7 @@ pnpm test             # unit and component tests (Vitest, jsdom)
 pnpm test:e2e         # browser tests of the built site (Playwright, Chrome)
 pnpm check            # svelte-check
 pnpm lint             # Prettier and ESLint
-pnpm build            # registry and static site
+pnpm build            # registry, static site, search index and social cards
 pnpm test:install     # installs every item into fresh SvelteKit 2 and 3 apps and type-checks them
 ```
 

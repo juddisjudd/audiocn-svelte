@@ -1,7 +1,5 @@
-import { docsPages } from "#lib/docs/server/pages.js";
+import { getDocsEntries } from "#lib/server/content.js";
 
 export const load = () => ({
-	componentCount: [...docsPages.values()].filter((page) =>
-		page.href.startsWith("/docs/components/")
-	).length,
+	componentCount: getDocsEntries().filter((entry) => entry.slug.startsWith("components/")).length,
 });

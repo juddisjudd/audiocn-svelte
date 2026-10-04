@@ -6,12 +6,13 @@ const collectPages = (dir: string, prefix = "/docs"): string[] =>
 		if (entry.isDirectory()) {
 			return collectPages(path.join(dir, entry.name), `${prefix}/${entry.name}`);
 		}
-		if (!entry.name.endsWith(".md")) {
+		if (!/\.(md|svx)$/u.test(entry.name)) {
 			return [];
 		}
-		const slug = entry.name.replace(/\.md$/u, "");
+		const slug = entry.name.replace(/\.(md|svx)$/u, "");
 		return [slug === "index" ? prefix : `${prefix}/${slug}`];
 	});
 
-export const docsPages = collectPages(path.join(process.cwd(), "src/content/docs")).toSorted();
+/** Every svocs content page, plus `/docs`, which renders the introduction. */
+export const docsPages = ["/docs", ...collectPages(path.join(process.cwd(), "content"))].toSorted();
 export const publicPages = ["/", ...docsPages];

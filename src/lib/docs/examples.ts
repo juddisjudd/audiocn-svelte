@@ -16,6 +16,12 @@ export const exampleNames = Object.keys(components).map((key) =>
 
 export const loadExample = async (name: string) => (await components[keyFor(name)]?.())?.default;
 
+/** Example components by name, loaded before a docs page renders. */
+export const loadExamples = async (names: string[]) =>
+	Object.fromEntries(
+		await Promise.all(names.map(async (name) => [name, await loadExample(name)] as const))
+	);
+
 export const loadExampleSource = async (name: string) => {
 	const source = await sources[keyFor(name)]?.();
 	return source?.replace(/\n+$/, "");

@@ -1,0 +1,93 @@
+{
+	"items": {
+		"separator-1": {
+			"type": "separator",
+			"title": "Meters and visualizers",
+			"order": 1
+		},
+		"level-meter": {
+			"order": 2
+		},
+		"db-scale": {
+			"order": 3
+		},
+		"db-readout": {
+			"order": 4
+		},
+		"clip-indicator": {
+			"order": 5
+		},
+		"bar-visualizer": {
+			"order": 6
+		},
+		"electric-bar-visualizer": {
+			"order": 7
+		},
+		"electric-waveform": {
+			"order": 8
+		},
+		"smooth-waveform": {
+			"order": 9
+		},
+		"live-waveform": {
+			"order": 10
+		},
+		"waveform": {
+			"order": 11
+		},
+		"spectrum": {
+			"order": 12
+		},
+		"separator-2": {
+			"type": "separator",
+			"title": "Controls",
+			"order": 13
+		},
+		"fader": {
+			"order": 14
+		},
+		"parameter-slider": {
+			"order": 15
+		},
+		"knob": {
+			"order": 16
+		},
+		"pan-control": {
+			"order": 17
+		},
+		"channel-toggle": {
+			"order": 18
+		},
+		"volume-control": {
+			"order": 19
+		},
+		"audio-device-select": {
+			"order": 20
+		},
+		"separator-3": {
+			"type": "separator",
+			"title": "Mixer",
+			"order": 21
+		},
+		"channel-strip": {
+			"order": 22
+		},
+		"mixer": {
+			"order": 23
+		},
+		"separator-4": {
+			"type": "separator",
+			"title": "Sounds and music",
+			"order": 24
+		},
+		"audio-player": {
+			"order": 25
+		},
+		"track-list": {
+			"order": 26
+		},
+		"sound-pad": {
+			"order": 27
+		}
+	}
+}

@@ -7,7 +7,6 @@
 	import { siteConfig } from "../site.js";
 	import Brand from "./brand.svelte";
 	import ModeToggle from "./mode-toggle.svelte";
-	import ThemePicker from "./theme-picker.svelte";
 
 	const LINKS = [
 		{ href: "/docs", label: "Docs" },
@@ -16,7 +15,6 @@
 	];
 
 	const pathname = $derived(withoutBase(page.url.pathname));
-	const onDocs = $derived(pathname === "/docs" || pathname.startsWith("/docs/"));
 
 	const isActive = (href: string) => {
 		const nested = LINKS.some(
@@ -43,10 +41,6 @@
 			{/each}
 		</nav>
 		<div class="ms-auto flex items-center gap-1">
-			<!-- The home page has its own theme swatches. -->
-			{#if onDocs}
-				<ThemePicker class="hidden sm:flex" />
-			{/if}
 			{#if siteConfig.githubUrl}
 				<a
 					href={siteConfig.githubUrl}

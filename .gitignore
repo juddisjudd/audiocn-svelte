@@ -28,3 +28,6 @@ vite.config.ts.timestamp-*
 # Playwright
 /test-results
 /playwright-report
+
+# Obsidian workspace state when content/ is opened as a vault
+.obsidian

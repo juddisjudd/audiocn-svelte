@@ -1,0 +1,55 @@
+{
+	"items": {
+		"use-demo-signal": {
+			"order": 1
+		},
+		"use-frame-source": {
+			"order": 2
+		},
+		"use-level": {
+			"order": 3
+		},
+		"use-clip-hold": {
+			"order": 4
+		},
+		"use-reduced-motion": {
+			"order": 5
+		},
+		"use-visibility": {
+			"order": 6
+		},
+		"use-audio-context": {
+			"order": 7
+		},
+		"use-gain-node": {
+			"order": 8
+		},
+		"use-audio-analyser": {
+			"order": 9
+		},
+		"use-audio-devices": {
+			"order": 10
+		},
+		"use-microphone": {
+			"order": 11
+		},
+		"use-system-audio": {
+			"order": 12
+		},
+		"use-mixer": {
+			"order": 13
+		},
+		"use-web-audio-mixer": {
+			"order": 14
+		},
+		"use-audio-player": {
+			"order": 15
+		},
+		"use-sound": {
+			"order": 16
+		},
+		"use-waveform-data": {
+			"order": 17
+		}
+	}
+}

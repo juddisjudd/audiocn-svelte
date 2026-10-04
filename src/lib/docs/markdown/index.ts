@@ -1,10 +1,13 @@
 import { mdsvex } from "mdsvex";
+import rehypeAutolinkHeadings from "rehype-autolink-headings";
+import rehypeKatex from "rehype-katex-svelte";
+import rehypeSlug from "rehype-slug";
+import remarkMath from "remark-math";
 import type { PreprocessorGroup } from "svelte/compiler";
-import { highlightCodeBlock } from "./highlight.ts";
-import { rehypeBaseLinks } from "./rehype-base-links.ts";
-import { rehypeHeadings } from "./rehype-headings.ts";
+import { rehypeBasePath } from "../../build/base-path.ts";
+import { highlightWithFilename } from "../../build/code-highlighter.ts";
 import { rehypeTables } from "./rehype-tables.ts";
-import { remarkDocs } from "./remark-docs.ts";
+import { remarkInstallCommand } from "./remark-install-command.ts";
 
 export const MARKDOWN_EXTENSIONS = [".md", ".svx"];
 
@@ -20,18 +23,33 @@ const moduleScript: PreprocessorGroup = {
 			: undefined,
 };
 
-/** The Svelte preprocessors for docs pages: mdsvex with the docs plugins and shiki. */
-export const docsPreprocess = (): PreprocessorGroup[] => [
+/**
+ * The svocs content pipeline (mdsvex, heading anchors, KaTeX, base-path links,
+ * Prism with `filename="…"` frames), plus ```npm fences as install commands and
+ * tables in a scrolling wrapper.
+ * svocs' Obsidian preprocessor is left out: it reads `rows={[[…]]}` in props
+ * tables as wikilinks, and this content is not an Obsidian vault.
+ */
+export const docsPreprocess = (base: string): PreprocessorGroup[] => [
 	mdsvex({
 		extensions: MARKDOWN_EXTENSIONS,
+		// Keeps `--meter-level` and straight quotes intact in prose.
 		smartypants: false,
-		remarkPlugins: [remarkDocs as never],
+		remarkPlugins: [remarkMath as never, remarkInstallCommand as never],
 		rehypePlugins: [
-			rehypeHeadings as never,
+			rehypeSlug as never,
+			[
+				rehypeAutolinkHeadings,
+				{
+					behavior: "append",
+					properties: { className: ["heading-anchor"], "aria-label": "Section link" },
+				},
+			] as never,
+			rehypeKatex as never,
+			rehypeBasePath(base) as never,
 			rehypeTables as never,
-			rehypeBaseLinks(process.env.VITE_BASE_PATH ?? "") as never,
 		],
-		highlight: { highlighter: highlightCodeBlock },
+		highlight: { highlighter: highlightWithFilename, optimise: true },
 	}) as PreprocessorGroup,
 	moduleScript,
 ];

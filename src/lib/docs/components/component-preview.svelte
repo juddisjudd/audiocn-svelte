@@ -1,6 +1,7 @@
 <script lang="ts">
 	import type { Component } from "svelte";
-	import * as Tabs from "#lib/components/ui/tabs/index.js";
+	import Tab from "#lib/components/Tab.svelte";
+	import Tabs from "#lib/components/Tabs.svelte";
 	import { Skeleton } from "#lib/components/ui/skeleton/index.js";
 	import { cn } from "#lib/utils.js";
 	import { useDocsPageContext } from "../context.js";
@@ -47,17 +48,14 @@
 	});
 </script>
 
-<div class="not-prose my-6" data-slot="component-preview-tabs">
-	<Tabs.Root value="preview">
-		<Tabs.List variant="line">
-			<Tabs.Trigger value="preview">Preview</Tabs.Trigger>
-			<Tabs.Trigger value="code">Code</Tabs.Trigger>
-		</Tabs.List>
-		<Tabs.Content value="preview">
+<!-- Search indexes the prose, not the demo's labels. -->
+<div class="not-prose" data-slot="component-preview-tabs" data-pagefind-ignore>
+	<Tabs items={["Preview", "Code"]}>
+		<Tab>
 			<div
 				data-slot="component-preview"
 				class={cn(
-					"flex min-h-72 w-full justify-center rounded-xl border bg-background p-4 sm:p-10",
+					"flex min-h-72 w-full justify-center rounded-[0.65rem] border border-(--line) bg-background p-4 font-sans text-foreground sm:p-10",
 					align === "center" && "items-center",
 					align === "start" && "items-start",
 					align === "end" && "items-end",
@@ -79,17 +77,22 @@
 					<Skeleton class="h-24 w-full max-w-sm" />
 				{/if}
 			</div>
-		</Tabs.Content>
-		<Tabs.Content value="code" class="[&_figure]:my-0 [&_pre]:max-h-[32rem]">
+		</Tab>
+		<Tab>
 			{#if code}
-				<CodeBlock html={code} lang="svelte" />
+				<CodeBlock html={code} maxHeight="32rem" />
 			{:else if current?.source}
-				<CodeBlock lang="svelte">
-					<pre><code>{current.source}</code></pre>
-				</CodeBlock>
+				<CodeBlock code={current.source} maxHeight="32rem" />
 			{:else}
-				<p class="text-sm text-muted-foreground">No source for <code>{name}</code>.</p>
+				<p class="missing">No source for <code>{name}</code>.</p>
 			{/if}
-		</Tabs.Content>
-	</Tabs.Root>
+		</Tab>
+	</Tabs>
 </div>
+
+<style>
+	.missing {
+		color: var(--text-dim);
+		font-size: 0.875rem;
+	}
+</style>

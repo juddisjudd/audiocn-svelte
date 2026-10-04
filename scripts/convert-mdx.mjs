@@ -1,11 +1,11 @@
 #!/usr/bin/env node
 /**
- * Converts audiocn docs pages (Fumadocs .mdx) into stubs for this site (mdsvex .md).
+ * Converts audiocn docs pages (Fumadocs .mdx) into stubs for this site's svocs content.
  *
  *   node scripts/convert-mdx.mjs <audiocn content/docs dir | file.mdx ...> [options]
  *
  * Options:
- *   --out <dir>   Where pages go. Default: src/content/docs
+ *   --out <dir>   Where pages go. Default: content
  *   --force       Overwrite pages that already exist
  *   --dry-run     Print what would be written, write nothing
  *   --stdout      Print converted pages instead of writing them
@@ -15,14 +15,18 @@
  *
  * What it does:
  * - keeps the frontmatter, rewording React and shadcn/ui in the SEO fields;
- * - adds a <script> that imports the docs components the page uses;
- * - keeps <ComponentPreview>, <PropsTable>, <Callout>, <Steps> and the other
- *   docs components, maps <ComponentSource> paths to this repo's files, and
- *   adds blank lines inside <Callout> so its content is parsed as markdown;
+ * - adds a <script> that imports the docs components the page uses, and
+ *   writes .svx for pages that have one (.md otherwise), as svocs expects;
+ * - keeps <ComponentPreview>, <PropsTable> and the other docs components,
+ *   and maps <ComponentSource> paths to this repo's files;
+ * - maps <Callout>, <Steps> and <Tabs> to the svocs built-ins: Callout types
+ *   become svocs types, <Step> wrappers go (svocs numbers each ### heading),
+ *   and blank lines go inside <Callout> so its content is parsed as markdown;
  * - turns `npx shadcn@latest add @audiocn/x` into the shadcn-svelte command
  *   (`@audiocn-svelte/x` expands to the registry URL from src/lib/docs/site.ts);
- * - turns tsx code blocks into svelte blocks and rewrites `@/` imports to
- *   `#lib/` paths, but leaves the React code itself to be ported by hand;
+ * - turns tsx code blocks into svelte blocks, `title="…"` into svocs'
+ *   `filename="…"`, and `@/` imports into `#lib/` paths, but leaves the React
+ *   code itself to be ported by hand;
  * - escapes braces in prose, which Svelte would read as expressions.
  */
 import { existsSync } from "node:fs";
@@ -33,17 +37,17 @@ import { fileURLToPath } from "node:url";
 const SECTIONS = ["components", "hooks", "blocks"];
 
 const DOCS_COMPONENTS = [
-	"Callout",
 	"ComponentPreview",
 	"ComponentSource",
 	"InstallCommand",
 	"PropsTable",
-	"Step",
-	"Steps",
-	"Tab",
-	"Tabs",
 	"TypeTable",
 ];
+
+const SVOCS_COMPONENTS = ["Callout", "Steps", "Tab", "Tabs"];
+
+// Fumadocs callout types to svocs ones.
+const CALLOUT_TYPES = { warn: "warning", error: "danger", success: "tip" };
 
 // Markup in a code sample, as opposed to a TypeScript generic such as `useRef<T>()`.
 const JSX = /(^|[\s(>={])<[A-Za-z]/m;
@@ -54,7 +58,7 @@ const STUB_NOTE =
 const parseArgs = (argv) => {
 	const options = {
 		inputs: [],
-		out: "src/content/docs",
+		out: "content",
 		force: false,
 		dryRun: false,
 		stdout: false,
@@ -170,6 +174,10 @@ const convertTagLine = (line) =>
 	line
 		.replace(/\bclassName=/g, "class=")
 		.replace(
+			/(<Callout\b[^>]*\btype=)(["'])(\w+)\2/,
+			(_, start, quote, type) => `${start}${quote}${CALLOUT_TYPES[type] ?? type}${quote}`
+		)
+		.replace(
 			/(<ComponentSource\b[^>]*\bpath=)(["'])([^"']+)\2/,
 			(_, start, quote, file) => `${start}${quote}${mapSourcePath(file)}${quote}`
 		);
@@ -205,7 +213,9 @@ export const convertMdx = (source) => {
 		const opening = line.match(/^(\s*)(`{3,}|~{3,})([\w-]*)(.*)$/);
 		if (opening) {
 			const [, indent, marker, lang, rest] = opening;
-			const meta = rest.replace(/title="app\/globals\.css"/, 'title="src/routes/layout.css"');
+			const meta = rest
+				.replace(/title="app\/globals\.css"/, 'title="src/routes/layout.css"')
+				.replace(/\btitle=/, "filename=");
 			const isReact = lang === "tsx" || lang === "jsx";
 			// A React block becomes svelte or ts at its closing fence, once we know whether it has markup.
 			fence = { marker, lang, open: isReact ? output.length : undefined };
@@ -225,6 +235,10 @@ export const convertMdx = (source) => {
 		const comment = line.match(/^(\s*)\{\/\*([\s\S]*?)\*\/\}\s*$/);
 		if (comment) {
 			output.push(`${comment[1]}<!--${comment[2]}-->`);
+			continue;
+		}
+
+		if (/^\s*<\/?Step>\s*$/.test(line)) {
 			continue;
 		}
 
@@ -254,10 +268,15 @@ export const convertMdx = (source) => {
 		.join("\n")
 		.replace(/\n{3,}/g, "\n\n")
 		.trim();
-	const used = DOCS_COMPONENTS.filter((name) => new RegExp(`<${name}\\b`).test(text));
-	const script = used.length
-		? `<script>\n\timport { ${used.join(", ")} } from "#lib/docs/components/index.js";\n</script>\n\n`
-		: "";
+	const uses = (name) => new RegExp(`<${name}\\b`).test(text);
+	const docs = DOCS_COMPONENTS.filter(uses);
+	const imports = [
+		...(docs.length ? [`import { ${docs.join(", ")} } from "#lib/docs/components/index.js";`] : []),
+		...SVOCS_COMPONENTS.filter(uses).map(
+			(name) => `import ${name} from "#lib/components/${name}.svelte";`
+		),
+	];
+	const script = imports.length ? `<script>\n\t${imports.join("\n\t")}\n</script>\n\n` : "";
 
 	return `---\n${convertFrontmatter(frontmatter)}\n---\n\n${script}${STUB_NOTE}\n\n${text}\n`;
 };
@@ -300,13 +319,16 @@ const main = async () => {
 	for (const input of options.inputs) {
 		for (const page of await collectPages(input)) {
 			const converted = convertMdx(await readFile(page.file, "utf8"));
-			const target = path.join(options.out, page.relative.replace(/\.mdx$/, ".md"));
+			const pathFor = (extension) =>
+				path.join(options.out, page.relative.replace(/\.mdx$/, extension));
+			const target = pathFor(converted.includes("\n<script>\n") ? ".svx" : ".md");
 			if (options.stdout) {
 				console.log(`<!-- ${target} -->\n${converted}`);
 				continue;
 			}
-			if (existsSync(target) && !options.force) {
-				console.log(`skip   ${target} (exists; use --force)`);
+			const existing = [".md", ".svx"].map(pathFor).find((file) => existsSync(file));
+			if (existing && !options.force) {
+				console.log(`skip   ${existing} (exists; use --force)`);
 				skipped += 1;
 				continue;
 			}
