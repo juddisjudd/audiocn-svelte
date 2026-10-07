@@ -23,9 +23,9 @@
 		MixerMaster,
 		MixerSeparator,
 	} from "#lib/components/ui/mixer/index.js";
-	import { useDemoSignal } from "#lib/hooks/use-demo-signal.svelte.js";
 	import { useMixer } from "#lib/hooks/use-mixer.svelte.js";
 	import { formatDb } from "#lib/audio/decibels.js";
+	import { useDemoMixer } from "#lib/docs/use-demo-mixer.svelte.js";
 
 	const CHANNELS = [
 		{
@@ -67,24 +67,16 @@
 		},
 	] as const;
 
-	const strips = CHANNELS.map((channel) => ({
-		...channel,
-		signal: useDemoSignal({
-			channels: channel.channels,
-			kind: channel.kind,
-			seed: "seed" in channel ? channel.seed : undefined,
-		}),
-	}));
-
 	const mixer = useMixer({ channels: CHANNELS.map(({ id, gainDb }) => ({ gainDb, id })) });
-	const program = useDemoSignal({ channels: 2, kind: "music", seed: 9 });
+	const demo = useDemoMixer(CHANNELS, () => mixer.state);
+	const audible = $derived(CHANNELS.some(({ id }) => mixer.isAudible(id)));
 </script>
 
 <!-- The card label titles the tile, so the mixer is named here instead of
 pointing at a MixerTitle it does not render. -->
 <Mixer aria-label="Mixer" aria-labelledby={undefined} class="w-full" orientation="vertical">
 	<MixerChannels>
-		{#each strips as { channels, icon: Icon, id, name, signal, title } (id)}
+		{#each CHANNELS as { channels, icon: Icon, id, name, title } (id)}
 			{@const state = mixer.channel(id)}
 			{#if state}
 				<ChannelStrip dimmed={mixer.isDimmed(id)} muted={state.muted} solo={state.solo}>
@@ -97,9 +89,10 @@ pointing at a MixerTitle it does not render. -->
 					<ChannelStripMeter>
 						<LevelMeter
 							aria-label="{name} level"
+							ballistics={mixer.isAudible(id) ? undefined : "instant"}
 							channelCount={channels}
 							size="sm"
-							source={signal.meter}
+							source={demo.sources[id]}
 						/>
 					</ChannelStripMeter>
 					<ChannelStripFader>
@@ -140,7 +133,13 @@ pointing at a MixerTitle it does not render. -->
 				<ChannelStripTitle>Master</ChannelStripTitle>
 			</ChannelStripHeader>
 			<ChannelStripMeter>
-				<LevelMeter aria-label="Master level" channelCount={2} size="sm" source={program.meter} />
+				<LevelMeter
+					aria-label="Master level"
+					ballistics={audible ? undefined : "instant"}
+					channelCount={2}
+					size="sm"
+					source={demo.master}
+				/>
 			</ChannelStripMeter>
 			<ChannelStripFader>
 				<Fader

@@ -25,21 +25,19 @@
 		MixerSeparator,
 		MixerTitle,
 	} from "#lib/components/ui/mixer/index.js";
-	import { useDemoSignal } from "#lib/hooks/use-demo-signal.svelte.js";
 	import { useMixer } from "#lib/hooks/use-mixer.svelte.js";
 	import { formatDb } from "#lib/audio/decibels.js";
-
-	const speech = useDemoSignal({ kind: "speech" });
-	const noise = useDemoSignal({ channels: 2, kind: "noise" });
-	const music = useDemoSignal({ channels: 2, kind: "music" });
+	import { useDemoMixer } from "#lib/docs/use-demo-mixer.svelte.js";
 
 	const channels = [
-		{ icon: MicrophoneIcon, id: "mic", source: speech.meter, title: "Microphone" },
-		{ icon: DesktopIcon, id: "system", source: noise.meter, title: "System audio" },
-		{ icon: MusicNotesIcon, id: "music", source: music.meter, title: "Music" },
-	];
+		{ icon: MicrophoneIcon, id: "mic", kind: "speech", title: "Microphone" },
+		{ channels: 2, icon: DesktopIcon, id: "system", kind: "noise", title: "System audio" },
+		{ channels: 2, icon: MusicNotesIcon, id: "music", kind: "music", title: "Music" },
+	] as const;
 
 	const mixer = useMixer({ channels: channels.map(({ id }) => ({ id })) });
+	const demo = useDemoMixer(channels, () => mixer.state);
+	const audible = $derived(channels.some(({ id }) => mixer.isAudible(id)));
 </script>
 
 <Mixer class="w-full max-w-2xl">
@@ -47,7 +45,7 @@
 		<MixerTitle>Audio mixer</MixerTitle>
 	</MixerHeader>
 	<MixerChannels>
-		{#each channels as { icon: Icon, id, source, title } (id)}
+		{#each channels as { icon: Icon, id, title } (id)}
 			{@const channel = mixer.channel(id)}
 			{#if channel}
 				<ChannelStrip dimmed={mixer.isDimmed(id)} muted={channel.muted} solo={channel.solo}>
@@ -60,7 +58,12 @@
 						</ChannelStripText>
 					</ChannelStripHeader>
 					<ChannelStripMeter>
-						<LevelMeter aria-label="{title} level" size="sm" {source} />
+						<LevelMeter
+							aria-label="{title} level"
+							ballistics={mixer.isAudible(id) ? undefined : "instant"}
+							size="sm"
+							source={demo.sources[id]}
+						/>
 					</ChannelStripMeter>
 					<ChannelStripFader>
 						<Fader
@@ -98,7 +101,13 @@
 				<ChannelStripTitle>Master</ChannelStripTitle>
 			</ChannelStripHeader>
 			<ChannelStripMeter>
-				<LevelMeter aria-label="Master level" channelCount={2} size="sm" source={music.meter} />
+				<LevelMeter
+					aria-label="Master level"
+					ballistics={audible ? undefined : "instant"}
+					channelCount={2}
+					size="sm"
+					source={demo.master}
+				/>
 			</ChannelStripMeter>
 			<ChannelStripFader>
 				<Fader

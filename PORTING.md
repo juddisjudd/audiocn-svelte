@@ -2,7 +2,7 @@
 
 audiocn-svelte is a Svelte 5 port of [audiocn](https://github.com/audiocn/ui) (MIT). Every item keeps audiocn's name, props, data attributes, class strings and behaviour, translated to the shadcn-svelte conventions below. The test for every component: a developer who knows shadcn-svelte can guess its API.
 
-The React source is the reference. Its plans (`plans/002-conventions.md` to `008-blocks.md`) are the specs. The port matches upstream commit `199b0b8`; diff from there to find new work.
+The React source is the reference. Its plans (`plans/002-conventions.md` to `008-blocks.md`) are the specs. The port matches upstream commit `4234aa1`; diff from there to find new work.
 
 ## Stack
 

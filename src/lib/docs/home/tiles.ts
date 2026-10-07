@@ -11,7 +11,6 @@ export const TILES = {
 		href: "/docs/components/audio-player",
 		height: "h-10",
 	},
-	eq: { label: "Parameter sliders", href: "/docs/components/parameter-slider", height: "h-46" },
 	faders: { label: "Faders", href: "/docs/components/fader", height: "h-62" },
 	knobs: { label: "Knobs", href: "/docs/components/knob", height: "h-23" },
 	"live-waveform": {
@@ -30,6 +29,11 @@ export const TILES = {
 	},
 	spectrum: { label: "Spectrum", href: "/docs/components/spectrum", height: "h-32" },
 	voice: { label: "Bar visualizer", href: "/docs/components/bar-visualizer", height: "h-40" },
+	"volume-knob": {
+		label: "Volume dial",
+		href: "/docs/components/knob#volume-dial",
+		height: "size-44",
+	},
 	waveform: { label: "Waveform", href: "/docs/components/waveform", height: "h-36" },
 } as const;
 
@@ -38,7 +42,7 @@ export type TileName = keyof typeof TILES;
 /** Three stacks: the wide one first, so phones show the mixer under the hero. */
 export const GRID: { wide: TileName[]; left: TileName[]; right: TileName[] } = {
 	wide: ["mixer", "waveform", "music", "sound-pads"],
-	left: ["voice", "knobs", "spectrum", "eq", "live-waveform"],
+	left: ["voice", "knobs", "spectrum", "volume-knob", "live-waveform"],
 	right: ["meters", "channel", "faders", "output", "compact-player"],
 };
 

@@ -4,10 +4,23 @@ description: The container for channel strips, with shared meter settings and ke
 ---
 
 <script>
-	import { ComponentPreview, PropsTable } from "#lib/docs/components/index.js";
+	import Collapse from "#lib/components/Collapse.svelte";
+	import { ComponentPreview, ComponentSource, PropsTable } from "#lib/docs/components/index.js";
 </script>
 
 <ComponentPreview name="mixer-demo" />
+
+The preview meters each synthetic channel after its fader, mute and solo settings. Muting or excluding a channel with solo clears its meter immediately. The master combines those channels, then applies the master fader. It clears immediately when no channels are audible.
+
+<Collapse title="Copy the demo signal helper">
+
+The example uses a docs-only `useDemoMixer` helper. To copy the preview, save the code below as `src/lib/docs/use-demo-mixer.svelte.ts`. It uses [`useDemoSignal`](/docs/hooks/use-demo-signal) and [`useMixer`](/docs/hooks/use-mixer).
+
+Mono channels feed both sides. The helper estimates peak by summing amplitudes and RMS by summing powers. For audio samples, connect [`useWebAudioMixer`](/docs/hooks/use-web-audio-mixer) to the same components.
+
+<ComponentSource path="src/lib/docs/use-demo-mixer.svelte.ts" />
+
+</Collapse>
 
 ## Installation
 

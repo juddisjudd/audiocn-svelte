@@ -12,8 +12,10 @@
 		{ initialDb: -14, kind: "music", label: "Keys", seed: 7 },
 	];
 
-	const signals = strips.map(({ kind, seed }) => useDemoSignal({ channels: 2, kind, seed }));
 	let gains = $state(strips.map((strip) => strip.initialDb));
+	const signals = strips.map(({ kind, seed }, index) =>
+		useDemoSignal(() => ({ channels: 2, gainDb: gains[index], kind, seed }))
+	);
 </script>
 
 <div class="flex w-full justify-center gap-4">

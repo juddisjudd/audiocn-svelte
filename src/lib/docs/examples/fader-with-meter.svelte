@@ -4,7 +4,7 @@
 	import { useDemoSignal } from "#lib/hooks/use-demo-signal.svelte.js";
 
 	let gainDb = $state(0);
-	const signal = useDemoSignal({ channels: 2, kind: "music" });
+	const signal = useDemoSignal(() => ({ channels: 2, gainDb, kind: "music" }));
 </script>
 
 <Fader

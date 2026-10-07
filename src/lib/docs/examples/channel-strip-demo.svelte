@@ -19,10 +19,10 @@
 	import { LevelMeter } from "#lib/components/ui/level-meter/index.js";
 	import { useDemoSignal } from "#lib/hooks/use-demo-signal.svelte.js";
 
-	const signal = useDemoSignal({ kind: "speech" });
 	let gainDb = $state(0);
 	let muted = $state(false);
 	let solo = $state(false);
+	const signal = useDemoSignal(() => ({ gainDb, kind: "speech", playing: !muted }));
 </script>
 
 <ChannelStrip class="max-w-2xl" {muted} {solo}>
@@ -39,7 +39,12 @@
 		</ChannelStripStatus>
 	</ChannelStripHeader>
 	<ChannelStripMeter>
-		<LevelMeter aria-label="Microphone level" size="sm" source={signal.meter} />
+		<LevelMeter
+			aria-label="Microphone level"
+			ballistics={muted ? "instant" : undefined}
+			size="sm"
+			source={signal.meter}
+		/>
 	</ChannelStripMeter>
 	<ChannelStripFader>
 		<Fader aria-label="Microphone volume" bind:value={gainDb} size="sm" />

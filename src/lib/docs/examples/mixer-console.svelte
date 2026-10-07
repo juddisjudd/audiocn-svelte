@@ -21,11 +21,20 @@
 
 	const channels = Array.from({ length: CHANNEL_COUNT }, (_, index) => ({
 		id: `input-${index + 1}`,
-		signal: useDemoSignal({ kind: KINDS[index % KINDS.length] ?? "music", seed: index + 1 }),
+		kind: KINDS[index % KINDS.length] ?? "music",
+		seed: index + 1,
 		title: `In ${index + 1}`,
 	}));
 
 	const mixer = useMixer({ channels: channels.map(({ id }) => ({ id })) });
+	const signals = channels.map(({ id, kind, seed }) =>
+		useDemoSignal(() => ({
+			gainDb: mixer.channel(id)?.gainDb,
+			kind,
+			playing: mixer.isAudible(id),
+			seed,
+		}))
+	);
 </script>
 
 <Mixer class="w-full" orientation="vertical">
@@ -33,7 +42,7 @@
 		<MixerTitle>Console</MixerTitle>
 	</MixerHeader>
 	<MixerChannels>
-		{#each channels as { id, signal, title } (id)}
+		{#each channels as { id, title }, index (id)}
 			{@const channel = mixer.channel(id)}
 			{#if channel}
 				<ChannelStrip dimmed={mixer.isDimmed(id)} muted={channel.muted} solo={channel.solo}>
@@ -41,7 +50,12 @@
 						<ChannelStripTitle>{title}</ChannelStripTitle>
 					</ChannelStripHeader>
 					<ChannelStripMeter>
-						<LevelMeter aria-label="{title} level" size="sm" source={signal.meter} />
+						<LevelMeter
+							aria-label="{title} level"
+							ballistics={mixer.isAudible(id) ? undefined : "instant"}
+							size="sm"
+							source={signals[index].meter}
+						/>
 					</ChannelStripMeter>
 					<ChannelStripFader>
 						<Fader

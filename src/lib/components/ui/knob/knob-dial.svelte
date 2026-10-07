@@ -8,6 +8,7 @@
 <script lang="ts">
 	import { useKnob } from "./knob-context.svelte.js";
 	import {
+		CENTER,
 		VIEWBOX,
 		angleFor,
 		dragAngle,
@@ -172,7 +173,12 @@
 	aria-valuenow={knob.value}
 	aria-valuetext={knob.format(knob.value)}
 	class={cn(
-		"relative size-(--knob-size) cursor-grab touch-none rounded-full outline-none aria-disabled:cursor-default data-dragging:cursor-grabbing",
+		"group/knob-dial pointer-events-none relative size-(--knob-size) touch-none rounded-full outline-none data-dragging:pointer-events-auto",
+		{
+			"data-dragging:cursor-ew-resize": knob.dragDirection === "horizontal",
+			"data-dragging:cursor-grabbing": knob.dragDirection === "circular",
+			"data-dragging:cursor-ns-resize": knob.dragDirection === "vertical",
+		},
 		className
 	)}
 	data-dragging={dragging ? "" : undefined}
@@ -190,5 +196,13 @@
 >
 	<svg aria-hidden="true" class="size-full overflow-visible" viewBox="0 0 {VIEWBOX} {VIEWBOX}">
 		{@render children?.()}
+		<circle
+			class="[pointer-events:all] cursor-grab touch-none group-aria-disabled/knob-dial:cursor-default group-data-dragging/knob-dial:cursor-[inherit]"
+			cx={CENTER}
+			cy={CENTER}
+			data-slot="knob-hit-area"
+			fill="none"
+			r={CENTER}
+		/>
 	</svg>
 </div>
